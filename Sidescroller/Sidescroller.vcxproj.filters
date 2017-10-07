@@ -125,14 +125,14 @@
     <ClInclude Include="logger.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="tinyxml2.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TiledMap.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
