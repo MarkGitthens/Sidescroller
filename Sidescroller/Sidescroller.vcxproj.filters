@@ -78,7 +78,7 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Visual Studio 2015\Projects\PlatformTest\PlatformTest\tinyxml2.cpp">
+    <ClCompile Include="tinyxml2.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
   </ItemGroup>
