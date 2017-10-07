@@ -76,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2_image-2.0.1\include;C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2-2.0.5\include;$(IncludePath);C:\Users\MarkGitthens\Documents\Programming Projects\glew-2.1.0\include</IncludePath>
-    <LibraryPath>C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2_image-2.0.1\lib\x64;C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2-2.0.5\lib\x64;$(LibraryPath);C:\Users\MarkGitthens\Documents\Programming Projects\glew-2.1.0\lib\Release\x64</LibraryPath>
+    <IncludePath>C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2_image-2.0.1\include;C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2_image-2.0.1\lib\x64;C:\Users\MarkGitthens\Documents\SDL Stuff\SDL2-2.0.5\lib\x64;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -182,7 +182,6 @@
     <ClInclude Include="CollisionHandler.h" />
     <ClInclude Include="DynamicCollider.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="GLRenderer.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="Player.h" />
