@@ -4,13 +4,14 @@
 #include "InputHandler.h"
 
 void Player::update() {
-    SDL_Rect* physicsBody = getRect();
+    //SDL_Rect* physicsBody = getRect();
     //Do basic physics
     //DynamicCollider::onUpdate();
     handleInput();
 
-    physicsBody->x += mVelocity.x;
-    physicsBody->y += mVelocity.y;
+
+   // physicsBody->x += mVelocity.x;
+    //physicsBody->y += mVelocity.y;
 }
 
 void Player::handleInput() {
@@ -31,11 +32,16 @@ void Player::handleInput() {
     }
 }
 
+void Player::setPosition(int x, int y) {
+    mRect.x = x;
+    mRect.y = y;
+}
+
 void Player::render(SDL_Rect* cameraRect) {
-    SDL_Rect destRect = *(getRect());
-    destRect.x -= cameraRect->x;
-    destRect.y -= cameraRect->y;
-    Renderer::getInstance().drawTexture(getTexture(), &destRect);
+    //SDL_Rect destRect = *(getRect());
+   // destRect.x -= cameraRect->x;
+    //destRect.y -= cameraRect->y;
+    //Renderer::getInstance().drawTexture(getTexture(), &destRect);
 }
 
 void Player::onCollision(const char* name) {

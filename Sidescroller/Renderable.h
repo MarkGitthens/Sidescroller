@@ -14,6 +14,8 @@ public:
 
     void createFromPath(char* path) {
         mImage = new Texture(path);
+        mRect.w = mImage->getWidth();
+        mRect.h = mImage->getHeight();
     }
     void setSprite(Texture* texture) {
         if (mImage)
@@ -27,9 +29,11 @@ public:
     Texture* getTexture() { return mImage; }
     SDL_Texture* getSDLTexture() { return mImage->getTexture(); }
 
+    SDL_Rect* getRenderRect() { return &mRect; }
     virtual void render(SDL_Rect*) = 0;
 
 protected:
     int layer = 0;
+    SDL_Rect mRect;
     Texture* mImage;
 };

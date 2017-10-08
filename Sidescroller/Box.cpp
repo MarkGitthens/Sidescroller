@@ -15,7 +15,7 @@ void Box::handleInput() {
 }
 
 void Box::render(SDL_Rect* camera) {
-    Renderer::getInstance().drawTexture(getTexture(), getRect());
+    //Renderer::getInstance().drawTexture(getTexture(), getRect());
 }
 void Box::setImage(Texture* texture) {
     mTexture = texture;

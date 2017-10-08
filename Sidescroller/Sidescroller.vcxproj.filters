@@ -19,9 +19,6 @@
     <Filter Include="Header Files\entities">
       <UniqueIdentifier>{b3ff443d-b315-49e5-9d2a-bc27e654e9ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\physics">
-      <UniqueIdentifier>{f7302218-23fd-41a4-8523-9c674658303d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\core">
       <UniqueIdentifier>{6412e631-75cb-4b7c-aa8c-d3272f767fe6}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     </Filter>
     <Filter Include="Source Files\util">
       <UniqueIdentifier>{7e2febd0-b514-4ffc-8fa4-ada766dcd9e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\physics">
-      <UniqueIdentifier>{42bdebda-5d29-49fb-9f68-50c17df9b729}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\util">
       <UniqueIdentifier>{12cdce82-c179-43df-bae6-b67a7148010b}</UniqueIdentifier>
@@ -50,18 +44,6 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Collidable.cpp">
-      <Filter>Source Files\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionHandler.cpp">
-      <Filter>Source Files\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="DynamicCollider.cpp">
-      <Filter>Source Files\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticCollider.cpp">
-      <Filter>Source Files\physics</Filter>
     </ClCompile>
     <ClCompile Include="Vector2D.cpp">
       <Filter>Source Files\util</Filter>
@@ -94,12 +76,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionHandler.h">
-      <Filter>Header Files\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Collidable.h">
-      <Filter>Header Files\physics</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\entities</Filter>

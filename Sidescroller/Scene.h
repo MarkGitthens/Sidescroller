@@ -5,7 +5,6 @@
 #include <unordered_map>
 #include "Entity.h"
 #include "Renderable.h"
-#include "CollisionHandler.h"
 #include "TiledMap.h"
 #include "Camera.h"
 
@@ -32,11 +31,7 @@ public:
         }
            
 
-        Collidable* tempCollide = dynamic_cast<Collidable*>(entity);
-        if (tempCollide) {
-            std::cout << "registered collider" << std::endl;
-            mCollisionHandler.registerCollider(tempCollide);
-        }
+    
     }
 
     void setCamera(Camera* camera) {
@@ -54,7 +49,7 @@ public:
         for (std::pair<char*, Entity*> e : mEntityMap) {
             e.second->update();
         }
-        mCollisionHandler.checkCollisions();
+        //mCollisionHandler.checkCollisions();
 
         mCamera->update();
         SDL_RenderClear(Renderer::getInstance().getRenderer());

@@ -20,7 +20,6 @@ CollisionHandler* collisionHandler = nullptr;
 
 //Entities
 Player* player;
-Box* box;
 TiledMap* map;
 Camera* camera;
 
@@ -50,7 +49,6 @@ int main(int argc, char* argv[]) {
     scene.setTiledMap(map);
     scene.registerEntity(player);
     scene.setCamera(camera);
-    //scene.registerEntity(box);
 
     while (!InputHandler::getInstance().actionTriggered("SDL_QUIT")) {
         InputHandler::getInstance().handleInput();
@@ -75,24 +73,12 @@ void shutdown() {
 }
 void initializeEntities() {
     player = new Player();
-    box = new Box();
 
     player->setName("Player");
-    player->setDimensions(Vector2D(64, 64));
+    //player->setDimensions(Vector2D(64, 64));
     player->createFromPath("images/ball.png");
+    player->setPosition(0, 0);
     player->setLayer(1);
-
-    box->setName("Box");
-    box->setDimensions(Vector2D(64, 64));
-    box->createFromPath("images/block.png");
-    box->setLayer(1);
-
-    Collidable* tempCollidable = dynamic_cast<Collidable*>(player);
-    collisionHandler->registerCollider(tempCollidable);
-
-    tempCollidable = dynamic_cast<Collidable*>(box);
-    collisionHandler->registerCollider(tempCollidable);
-
     map = new TiledMap(15,10,128,128);
     map->setTileSheet("images/tilesheet_complete_2X.png");
     map->parseFile("tilesets/test_level.tmx");
@@ -105,7 +91,7 @@ void initializeEntities() {
     cameraRect->w = 1920;
     cameraRect->h = 1080;
     camera->setCameraRect(cameraRect);
-    camera->setParentRect(player->getRect());
+    camera->setParentRect(player->getRenderRect());
 }
 
 void registerInputs() {

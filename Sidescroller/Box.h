@@ -1,10 +1,10 @@
 #pragma once
 #include "Entity.h"
-#include "StaticCollider.h"
+#include "Collidable.h"
 #include "Texture.h"
 #include "Renderable.h"
 
-class Box : public Entity, public StaticCollider, public Renderable {
+class Box : public Entity, public Renderable {
 public:
     Box(): mTexture(nullptr) {};
     Box(Texture* texture) : mTexture(texture) {};
