@@ -95,12 +95,6 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="StaticCollider.h">
-      <Filter>Header Files\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="DynamicCollider.h">
-      <Filter>Header Files\physics</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionHandler.h">
       <Filter>Header Files\physics</Filter>
     </ClInclude>
@@ -134,8 +128,14 @@
     <ClInclude Include="tinyxml2.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
+    <ClInclude Include="SDL_mixer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL2_mixer.lib" />
   </ItemGroup>
 </Project>

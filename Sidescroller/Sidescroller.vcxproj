@@ -180,7 +180,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="CollisionHandler.h" />
-    <ClInclude Include="DynamicCollider.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="logger.h" />
@@ -188,7 +187,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="StaticCollider.h" />
+    <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="tinyxml2.h" />
@@ -196,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL2_mixer.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

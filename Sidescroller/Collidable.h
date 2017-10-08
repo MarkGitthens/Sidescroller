@@ -22,7 +22,6 @@ public:
     virtual void onUpdate() = 0;
     virtual void resolveCollision(const Collidable*) = 0;
     virtual void onCollision(const char*) = 0;
-    virtual Type getType() = 0;
 
 private:
     SDL_Rect mBody;
