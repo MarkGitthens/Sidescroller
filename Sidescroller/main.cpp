@@ -2,7 +2,6 @@
 #include "Renderer.h"
 #include <SDL_image.h>
 
-#include "CollisionHandler.h"
 #include "InputHandler.h"
 
 #include "Player.h"
@@ -16,7 +15,7 @@ void shutdown();
 //SDL specific pointers
 SDL_Window* window = nullptr;
 SDL_Surface* screenSurface = nullptr;
-CollisionHandler* collisionHandler = nullptr;
+
 
 //Entities
 Player* player;
@@ -28,7 +27,6 @@ Scene scene;
 bool running = true;
 
 int main(int argc, char* argv[]) {
-    collisionHandler = new CollisionHandler();
     
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         //error
@@ -60,7 +58,6 @@ int main(int argc, char* argv[]) {
 }
 
 void shutdown() {
-    delete collisionHandler;
 
     SDL_FreeSurface(screenSurface);
     screenSurface = nullptr;
@@ -75,7 +72,6 @@ void initializeEntities() {
     player = new Player();
 
     player->setName("Player");
-    //player->setDimensions(Vector2D(64, 64));
     player->createFromPath("images/ball.png");
     player->setPosition(0, 0);
     player->setLayer(1);

@@ -76,5 +76,4 @@ private:
     TiledMap* mTiledMap;
     std::vector<std::vector<Renderable*>> mRenderList;
     unordered_map<char*, Entity*> mEntityMap;
-    CollisionHandler mCollisionHandler;
 };

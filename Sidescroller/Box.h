@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.h"
-#include "Collidable.h"
 #include "Texture.h"
 #include "Renderable.h"
 
