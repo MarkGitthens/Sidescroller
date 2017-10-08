@@ -12,17 +12,18 @@ InputHandler& InputHandler::getInstance() {
 
 void InputHandler::handleInput() {
     while (SDL_PollEvent(&mEvent) != 0) {
+        std::string actionName = mKeyMap[mEvent.key.keysym.sym];
         if (mEvent.type == SDL_QUIT) {
             mTriggeredActions["SDL_QUIT"] = true;
         }
             //send message to close window
         if (mEvent.type == SDL_KEYDOWN) {
-            std::string actionName = mKeyMap[mEvent.key.keysym.sym];
             mTriggeredActions[actionName] = true;
-            mPressedTriggeredActions[actionName] = mActions[actionName];
         }
         if (mEvent.type == SDL_KEYUP) {
-            mTriggeredActions[mKeyMap[mEvent.key.keysym.sym]] = false;
+            mTriggeredActions[actionName] = false;
+            if (mPressedTriggeredActions[actionName] < 1)
+                mPressedTriggeredActions[actionName] = mActions[actionName];
         }
     }
 }
@@ -52,6 +53,7 @@ void InputHandler::addKeyAction(int key, std::string tag) {
     }
     else {
         mActions[tag] = 1;
+        mPressedTriggeredActions[tag] = 0;
     }
 }
 
