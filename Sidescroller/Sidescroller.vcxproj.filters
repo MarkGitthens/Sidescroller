@@ -63,6 +63,9 @@
     <ClCompile Include="tinyxml2.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -107,9 +110,13 @@
     <ClInclude Include="SDL_mixer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="post_build.bat" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2_mixer.lib" />
