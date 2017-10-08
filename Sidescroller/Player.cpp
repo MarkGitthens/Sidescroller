@@ -10,8 +10,8 @@ void Player::update() {
     handleInput();
 
 
-   // physicsBody->x += mVelocity.x;
-    //physicsBody->y += mVelocity.y;
+    mRect.x += mVelocity.x;
+    mRect.y += mVelocity.y;
 }
 
 void Player::handleInput() {
@@ -38,10 +38,10 @@ void Player::setPosition(int x, int y) {
 }
 
 void Player::render(SDL_Rect* cameraRect) {
-    //SDL_Rect destRect = *(getRect());
-   // destRect.x -= cameraRect->x;
-    //destRect.y -= cameraRect->y;
-    //Renderer::getInstance().drawTexture(getTexture(), &destRect);
+    SDL_Rect destRect = mRect;
+    destRect.x -= cameraRect->x;
+    destRect.y -= cameraRect->y;
+    Renderer::getInstance().drawTexture(getTexture(), &destRect);
 }
 
 void Player::onCollision(const char* name) {
