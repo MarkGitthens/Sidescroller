@@ -21,27 +21,27 @@ public:
     Scene(const char* name) : mSceneName(name) {};
     Scene(const char* name, SDL_Rect world) : mSceneName(name), mWorldSpace(world) {};
     Scene(const Scene& old) : mSceneName(old.mSceneName), mWorldSpace(old.mWorldSpace), mEntityMap(old.mEntityMap) {};
-	~Scene() {
-		stopThreads();
-		mBackgroundThread.join();
-	};
+    ~Scene() {
+        stopThreads();
+        mBackgroundThread.join();
+    };
 
     void registerEntity(Entity* entity) { 
         Renderable* temp = dynamic_cast<Renderable*>(entity);
-		mEntityMap[entity->getName()] = entity;
+        mEntityMap[entity->getName()] = entity;
         if (temp) {
             if (mRenderList.size() <= temp->getLayer()) {
                 mRenderList.resize(temp->getLayer() + 1);
             } 
             mRenderList.at(temp->getLayer()-1).emplace_back(temp);
-		}
+        }
     }
 
-	void registerOffScreenEntity(Entity* entity) {
-		if (entity != nullptr) {
-			mOffScreenEntityMap[entity->getName()] = entity;
-		}
-	}
+    void registerOffScreenEntity(Entity* entity) {
+        if (entity != nullptr) {
+            mOffScreenEntityMap[entity->getName()] = entity;
+        }
+    }
 
     void setCamera(Camera* camera) {
         mCamera = camera;
@@ -51,10 +51,10 @@ public:
         mTiledMap = tiledMap;
     }
     void removeEntity(char* name) {
-		if (mEntityMap.find(name) != mEntityMap.end()) {
-			mEntityMap.erase(name);
-		}
-	}
+        if (mEntityMap.find(name) != mEntityMap.end()) {
+            mEntityMap.erase(name);
+        }
+    }
     Entity* getEntity(char* name) { return mEntityMap[name]; }
     const char* getName() { return mSceneName.c_str(); }
 
@@ -77,25 +77,25 @@ public:
         SDL_RenderPresent(Renderer::getInstance().getRenderer());
     }
 
-	// Init and start the background thread
-	void initThreads() {
-		mRunning = true;
-		mBackgroundThread = std::move(std::thread(&Scene::updateOffScreen, this));
-	}
+    // Init and start the background thread
+    void initThreads() {
+        mRunning = true;
+        mBackgroundThread = std::move(std::thread(&Scene::updateOffScreen, this));
+    }
 
-	// Stop the background thread by setting mRunning to false
-	void stopThreads() {
-		mRunning = false;
-	}
+    // Stop the background thread by setting mRunning to false
+    void stopThreads() {
+        mRunning = false;
+    }
 
-	// Thread function to run in the background to handle updating the off-screen entities
-	void updateOffScreen() {
-		while (mRunning) {
-			for (std::pair<char*, Entity*> e : mOffScreenEntityMap) {
-				e.second->update();
-			}
-		}
-	}
+    // Thread function to run in the background to handle updating the off-screen entities
+    void updateOffScreen() {
+        while (mRunning) {
+            for (std::pair<char*, Entity*> e : mOffScreenEntityMap) {
+                e.second->update();
+            }
+        }
+    }
 
     void clearRenderList();
     void registerRenderable(Renderable*);
@@ -109,8 +109,8 @@ private:
     std::vector<std::vector<Renderable*>> mRenderList;
     unordered_map<char*, Entity*> mEntityMap;
 
-	// seperate thread from render
-	std::atomic<bool> mRunning;
-	std::thread mBackgroundThread;
-	unordered_map<char*, Entity*> mOffScreenEntityMap;
+    // seperate thread from render
+    std::atomic<bool> mRunning;
+    std::thread mBackgroundThread;
+    unordered_map<char*, Entity*> mOffScreenEntityMap;
 };

@@ -36,17 +36,17 @@ int main(int argc, char* argv[]) {
     
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         //error
-		std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
+        std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
     }
     if (IMG_Init(IMG_INIT_PNG)) {
 
     }
 
-	//Initialize SDL_mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-	{
-		std::cerr << "SDL_mixer could not initialize!\n" << Mix_GetError() << std::endl;
-	}
+    //Initialize SDL_mixer
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        std::cerr << "SDL_mixer could not initialize!\n" << Mix_GetError() << std::endl;
+    }
 
     window = SDL_CreateWindow("Sidescroller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_SHOWN);
 
@@ -56,15 +56,15 @@ int main(int argc, char* argv[]) {
 
     
     initializeEntities();
-	initializeAudio();
-	registerInputs();
+    initializeAudio();
+    registerInputs();
 
     scene.setTiledMap(map);
     scene.registerEntity(player);
-	scene.registerOffScreenEntity(music);
+    scene.registerOffScreenEntity(music);
     scene.setCamera(camera);
 
-	scene.initThreads();
+    scene.initThreads();
     while (!InputHandler::getInstance().actionTriggered("SDL_QUIT")) {
         InputHandler::getInstance().handleInput();
         scene.updateScene();
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 }
 
 void shutdown() {
-	scene.stopThreads();
+    scene.stopThreads();
     SDL_FreeSurface(screenSurface);
     screenSurface = nullptr;
 
@@ -87,10 +87,10 @@ void shutdown() {
 }
 
 bool initializeAudio() {
-	bool good = true;
-	music = new Music("background_music");
-	good = music->load("audio/beat.wav");
-	return good;
+    bool good = true;
+    music = new Music("background_music");
+    good = music->load("audio/beat.wav");
+    return good;
 }
 
 void initializeEntities() {
@@ -116,12 +116,12 @@ void initializeEntities() {
 }
 
 void registerInputs() {
-	InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "SDL_QUIT");
-	InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
+    InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "SDL_QUIT");
+    InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
     InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
     InputHandler::getInstance().addKeyAction(SDLK_UP, "move_up");
     InputHandler::getInstance().addKeyAction(SDLK_DOWN, "move_down");
-	InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
-	InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());
-	InputHandler::getInstance().addKeyAction(SDLK_EQUALS, music->getVolumeHigherActionName());
+    InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
+    InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());
+    InputHandler::getInstance().addKeyAction(SDLK_EQUALS, music->getVolumeHigherActionName());
 }
