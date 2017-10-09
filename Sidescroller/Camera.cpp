@@ -14,8 +14,8 @@ void Camera::update() {
     //Update the viewport to center on the parent rectangle;
 
     //Centers the camera to the center of the Parent and the screen.
-    mCameraViewport->x = (mParentRect->x - mParentRect->w / 2) - mCameraViewport->w/2;
-    mCameraViewport->y = (mParentRect->y - mParentRect->h / 2) - mCameraViewport->h/2;
+    mCameraViewport->x = (mParentPos->x / 2) - mCameraViewport->w/2;
+    mCameraViewport->y = (mParentPos->y / 2) - mCameraViewport->h/2;
 }
 
 void Camera::setX(int x) {
@@ -37,14 +37,14 @@ void Camera::setHeight(int height) {
 void Camera::setCameraRect(SDL_Rect* rect) {
     mCameraViewport = rect;
 }
-void Camera::setParentRect(SDL_Rect* parent) {
-    mParentRect = parent;
+void Camera::setParentPos(Vector2D* parent) {
+    mParentPos = parent;
 }
 
 SDL_Rect* Camera::getCameraRect() {
     return mCameraViewport;
 }
 
-SDL_Rect* Camera::getParentRect() {
-    return mParentRect;
+Vector2D* Camera::getParentPos() {
+    return mParentPos;
 }

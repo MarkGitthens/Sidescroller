@@ -22,6 +22,7 @@ SDL_Surface* screenSurface = nullptr;
 
 //Entities
 Player* player;
+Box* box;
 TiledMap* map;
 Camera* camera;
 
@@ -61,6 +62,7 @@ int main(int argc, char* argv[]) {
 
     scene.setTiledMap(map);
     scene.registerEntity(player);
+    scene.registerEntity(box);
     //scene.registerOffScreenEntity(music);
     scene.setCamera(camera);
 
@@ -95,12 +97,17 @@ bool initializeAudio() {
 }
 
 void initializeEntities() {
-    player = new Player();
+    player = new Player(64, 64, 64, 64);
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
-    player->setPosition(0, 0);
     player->setLayer(1);
+
+    box = new Box(0, 0, 128, 128);
+    box->setName("Box");
+    box->createFromPath("images/block.png");
+    box->setLayer(1);
+
     map = new TiledMap(15,10,128,128);
     map->setTileSheet("images/tilesheet_complete_2X.png");
     map->parseFile("tilesets/Level1.tmx");
@@ -113,7 +120,7 @@ void initializeEntities() {
     cameraRect->w = 1920;
     cameraRect->h = 1080;
     camera->setCameraRect(cameraRect);
-    camera->setParentRect(player->getRenderRect());
+    camera->setParentPos(player->getPos());
 }
 
 void registerInputs() {

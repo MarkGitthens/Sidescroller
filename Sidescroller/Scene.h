@@ -11,6 +11,7 @@
 #include "TiledMap.h"
 #include "Camera.h"
 #include "Audio.h"
+#include "AABBCollider.h"
 
 using std::string;
 using std::unordered_map;
@@ -34,6 +35,11 @@ public:
                 mRenderList.resize(temp->getLayer() + 1);
             } 
             mRenderList.at(temp->getLayer()-1).emplace_back(temp);
+        }
+
+        AABBCollider* tempCollider = dynamic_cast<AABBCollider*>(entity);
+        if (tempCollider) {
+            mColliders.push_back(tempCollider);
         }
     }
 
@@ -62,9 +68,10 @@ public:
         for (std::pair<char*, Entity*> e : mEntityMap) {
             e.second->update();
         }
-        //mCollisionHandler.checkCollisions();
 
+        checkCollisions();
         mCamera->update();
+
         SDL_RenderClear(Renderer::getInstance().getRenderer());
 
         mTiledMap->render(mCamera->getCameraRect());
@@ -75,6 +82,23 @@ public:
         }
 
         SDL_RenderPresent(Renderer::getInstance().getRenderer());
+    }
+
+    void checkCollisions() {
+
+        //mColliders[0]->colliding(*mColliders[1]);
+
+        for (auto start = mColliders.begin(); start != mColliders.end() - 1; start++) {
+            for (auto j = start + 1; j != mColliders.end(); j++) {
+                if ((*start)->colliding(**j)) {
+                    Entity* tempStart = dynamic_cast<Entity*>(*start);
+                    Entity* tempJ = dynamic_cast<Entity*>(*j);
+
+                    (*start)->handleCollision(tempJ->getName(), **j);
+                    (*j)->handleCollision(tempStart->getName(), **start);
+                }
+            }
+        }
     }
 
     // Init and start the background thread
@@ -109,6 +133,7 @@ private:
     std::vector<std::vector<Renderable*>> mRenderList;
     unordered_map<char*, Entity*> mEntityMap;
 
+    std::vector<AABBCollider*> mColliders;
     // seperate thread from render
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;

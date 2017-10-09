@@ -15,12 +15,18 @@ void Box::handleInput() {
 }
 
 void Box::render(SDL_Rect* camera) {
-    //Renderer::getInstance().drawTexture(getTexture(), getRect());
-}
-void Box::setImage(Texture* texture) {
-    mTexture = texture;
+    SDL_Rect destRect;
+    destRect.x = pos.x -mHalfWidth - camera->x;
+    destRect.y = pos.y - mHalfHeight - camera->y;
+    destRect.w = mHalfWidth*2;
+    destRect.h = mHalfHeight*2;
+    Renderer::getInstance().drawTexture(getTexture(), &destRect);
 }
 
-Texture* Box::getImage() {
-    return mTexture;
+void Box::handleCollision(std::string name, AABBCollider col) {
+
+}
+
+void Box::updateAABB() {
+
 }

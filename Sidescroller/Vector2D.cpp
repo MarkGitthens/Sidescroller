@@ -1,14 +1,10 @@
 #include "Vector2D.h"
-
-Vector2D::Vector2D() {
-    x = y = 0;
-}
-
+#include <iostream>
 Vector2D::~Vector2D() {
     x = y = 0;
 }
 
-Vector2D::Vector2D(int x, int y) {
+Vector2D::Vector2D(double x, double y) {
     this->x = x;
     this->y = y;
 }
@@ -16,6 +12,11 @@ Vector2D::Vector2D(int x, int y) {
 Vector2D::Vector2D(const Vector2D& copy) {
     this->x = copy.x;
     this->y = copy.y;
+}
+
+//RHS normal of a vector
+Vector2D Vector2D::normal() {
+    return Vector2D(-y, x);
 }
 
 Vector2D Vector2D::normalize() {
@@ -28,14 +29,16 @@ Vector2D Vector2D::normalize() {
     return temp;
 }
 
-int Vector2D::dot(Vector2D rhs) {
-    return x*rhs.x + y*rhs.y;
+double Vector2D::dot(Vector2D rhs) {
+    return (x*rhs.x) + (y*rhs.y);
 }
 
-Vector2D Vector2D::project(Vector2D line) {
+Vector2D Vector2D::project(Vector2D axis) {
     Vector2D projection;
-    projection.x = (dot(line) / (line.x * line.x + line.y*line.y)) * line.x;
-    projection.x = (dot(line) / (line.x * line.x + line.y*line.y)) * line.y;
+    double dotP = dot(axis);
+
+    projection.x = (dotP / (axis.x * axis.x + axis.y * axis.y)) * axis.x;
+    projection.y = (dotP / (axis.x * axis.x + axis.y * axis.y)) * axis.y;
 
     return projection;
 }

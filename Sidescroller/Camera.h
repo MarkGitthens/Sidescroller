@@ -15,10 +15,10 @@ public:
     void setWidth(int);
     void setHeight(int);
     void setCameraRect(SDL_Rect*);
-    void setParentRect(SDL_Rect*);
+    void setParentPos(Vector2D*);
     SDL_Rect* getCameraRect();
-    SDL_Rect* getParentRect();
+    Vector2D* getParentPos();
 private:
-    SDL_Rect* mParentRect;
+    Vector2D* mParentPos;
     SDL_Rect* mCameraViewport;
 };
