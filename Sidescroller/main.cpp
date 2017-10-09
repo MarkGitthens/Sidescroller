@@ -61,10 +61,11 @@ int main(int argc, char* argv[]) {
 
     scene.setTiledMap(map);
     scene.registerEntity(player);
-    scene.registerOffScreenEntity(music);
+    //scene.registerOffScreenEntity(music);
     scene.setCamera(camera);
 
     scene.initThreads();
+    music->subscribeToEvents();
     while (!InputHandler::getInstance().actionTriggered("SDL_QUIT")) {
         InputHandler::getInstance().handleInput();
         scene.updateScene();
