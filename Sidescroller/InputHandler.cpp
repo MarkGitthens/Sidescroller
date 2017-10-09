@@ -24,6 +24,7 @@ void InputHandler::handleInput() {
             mTriggeredActions[actionName] = false;
             if (mPressedTriggeredActions[actionName] < 1)
                 mPressedTriggeredActions[actionName] = mActions[actionName];
+            EventHandler::getInstance().triggerEvent(actionName);
         }
     }
 }

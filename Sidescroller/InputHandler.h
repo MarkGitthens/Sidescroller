@@ -2,20 +2,18 @@
 #include <SDL.h>
 #include <string>
 #include <unordered_map>
-#include <vector>
 
+#include "EventHandler.h"
 #include "Entity.h"
 
 class InputHandler {
 public:
-
     static InputHandler& getInstance();
     void handleInput();
     void addKeyAction(int key, std::string tag);
     void removeKeyAction(int key);
     bool actionTriggered(std::string action);
     bool actionPressTriggered(std::string action);
-
 private:
     ~InputHandler() { if (instance) { delete instance; } instance = nullptr; }
     InputHandler() { mTriggeredActions["SDL_QUIT"] = false; }
