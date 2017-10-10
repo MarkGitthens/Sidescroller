@@ -29,6 +29,9 @@ Vector2D Vector2D::normalize() {
     return temp;
 }
 
+double Vector2D::magnitude() {
+    return sqrt(x*x + y*y);
+}
 double Vector2D::dot(Vector2D rhs) {
     return (x*rhs.x) + (y*rhs.y);
 }

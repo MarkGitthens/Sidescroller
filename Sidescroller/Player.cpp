@@ -54,7 +54,27 @@ void Player::render(SDL_Rect* cameraRect) {
 }
 
 void Player::handleCollision(std::string name, AABBCollider col) {
-    pos = pos + getProjectionVector(col);
+
+    //std::cout << mColliders.size() << std::endl;
+    while (!mColliders.empty()) {
+        //Determine the collider that provides the greatest impact on this entity
+        double greatest = 0;
+        int greatestIndex = 0;
+        for (int i = 0; i < mColliders.size(); i++) {
+            double temp = getInterArea(*mColliders.at(i));
+            std::cout << temp << " ";
+            if (i == 0) {
+                greatest = temp;
+            } else if (temp > greatest) {
+                greatestIndex = i;
+                greatest = temp;
+            }
+        }
+        std::cout << std::endl;
+        pos = pos + getProjectionVector(*mColliders.at(greatestIndex));
+        mColliders.erase(mColliders.begin() + greatestIndex);
+    }
+    //pos = pos + getProjectionVector(col);
 }
 
 void Player::updateAABB() {

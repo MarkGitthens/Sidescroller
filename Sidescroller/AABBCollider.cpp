@@ -19,6 +19,20 @@ bool AABBCollider::colliding(AABBCollider col) {
     return false;
 }
 
+void AABBCollider::addCollider(AABBCollider* collider) {
+    mColliders.push_back(collider);
+}
+
+void AABBCollider::clearColliders() {
+    mColliders.clear();
+}
+
+double AABBCollider::getInterArea(AABBCollider col) {
+    int vecX = mHalfWidth + col.mHalfWidth - abs(pos.x - col.pos.x);
+    int vecY = mHalfHeight + col.mHalfHeight - abs(pos.y - col.pos.y);
+
+    return (Vector2D(vecX, vecY).magnitude());
+}
 Vector2D AABBCollider::getProjectionVector(AABBCollider col) {
     int vecX = mHalfWidth + col.mHalfWidth - abs(pos.x - col.pos.x);
     int vecY = mHalfHeight + col.mHalfHeight - abs(pos.y - col.pos.y);

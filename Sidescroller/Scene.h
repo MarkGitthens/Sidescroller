@@ -91,13 +91,17 @@ public:
         for (auto start = mColliders.begin(); start != mColliders.end() - 1; start++) {
             for (auto j = start + 1; j != mColliders.end(); j++) {
                 if ((*start)->colliding(**j)) {
-                    Entity* tempStart = dynamic_cast<Entity*>(*start);
-                    Entity* tempJ = dynamic_cast<Entity*>(*j);
+                    //Entity* tempStart = dynamic_cast<Entity*>(*start);
+                    //Entity* tempJ = dynamic_cast<Entity*>(*j);
 
-                    (*start)->handleCollision(tempJ->getName(), **j);
-                    (*j)->handleCollision(tempStart->getName(), **start);
+                    (*start)->addCollider(*j);
+                    (*j)->addCollider(*start);
+
+                   
+                    //(*j)->handleCollision(tempStart->getName(), **start);
                 }
             }
+            (*start)->handleCollision("test", **start);
         }
     }
 

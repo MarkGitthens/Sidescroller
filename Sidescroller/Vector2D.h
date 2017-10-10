@@ -12,6 +12,7 @@ public:
     double dot(Vector2D rhs);
     Vector2D normal();
     Vector2D normalize();
+    double magnitude();
     Vector2D project(Vector2D line);
     Vector2D operator+(const Vector2D& right);
     Vector2D operator-(const Vector2D& right);

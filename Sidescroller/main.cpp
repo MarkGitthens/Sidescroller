@@ -23,6 +23,12 @@ SDL_Surface* screenSurface = nullptr;
 //Entities
 Player* player;
 Box* box;
+Box* box2;
+Box* box3;
+Box* box4;
+Box* box5;
+Box* box6;
+Box* box7;
 TiledMap* map;
 Camera* camera;
 
@@ -62,7 +68,15 @@ int main(int argc, char* argv[]) {
 
     scene.setTiledMap(map);
     scene.registerEntity(player);
+
     scene.registerEntity(box);
+    scene.registerEntity(box2);
+    scene.registerEntity(box3);
+    scene.registerEntity(box4);
+    scene.registerEntity(box5);
+    scene.registerEntity(box6);
+    scene.registerEntity(box7);
+
     //scene.registerOffScreenEntity(music);
     scene.setCamera(camera);
 
@@ -97,7 +111,7 @@ bool initializeAudio() {
 }
 
 void initializeEntities() {
-    player = new Player(64, 64, 64, 64);
+    player = new Player(64, 300, 64, 64);
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
@@ -107,6 +121,36 @@ void initializeEntities() {
     box->setName("Box");
     box->createFromPath("images/block.png");
     box->setLayer(1);
+
+    box2 = new Box(128, 0, 128, 128);
+    box2->setName("Box2");
+    box2->createFromPath("images/block.png");
+    box2->setLayer(1);
+
+    box3 = new Box(256, 0, 128, 128);
+    box3->setName("Box3");
+    box3->createFromPath("images/block.png");
+    box3->setLayer(1);
+
+    box4 = new Box(256, -128, 128, 128);
+    box4->setName("Box4");
+    box4->createFromPath("images/block.png");
+    box4->setLayer(1);
+
+    box5 = new Box(128, -256, 128, 128);
+    box5->setName("Box5");
+    box5->createFromPath("images/block.png");
+    box5->setLayer(1);
+
+    box6 = new Box(0, -256, 128, 128);
+    box6->setName("Box6");
+    box6->createFromPath("images/block.png");
+    box6->setLayer(1);
+
+    box7 = new Box(0, 80, 32, 32);
+    box7->setName("Box7");
+    box7->createFromPath("images/block.png");
+    box7->setLayer(1);
 
     map = new TiledMap(15,10,128,128);
     map->setTileSheet("images/tilesheet_complete_2X.png");
