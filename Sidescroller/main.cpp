@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
     }
     if (IMG_Init(IMG_INIT_PNG)) {
-
+        std::cerr << "SDL_Img could not be initialized!\n" << IMG_GetError() << std::endl;
     }
 
     //Initialize SDL_mixer
@@ -84,7 +84,6 @@ int main(int argc, char* argv[]) {
     music->subscribeToEvents();
 
     //Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
-    double time = 0;
     double deltaTime = 16.667;
 
     double currentTime = SDL_GetTicks();
@@ -108,7 +107,6 @@ int main(int argc, char* argv[]) {
         while (backlog >= deltaTime) {
             scene.updateScene();
             backlog -= deltaTime;
-            time += deltaTime;
             updateCounter++;
         }
         if ((currentTime - fpsTimerStart) >= 1000) {
