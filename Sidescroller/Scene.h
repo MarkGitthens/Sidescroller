@@ -70,8 +70,10 @@ public:
         }
 
         checkCollisions();
-        mCamera->update();
+        mCamera->update();       
+    }
 
+    void renderScene() {
         SDL_RenderClear(Renderer::getInstance().getRenderer());
 
         mTiledMap->render(mCamera->getCameraRect());
@@ -83,22 +85,14 @@ public:
 
         SDL_RenderPresent(Renderer::getInstance().getRenderer());
     }
-
+    //Iterate through all registered colliders and if one is colliding with another add each other to their respective
+    //collider list for further processing
     void checkCollisions() {
-
-        //mColliders[0]->colliding(*mColliders[1]);
-
-        for (auto start = mColliders.begin(); start != mColliders.end() - 1; start++) {
+        for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
             for (auto j = start + 1; j != mColliders.end(); j++) {
                 if ((*start)->colliding(**j)) {
-                    //Entity* tempStart = dynamic_cast<Entity*>(*start);
-                    //Entity* tempJ = dynamic_cast<Entity*>(*j);
-
                     (*start)->addCollider(*j);
                     (*j)->addCollider(*start);
-
-                   
-                    //(*j)->handleCollision(tempStart->getName(), **start);
                 }
             }
             (*start)->handleCollision("test", **start);

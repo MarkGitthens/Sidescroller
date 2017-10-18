@@ -3,6 +3,7 @@
 #include <iostream>
 #include "InputHandler.h"
 
+int speed = 15;
 Player::Player(int x, int y, int width, int height) {
     pos.x = x;
     pos.y = y;
@@ -18,17 +19,17 @@ void Player::update() {
 
 void Player::handleInput() {
     if (InputHandler::getInstance().actionTriggered("move_right")) {
-        mVelocity.x = 3;
+        mVelocity.x = speed;
     } else if (InputHandler::getInstance().actionTriggered("move_left")) {
-        mVelocity.x = -3;
+        mVelocity.x = -speed;
     } else {
         mVelocity.x = 0;
     }
 
     if (InputHandler::getInstance().actionTriggered("move_up")) {
-        mVelocity.y = -3;
+        mVelocity.y = -speed;
     } else if (InputHandler::getInstance().actionTriggered("move_down")) {
-        mVelocity.y = 3;
+        mVelocity.y = speed;
     } else {
         mVelocity.y = 0;
     }
@@ -54,15 +55,12 @@ void Player::render(SDL_Rect* cameraRect) {
 }
 
 void Player::handleCollision(std::string name, AABBCollider col) {
-
-    //std::cout << mColliders.size() << std::endl;
     while (!mColliders.empty()) {
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
         int greatestIndex = 0;
         for (int i = 0; i < mColliders.size(); i++) {
             double temp = getInterArea(*mColliders.at(i));
-            std::cout << temp << " ";
             if (i == 0) {
                 greatest = temp;
             } else if (temp > greatest) {
@@ -70,11 +68,9 @@ void Player::handleCollision(std::string name, AABBCollider col) {
                 greatest = temp;
             }
         }
-        std::cout << std::endl;
         pos = pos + getProjectionVector(*mColliders.at(greatestIndex));
         mColliders.erase(mColliders.begin() + greatestIndex);
     }
-    //pos = pos + getProjectionVector(col);
 }
 
 void Player::updateAABB() {

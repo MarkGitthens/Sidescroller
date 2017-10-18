@@ -82,9 +82,45 @@ int main(int argc, char* argv[]) {
 
     scene.initThreads();
     music->subscribeToEvents();
+
+    //Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
+    double time = 0;
+    double deltaTime = 16.667;
+
+    double currentTime = SDL_GetTicks();
+    double backlog = 0;
+
+    int fpsCounter = 0;
+    int updateCounter = 0;
+
+    double fpsTimerStart = SDL_GetTicks();
+    double updateTimerStart = SDL_GetTicks();
+
     while (!InputHandler::getInstance().actionTriggered("SDL_QUIT")) {
+        double newTime = SDL_GetTicks();
+        double frameTime = newTime - currentTime;
+
+        currentTime = newTime;
+        backlog += frameTime;
+
         InputHandler::getInstance().handleInput();
-        scene.updateScene();
+
+        while (backlog >= deltaTime) {
+            scene.updateScene();
+            backlog -= deltaTime;
+            time += deltaTime;
+            updateCounter++;
+        }
+        if ((currentTime - fpsTimerStart) >= 1000) {
+            std::cout << fpsCounter << " " << updateCounter << std::endl;
+            fpsCounter = 0;
+            updateCounter = 0;
+            fpsTimerStart = currentTime;
+            updateTimerStart = currentTime;
+        }
+
+        scene.renderScene();
+        fpsCounter++;
     }
 
     shutdown();
@@ -147,7 +183,7 @@ void initializeEntities() {
     box6->createFromPath("images/block.png");
     box6->setLayer(1);
 
-    box7 = new Box(0, 80, 32, 32);
+    box7 = new Box(0, 74, 10, 10);
     box7->setName("Box7");
     box7->createFromPath("images/block.png");
     box7->setLayer(1);
