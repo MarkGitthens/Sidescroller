@@ -28,14 +28,14 @@ void AABBCollider::clearColliders() {
 }
 
 double AABBCollider::getInterArea(AABBCollider col) {
-    int vecX = mHalfWidth + col.mHalfWidth - abs(pos.x - col.pos.x);
-    int vecY = mHalfHeight + col.mHalfHeight - abs(pos.y - col.pos.y);
+    double vecX = mHalfWidth + col.mHalfWidth - abs(pos.x - col.pos.x);
+    double vecY = mHalfHeight + col.mHalfHeight - abs(pos.y - col.pos.y);
 
     return (Vector2D(vecX, vecY).magnitude());
 }
 Vector2D AABBCollider::getProjectionVector(AABBCollider col) {
-    int vecX = mHalfWidth + col.mHalfWidth - abs(pos.x - col.pos.x);
-    int vecY = mHalfHeight + col.mHalfHeight - abs(pos.y - col.pos.y);
+    double vecX = mHalfWidth + col.mHalfWidth - abs(pos.x - col.pos.x);
+    double vecY = mHalfHeight + col.mHalfHeight - abs(pos.y - col.pos.y);
 
     if (vecX <= vecY) {
         return Vector2D((pos.x < col.pos.x) ? -vecX : vecX , 0);

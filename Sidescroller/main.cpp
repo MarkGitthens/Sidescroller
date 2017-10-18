@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
         //error
         std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
     }
-    if (IMG_Init(IMG_INIT_PNG)) {
+    if (IMG_Init(IMG_INIT_PNG) < 0) {
         std::cerr << "SDL_Img could not be initialized!\n" << IMG_GetError() << std::endl;
     }
 
