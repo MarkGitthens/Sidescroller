@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include <SDL.h>
 #include "Vector2D.h"
 #include "Entity.h"

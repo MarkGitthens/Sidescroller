@@ -78,6 +78,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
+    <ClCompile Include="SceneHandler.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderable.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="TiledMap.h">
       <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneHandler.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

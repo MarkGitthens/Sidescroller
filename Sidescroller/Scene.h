@@ -49,6 +49,9 @@ public:
         }
     }
 
+    void setName(std::string name) {
+        mSceneName = name;
+    }
     void setCamera(Camera* camera) {
         mCamera = camera;
     }
@@ -62,7 +65,7 @@ public:
         }
     }
     Entity* getEntity(char* name) { return mEntityMap[name]; }
-    const char* getName() { return mSceneName.c_str(); }
+    std::string getName() { return mSceneName.c_str(); }
 
     void updateScene() {
         for (std::pair<char*, Entity*> e : mEntityMap) {

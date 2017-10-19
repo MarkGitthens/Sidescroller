@@ -173,6 +173,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="SceneHandler.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneHandler.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TiledMap.h" />

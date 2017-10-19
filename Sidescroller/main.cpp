@@ -4,6 +4,7 @@
 #include "SDL_mixer.h"
 
 #include "InputHandler.h"
+#include "SceneHandler.h"
 
 #include "Player.h"
 #include "Box.h"
@@ -66,6 +67,7 @@ int main(int argc, char* argv[]) {
     initializeAudio();
     registerInputs();
 
+    scene.setName("start");
     scene.setTiledMap(map);
     scene.registerEntity(player);
 
@@ -82,7 +84,15 @@ int main(int argc, char* argv[]) {
 
     scene.initThreads();
     music->subscribeToEvents();
+    
+    Scene testScene;
+    testScene.setName("test_scene");
+    testScene.registerEntity(player);
+    testScene.setCamera(camera);
+    testScene.setTiledMap(map);
 
+    SceneHandler::getInstance().registerScene(&scene);
+    SceneHandler::getInstance().registerScene(&testScene);
     //Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
     double deltaTime = 16.667;
 
@@ -104,8 +114,10 @@ int main(int argc, char* argv[]) {
 
         InputHandler::getInstance().handleInput();
 
+        if (InputHandler::getInstance().actionPressTriggered("test_scene"))
+            SceneHandler::getInstance().changeScene("test_scene");
         while (backlog >= deltaTime) {
-            scene.updateScene();
+            SceneHandler::getInstance().getCurrentScene()->updateScene();
             backlog -= deltaTime;
             updateCounter++;
         }
@@ -117,7 +129,7 @@ int main(int argc, char* argv[]) {
             updateTimerStart = currentTime;
         }
 
-        scene.renderScene();
+        SceneHandler::getInstance().getCurrentScene()->renderScene();
         fpsCounter++;
     }
 
@@ -207,6 +219,7 @@ void registerInputs() {
     InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
     InputHandler::getInstance().addKeyAction(SDLK_UP, "move_up");
     InputHandler::getInstance().addKeyAction(SDLK_DOWN, "move_down");
+    InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
     InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
     InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());
     InputHandler::getInstance().addKeyAction(SDLK_EQUALS, music->getVolumeHigherActionName());
