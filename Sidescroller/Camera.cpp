@@ -11,11 +11,10 @@ Camera::~Camera() {
 }
 
 void Camera::update() {
-    //Update the viewport to center on the parent rectangle;
-
     //Centers the camera to the center of the Parent and the screen.
-    mCameraViewport->x = (mParentPos->x / 2) - mCameraViewport->w/2;
-    mCameraViewport->y = (mParentPos->y / 2) - mCameraViewport->h/2;
+    mCameraViewport->x = (mParentPos->x) - mCameraViewport->w/2;
+    mCameraViewport->y = (mParentPos->y) - mCameraViewport->h/2;
+    
 }
 
 void Camera::setX(int x) {

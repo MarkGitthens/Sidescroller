@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "SDL_mixer could not initialize!\n" << Mix_GetError() << std::endl;
     }
 
-    window = SDL_CreateWindow("Sidescroller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("Sidescroller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
     Renderer::getInstance().init(window, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
@@ -195,8 +195,8 @@ void initializeEntities() {
     SDL_Rect* cameraRect = new SDL_Rect();
     cameraRect->x = 0;
     cameraRect->y = 0;
-    cameraRect->w = 1920;
-    cameraRect->h = 1080;
+    cameraRect->w = 1280;
+    cameraRect->h = 720;
     camera->setCameraRect(cameraRect);
     camera->setParentPos(player->getPos());
 }
