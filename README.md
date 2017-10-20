@@ -4,3 +4,5 @@ This is a sample project being used to learn more about creating a custom 2d gam
 -SDL2 (tested with 2.0.5)
 
 -SDL2_image (tested with 2.0.1)
+
+-SDL2_mixer
