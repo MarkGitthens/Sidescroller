@@ -12,7 +12,6 @@ Player::Player(int x, int y, int width, int height) {
     mHalfHeight = height/2;
 
 	EventHandler::getInstance().listenEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
-	std::cout << "Registered fire_bullet" << std::endl;
 }
 void Player::update() {
     handleInput();
@@ -40,11 +39,11 @@ void Player::handleInput() {
 }
 
 void Player::fireBullet(int val) {
-	std::cout << "firing bullet" << std::endl;
 	Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10,0));
 	bullet->createFromPath("images/block.png");
 	bullet->setName("bullet");
-
+	bullet->setLayer(1);
+	bullet->setTrigger(true);
 	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
 }
 
