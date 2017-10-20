@@ -8,8 +8,8 @@ class Box : public Entity, public AABBCollider, public Renderable {
 public:
     Box(): mTexture(nullptr) {};
     Box(int x, int y, int w, int h) {
-        pos.x = x;
-        pos.y = y;
+        mPos.x = x;
+        mPos.y = y;
 
         mHalfHeight = h/2;
         mHalfWidth = w/2;

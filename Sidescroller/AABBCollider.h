@@ -2,6 +2,9 @@
 #include "Vector2D.h"
 #include <string>
 #include <vector>
+
+using std::string;
+using std::vector;
 class AABBCollider {
 public:
     AABBCollider() {}
@@ -9,7 +12,7 @@ public:
 
     bool colliding(AABBCollider);
     //Get the list of AABBColliders that are colliding with this collider.
-    std::vector<AABBCollider*> getColliders();
+    vector<AABBCollider*> getColliders();
     //Register a new currently colliding objects.
     void addCollider(AABBCollider*);
     //Clear the list of currently colliding objects. 
@@ -18,18 +21,18 @@ public:
     double getInterArea(AABBCollider);
     //Returns a vector defining how far this object is colliding into the collider.
     Vector2D getProjectionVector(AABBCollider);
-    //Get the position of this collider.
+    //Get the mPosition of this collider.
     Vector2D* getPos();
     //Returns true if this collider is a trigger
     bool isTrigger();
     //Set this collider to be a trigger or not
     void setTrigger(bool);
 
-    virtual void handleCollision(std::string, AABBCollider) {};
+    virtual void handleCollision(string, AABBCollider) {};
     virtual void updateAABB() {};
 protected:
-    std::vector<AABBCollider*> mColliders;
-    Vector2D pos;
+    vector<AABBCollider*> mColliders;
+    Vector2D mPos;
     int mHalfWidth;
     int mHalfHeight;
 

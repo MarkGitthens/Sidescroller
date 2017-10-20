@@ -19,6 +19,8 @@ public:
     virtual void render(SDL_Rect*);
 
     void setPosition(int x, int y);
+
+	void fireBullet(int);
 private:
     Vector2D mVelocity;
 };

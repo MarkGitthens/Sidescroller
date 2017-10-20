@@ -1,20 +1,24 @@
 #include "Player.h"
 #include <string>
 #include <iostream>
+#include "Projectile.h"
 #include "InputHandler.h"
-
+#include "SceneHandler.h"
 int speed = 15;
 Player::Player(int x, int y, int width, int height) {
-    pos.x = x;
-    pos.y = y;
+    mPos.x = x;
+    mPos.y = y;
     mHalfWidth = width/2;
     mHalfHeight = height/2;
+
+	EventHandler::getInstance().listenEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
+	std::cout << "Registered fire_bullet" << std::endl;
 }
 void Player::update() {
     handleInput();
 
-    pos.x += mVelocity.x;
-    pos.y += mVelocity.y;
+    mPos.x += mVelocity.x;
+    mPos.y += mVelocity.y;
 }
 
 void Player::handleInput() {
@@ -35,20 +39,29 @@ void Player::handleInput() {
     }
 }
 
+void Player::fireBullet(int val) {
+	std::cout << "firing bullet" << std::endl;
+	Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10,0));
+	bullet->createFromPath("images/block.png");
+	bullet->setName("bullet");
+
+	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
+}
+
 void Player::setPosition(int x, int y) {
     mRect.x = x;
     mRect.y = y;
 
-    pos.x = x;
-    pos.y = y;
+    mPos.x = x;
+    mPos.y = y;
     mHalfHeight = 32;
     mHalfWidth = 32;
 }
 
 void Player::render(SDL_Rect* cameraRect) {
     SDL_Rect destRect;
-    destRect.x = pos.x - mHalfWidth - cameraRect->x;
-    destRect.y = pos.y - mHalfHeight - cameraRect->y;
+    destRect.x = mPos.x - mHalfWidth - cameraRect->x;
+    destRect.y = mPos.y - mHalfHeight - cameraRect->y;
     destRect.w = mHalfWidth * 2;
     destRect.h = mHalfHeight * 2;
     Renderer::getInstance().drawTexture(getTexture(), &destRect);
@@ -73,12 +86,12 @@ void Player::handleCollision(std::string name, AABBCollider col) {
                 greatest = temp;
             }
         }
-        pos = pos + getProjectionVector(*mColliders.at(greatestIndex));
+        mPos = mPos + getProjectionVector(*mColliders.at(greatestIndex));
         mColliders.erase(mColliders.begin() + greatestIndex);
     }
 }
 
 void Player::updateAABB() {
-    pos.x = mRect.x + mHalfWidth;
-    pos.y = mRect.y + mHalfHeight;
+    mPos.x = mRect.x + mHalfWidth;
+    mPos.y = mRect.y + mHalfHeight;
 }   
