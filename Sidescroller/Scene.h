@@ -19,14 +19,15 @@ using std::unordered_map;
 class Scene {
 public:
     Scene() : mSceneName("default") {};
-    Scene(const char* name) : mSceneName(name) {};
-    Scene(const char* name, SDL_Rect world) : mSceneName(name), mWorldSpace(world) {};
+    Scene(const string name) : mSceneName(name) {};
+    Scene(const string name, SDL_Rect world) : mSceneName(name), mWorldSpace(world) {};
     Scene(const Scene& old) : mSceneName(old.mSceneName), mWorldSpace(old.mWorldSpace), mEntityMap(old.mEntityMap) {};
     ~Scene() {
         stopThreads();
         mBackgroundThread.join();
     };
 
+    //Register a new entity for use in the scene
     void registerEntity(Entity* entity) { 
         Renderable* temp = dynamic_cast<Renderable*>(entity);
         mEntityMap[entity->getName()] = entity;
@@ -43,6 +44,7 @@ public:
         }
     }
 
+    //Register an entity that should be tracked on a seperate thread
     void registerOffScreenEntity(Entity* entity) {
         if (entity != nullptr) {
             mOffScreenEntityMap[entity->getName()] = entity;
@@ -68,7 +70,7 @@ public:
     std::string getName() { return mSceneName.c_str(); }
 
     void updateScene() {
-        for (std::pair<char*, Entity*> e : mEntityMap) {
+        for (std::pair<string, Entity*> e : mEntityMap) {
             e.second->update();
         }
 
@@ -76,6 +78,7 @@ public:
         mCamera->update();       
     }
 
+    //Render all renderable entities in the scene.
     void renderScene() {
         SDL_RenderClear(Renderer::getInstance().getRenderer());
 
@@ -116,14 +119,11 @@ public:
     // Thread function to run in the background to handle updating the off-screen entities
     void updateOffScreen() {
         while (mRunning) {
-            for (std::pair<char*, Entity*> e : mOffScreenEntityMap) {
+            for (std::pair<string, Entity*> e : mOffScreenEntityMap) {
                 e.second->update();
             }
         }
     }
-
-    void clearRenderList();
-    void registerRenderable(Renderable*);
 
 private:
     string mSceneName;
@@ -132,11 +132,11 @@ private:
 
     TiledMap* mTiledMap;
     std::vector<std::vector<Renderable*>> mRenderList;
-    unordered_map<char*, Entity*> mEntityMap;
+    unordered_map<string, Entity*> mEntityMap;
 
     std::vector<AABBCollider*> mColliders;
     // seperate thread from render
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;
-    unordered_map<char*, Entity*> mOffScreenEntityMap;
+    unordered_map<string, Entity*> mOffScreenEntityMap;
 };

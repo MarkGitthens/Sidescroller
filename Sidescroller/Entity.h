@@ -1,34 +1,23 @@
 #pragma once
 #include "Vector2D.h"
+#include <string>
+using std::string;
 class Entity {
 public:
-    Entity() : mID(0) {
-        mName = nullptr;
-    };
-    Entity(char* name) : mName(name) {};
+    Entity() : mID(0) {};
+    Entity(string name) : mName(name) {};
 
-    ~Entity() {
-        if (mName) {
-            delete mName;
-            mName = nullptr; 
-        } 
-        if (mType) { 
-            delete mType;
-            mType = nullptr; 
-        }
-    }
+    ~Entity() {}
 
     virtual void update() = 0;
     void setID(int id) { mID = id; }
-    void setName(char* name) { mName = name; }
-    void setType(char* type) { mType = type; }
+    void setName(string name) { mName = name; }
 
     int getID() { return mID; }
-    char* getName() { return mName; }
-    char* getType() { return mType; }
+    string getName() { return mName; }
+    
 private:
     Vector2D* mPosition;
     int mID;
-    char* mName;
-    char* mType;
+    string mName;
 };

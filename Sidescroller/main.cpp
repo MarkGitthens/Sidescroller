@@ -79,7 +79,6 @@ int main(int argc, char* argv[]) {
     scene.registerEntity(box6);
     scene.registerEntity(box7);
 
-    //scene.registerOffScreenEntity(music);
     scene.setCamera(camera);
 
     scene.initThreads();

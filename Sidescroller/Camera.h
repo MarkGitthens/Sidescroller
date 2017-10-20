@@ -8,7 +8,7 @@ class Camera : public Entity {
 public:
     Camera();
     ~Camera();
-
+    
     void update();
     
     void setX(int);
