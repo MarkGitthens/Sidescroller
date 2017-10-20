@@ -164,6 +164,7 @@ void initializeEntities() {
 
     box = new Box(0, 0, 128, 128);
     box->setName("Box");
+    box->setTrigger(true);
     box->createFromPath("images/block.png");
     box->setLayer(1);
 
@@ -190,6 +191,7 @@ void initializeEntities() {
     box6 = new Box(0, -256, 128, 128);
     box6->setName("Box6");
     box6->createFromPath("images/block.png");
+    box6->setTrigger(true);
     box6->setLayer(1);
 
     box7 = new Box(0, 74, 10, 10);

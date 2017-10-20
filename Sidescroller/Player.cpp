@@ -56,6 +56,11 @@ void Player::render(SDL_Rect* cameraRect) {
 
 void Player::handleCollision(std::string name, AABBCollider col) {
     while (!mColliders.empty()) {
+        //Skip collision resolution if we are colliding with a trigger
+        if (mColliders.at(0)->isTrigger()) {
+            mColliders.erase(mColliders.begin());
+            continue;   
+        }
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
         int greatestIndex = 0;

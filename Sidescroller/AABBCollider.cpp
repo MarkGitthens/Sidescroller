@@ -43,3 +43,12 @@ Vector2D AABBCollider::getProjectionVector(AABBCollider col) {
         return Vector2D(0, (pos.y < col.pos.y) ? -vecY : vecY);
     }
 }
+
+bool AABBCollider::isTrigger() {
+    return trigger;
+}
+
+void AABBCollider::setTrigger(bool val) {
+    trigger = val;
+}
+

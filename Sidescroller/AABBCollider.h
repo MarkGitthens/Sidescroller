@@ -20,7 +20,11 @@ public:
     Vector2D getProjectionVector(AABBCollider);
     //Get the position of this collider.
     Vector2D* getPos();
-    
+    //Returns true if this collider is a trigger
+    bool isTrigger();
+    //Set this collider to be a trigger or not
+    void setTrigger(bool);
+
     virtual void handleCollision(std::string, AABBCollider) {};
     virtual void updateAABB() {};
 protected:
@@ -28,4 +32,6 @@ protected:
     Vector2D pos;
     int mHalfWidth;
     int mHalfHeight;
+
+    bool trigger = false;
 };
