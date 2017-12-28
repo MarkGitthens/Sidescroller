@@ -20,5 +20,4 @@ private:
 	int x, y;
     int mID;
     string mName;
-	//vector<Component> mComponents;
 };

@@ -9,13 +9,11 @@
 class InputHandler {
 public:
     static InputHandler& getInstance();
-    //Handle input events given from SDL
+
     void handleInput();
     //Register a key press to some plain text tag
     void addKeyAction(int key, std::string tag);
-    //Remove a mapped key
     void removeKeyAction(int key);
-    //Check if some key action is currently being triggered
     bool actionTriggered(std::string action);
     bool actionPressTriggered(std::string action);
 private:
