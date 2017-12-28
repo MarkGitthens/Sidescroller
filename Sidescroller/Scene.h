@@ -34,7 +34,11 @@ public:
         }
         string name = entity->getName();
 
-        mEntityMap[entity->getName()] = entity;
+        if (mEntityMap.find(name) != mEntityMap.end()) {
+            removeEntity(name);
+        }
+
+        mEntityMap[name] = entity;
         Renderable* temp = dynamic_cast<Renderable*>(entity);
         if (temp) {
             mRenderMap[name] = temp;
@@ -57,31 +61,26 @@ public:
         }
     }
 
-    void removeEntity(string name) {
-        if (mTriggers.find(name) != mTriggers.end()) {
-            mTriggers.erase(name);
-        }
-        if (mColliders.find(name) != mColliders.end()) {
-            mColliders.erase(name);
-        }
-        if (mRenderMap.find(name) != mRenderMap.end()) {
-            mRenderMap.erase(name);
-        }
+    void deleteEntity(string name) {
         if (mEntityMap.find(name) != mEntityMap.end()) {
-            delete mEntityMap.find(name)->second;
-            mEntityMap.find(name)->second = nullptr;
-            mEntityMap.erase(name);
+            mDeletedEntities.emplace_back(name);
         }
     }
+    
 
     void updateScene() {
         for (std::pair<string, Entity*> e : mEntityMap) {
-            if (e.second == nullptr)
-                continue;
              e.second->update();
         }
 
         checkCollisions();
+        
+        auto deleteIterator = mDeletedEntities.begin();
+        while (deleteIterator != mDeletedEntities.end()) {
+            removeEntity(*deleteIterator);
+            deleteIterator = mDeletedEntities.erase(deleteIterator);
+        }
+
         mCamera->update();
     }
 
@@ -89,8 +88,6 @@ public:
     void updateOffScreen() {
         while (mRunning) {
             for (std::pair<string, Entity*> e : mOffScreenEntityMap) {
-                if (e.second == nullptr)
-                    continue;
                 e.second->update();
             }
         }
@@ -124,8 +121,10 @@ public:
             (*start).second->handleCollisions();
 
             for (auto j = mTriggers.begin(); j != mTriggers.end(); j++) {
-                if ((*start).second->colliding(*(*j).second))
+                if ((*start).second->colliding(*(*j).second)) {
                     (*start).second->handleTrigger(dynamic_cast<Entity*>((*j).second)->getName());
+                    (*j).second->addCollider((*start).second);
+                }
             }
         }
     }
@@ -166,14 +165,33 @@ private:
     Camera* mCamera;
 
     TiledMap* mTiledMap;
+
     unordered_map<string, Renderable*> mRenderMap;
     unordered_map<string, Entity*> mEntityMap;
-
     unordered_map<string, AABBCollider*> mColliders;
     unordered_map<string, AABBCollider*> mTriggers;
+
+    std::vector<string> mDeletedEntities;
 
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;
 
     unordered_map<string, Entity*> mOffScreenEntityMap;
+
+    void removeEntity(string name) {
+        if (mTriggers.find(name) != mTriggers.end()) {
+            mTriggers.erase(name);
+        }
+        if (mColliders.find(name) != mColliders.end()) {
+            mColliders.erase(name);
+        }
+        if (mRenderMap.find(name) != mRenderMap.end()) {
+            mRenderMap.erase(name);
+        }
+        if (mEntityMap.find(name) != mEntityMap.end()) {
+            delete mEntityMap.find(name)->second;
+            mEntityMap.find(name)->second = nullptr;
+            mEntityMap.erase(name);
+        }
+    }
 };
