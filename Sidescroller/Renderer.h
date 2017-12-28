@@ -28,7 +28,6 @@ private:
 
     Renderer(Renderer const&) {}
     Renderer& operator=(Renderer const& e) {}
-    //TODO: Possible memory leak
     ~Renderer() { 
         if (instance) { 
             delete instance; 

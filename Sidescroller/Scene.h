@@ -26,6 +26,8 @@ public:
         stopThreads();
         //This causes a crash
         mBackgroundThread.join();
+        delete mCamera;
+        delete mTiledMap;
     };
 
     void registerEntity(Entity* entity) {
