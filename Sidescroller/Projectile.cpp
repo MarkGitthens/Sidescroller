@@ -1,5 +1,8 @@
 #include "Projectile.h"
 #include "SceneHandler.h"
+
+Projectile::~Projectile() {
+}
 void Projectile::update() {
     handleCollisions();
 	mPos = mPos + mVelocity;
@@ -16,7 +19,6 @@ void Projectile::render(SDL_Rect* offset) {
 void Projectile::handleCollisions() {
     for (auto c : mColliders) {
         if (dynamic_cast<Entity*>(c)->getName() == "Box2") {
-            std::cout << "Deleting projectile" << std::endl;
             SceneHandler::getInstance().getCurrentScene()->deleteEntity(getName());
         }
     }

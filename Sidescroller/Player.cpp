@@ -89,7 +89,6 @@ void Player::handleCollisions() {
 }
 
 void Player::handleTrigger(std::string name) {
-    std::cout << "Triggering " << name << "\n";
 }
 
 void Player::updateAABB() {

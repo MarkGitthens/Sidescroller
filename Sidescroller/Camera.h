@@ -7,7 +7,7 @@
 class Camera : public Entity {
 public:
     Camera();
-    ~Camera();
+    virtual ~Camera();
     
     void update();
     

@@ -9,7 +9,7 @@ class AABBCollider {
 public:
     AABBCollider() {}
     AABBCollider(double, double, int, int);
-	~AABBCollider();
+	virtual ~AABBCollider();
     bool colliding(AABBCollider);
 
     vector<AABBCollider*> getColliders();

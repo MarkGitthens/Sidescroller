@@ -10,6 +10,7 @@ AABBCollider::AABBCollider(double x, double y, int w, int h) {
 
 AABBCollider::~AABBCollider() {
 	mColliders.clear();
+    //std::cout << "destroying aabb" << std::endl;
 }
 Vector2D* AABBCollider::getPos() {
     return &mPos;

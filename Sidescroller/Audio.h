@@ -10,7 +10,7 @@
 class Music : public Entity {
 public:
     Music(char* name);
-    ~Music();
+    virtual ~Music();
     void update();
     void subscribeToEvents();
     void handleInput();

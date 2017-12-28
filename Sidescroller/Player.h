@@ -9,7 +9,6 @@ class Player : public Entity, public AABBCollider, public Renderable {
 public:
     Player() : mVelocity(0, 0){}
     Player(int, int, int, int);
-    ~Player();
     virtual void update();
     void handleInput();
 

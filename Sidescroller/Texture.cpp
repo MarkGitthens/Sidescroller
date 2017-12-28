@@ -1,15 +1,16 @@
 #include "Texture.h"
 #include <iostream>
 #include "Renderer.h"
+#include "SDL.h"
 Texture::Texture() {
     mTexture = nullptr;
     mWidth = mHeight = 0;
 }
 Texture::~Texture() {
     mWidth = mHeight = 0;
+    std::cout << "destroying Texture" << std::endl;
     if (mTexture) {
-        delete mTexture;
-        mTexture = nullptr;
+        SDL_DestroyTexture(mTexture);
     }
 }
 Texture::Texture(SDL_Texture* texture) {
