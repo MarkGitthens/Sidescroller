@@ -209,7 +209,7 @@ void initializeEntities() {
 
 void registerInputs() {
     InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
-	EventHandler::getInstance().listenEvent("quit_game", "main", std::bind(quitGame, std::placeholders::_1));
+	EventHandler::getInstance().subscribeToEvent("quit_game", "main", std::bind(quitGame, std::placeholders::_1));
     InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
     InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
     InputHandler::getInstance().addKeyAction(SDLK_UP, "move_up");

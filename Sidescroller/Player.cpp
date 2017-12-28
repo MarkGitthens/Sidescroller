@@ -12,7 +12,7 @@ Player::Player(int x, int y, int width, int height) {
     mHalfHeight = height/2;
 
     //TODO: The engine is not setup to support multithreading properly as of right now. Because of this random crashes are occuring due to pointers being modified and deleted when calling this event
-	EventHandler::getInstance().listenEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
+	EventHandler::getInstance().subscribeToEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
 }
 void Player::update() {
     handleInput();

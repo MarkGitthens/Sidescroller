@@ -24,6 +24,7 @@ public:
     Scene(const Scene& old) : mSceneName(old.mSceneName), mWorldSpace(old.mWorldSpace), mEntityMap(old.mEntityMap) {};
     ~Scene() {
         stopThreads();
+        //This causes a crash
         mBackgroundThread.join();
     };
 
@@ -170,8 +171,9 @@ private:
 
     unordered_map<string, AABBCollider*> mColliders;
     unordered_map<string, AABBCollider*> mTriggers;
-    // seperate thread from render
+
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;
+
     unordered_map<string, Entity*> mOffScreenEntityMap;
 };
