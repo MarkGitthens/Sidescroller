@@ -4,7 +4,7 @@
 #include "Projectile.h"
 #include "InputHandler.h"
 #include "SceneHandler.h"
-int speed = 15;
+const int speed = 8;
 Player::Player(int x, int y, int width, int height) {
     mPos.x = x;
     mPos.y = y;
@@ -43,9 +43,9 @@ void Player::handleInput() {
 }
 
 void Player::fireBullet(int val) {
-	Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10,0));
+    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
 	bullet->createFromPath("images/block.png");
-	bullet->setName("bullet"); 
+	bullet->setName("player_bullet"); 
 	bullet->setTrigger(true);
 	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
 }
@@ -69,13 +69,8 @@ void Player::render(SDL_Rect* cameraRect) {
     Renderer::getInstance().drawTexture(getTexture(), &destRect);
 }
 
-void Player::handleCollision(std::string name, AABBCollider col) {
+void Player::handleCollisions() {
     while (!mColliders.empty()) {
-        //Skip collision resolution if we are colliding with a trigger
-        if (mColliders.at(0)->isTrigger()) {
-            mColliders.erase(mColliders.begin());
-            continue;   
-        }
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
         int greatestIndex = 0;
@@ -91,6 +86,10 @@ void Player::handleCollision(std::string name, AABBCollider col) {
         mPos = mPos + getProjectionVector(*mColliders.at(greatestIndex));
         mColliders.erase(mColliders.begin() + greatestIndex);
     }
+}
+
+void Player::handleTrigger(std::string name) {
+    std::cout << "Triggering " << name << "\n";
 }
 
 void Player::updateAABB() {

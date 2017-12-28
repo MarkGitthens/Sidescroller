@@ -12,6 +12,6 @@ void Projectile::render(SDL_Rect* offset) {
 	destRect.h = mHalfHeight * 2;
 	Renderer::getInstance().drawTexture(mImage, &destRect);
 }
-void Projectile::handleCollision() {
+void Projectile::handleCollisions() {
 
 }

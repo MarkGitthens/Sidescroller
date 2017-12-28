@@ -27,8 +27,10 @@ public:
         mBackgroundThread.join();
     };
 
-    //Register a new entity for use in the scene
     void registerEntity(Entity* entity) {
+        if (entity == nullptr) {
+            return;
+        }
         string name = entity->getName();
 
         mEntityMap[entity->getName()] = entity;
@@ -40,7 +42,10 @@ public:
 
         AABBCollider* tempCollider = dynamic_cast<AABBCollider*>(entity);
         if (tempCollider) {
-            mColliders[name] = (dynamic_cast<AABBCollider*>(entity));
+            if (tempCollider->isTrigger())
+                mTriggers[name] = tempCollider;
+            else
+                mColliders[name] = tempCollider;
         }
     }
 
@@ -48,6 +53,72 @@ public:
     void registerOffScreenEntity(Entity* entity) {
         if (entity != nullptr) {
             mOffScreenEntityMap[entity->getName()] = entity;
+        }
+    }
+
+    void removeEntity(string name) {
+        if (mEntityMap.find(name) != mEntityMap.end()) {
+            mEntityMap.erase(name);
+        }
+        if (mRenderMap.find(name) != mRenderMap.end()) {
+            mRenderMap.erase(name);
+        }
+
+        if (mColliders.find(name) != mColliders.end()) {
+            mColliders.erase(name);
+        }
+        if (mTriggers.find(name) != mTriggers.end()) {
+            mTriggers.erase(name);
+        }
+    }
+
+    void updateScene() {
+        for (std::pair<string, Entity*> e : mEntityMap) {
+            e.second->update();
+        }
+
+        checkCollisions();
+        mCamera->update();
+    }
+
+    // Thread function to run in the background to handle updating the off-screen entities
+    void updateOffScreen() {
+        while (mRunning) {
+            for (std::pair<string, Entity*> e : mOffScreenEntityMap) {
+                e.second->update();
+            }
+        }
+    }
+
+    void renderScene() {
+        SDL_RenderClear(Renderer::getInstance().getRenderer());
+
+        mTiledMap->render(mCamera->getCameraRect());
+
+        for (std::pair<string, Renderable*> r : mRenderMap) {
+            r.second->render(mCamera->getCameraRect());
+        }
+
+        SDL_RenderPresent(Renderer::getInstance().getRenderer());
+    }
+
+    //Checks for "physical" collisions, then collisions against triggers.
+    void checkCollisions() {
+        for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
+            for (auto j = start; j != mColliders.end(); ++j) {
+                if (start != j) {
+                    if ((*start).second->colliding(*(*j).second)) {
+                        (*start).second->addCollider((*j).second);
+                        (*j).second->addCollider((*start).second);
+                    }
+                }
+            }
+            (*start).second->handleCollisions();
+
+            for (auto j = mTriggers.begin(); j != mTriggers.end(); j++) {
+                if ((*start).second->colliding(*(*j).second))
+                    (*start).second->handleTrigger(dynamic_cast<Entity*>((*j).second)->getName());
+            }
         }
     }
 
@@ -61,55 +132,13 @@ public:
     void setTiledMap(TiledMap* tiledMap) {
         mTiledMap = tiledMap;
     }
-    void removeEntity(char* name) {
-        if (mEntityMap.find(name) != mEntityMap.end()) {
-            mEntityMap.erase(name);
-        }
-        if (mRenderMap.find(name) != mRenderMap.end()) {
-            mRenderMap.erase(name);
-        }
-        if (mColliders.find(name) != mColliders.end()) {
-            mColliders.erase(name);
-        }
+
+    Entity* getEntity(char* name) { 
+        return mEntityMap[name];
     }
-    Entity* getEntity(char* name) { return mEntityMap[name]; }
-    std::string getName() { return mSceneName; }
-
-    void updateScene() {
-        for (std::pair<string, Entity*> e : mEntityMap) {
-            e.second->update();
-        }
-
-        checkCollisions();
-        mCamera->update();       
-    }
-
-    //Render all renderable entities in the scene.
-    void renderScene() {
-        SDL_RenderClear(Renderer::getInstance().getRenderer());
-
-        mTiledMap->render(mCamera->getCameraRect());
-
-        for (std::pair<string, Renderable*> r : mRenderMap) {
-            r.second->render(mCamera->getCameraRect());
-        }
-
-        SDL_RenderPresent(Renderer::getInstance().getRenderer());
-    }
-    //Iterate through all registered colliders and if one is colliding with another add each other to their respective
-    //collider list for further processing
-    void checkCollisions() {
-        for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
-            for (auto j = start; j != mColliders.end(); ++j) {
-                if (start != j) {
-                    if ((*start).second->colliding(*(*j).second)) {
-                        (*start).second->addCollider((*j).second);
-                        (*j).second->addCollider((*start).second);
-                    }
-                }
-            }
-            (*start).second->handleCollision("test", *(*start).second);
-        }
+    
+    std::string getName() { 
+        return mSceneName; 
     }
 
     // Init and start the background thread
@@ -118,19 +147,10 @@ public:
         mBackgroundThread = std::move(std::thread(&Scene::updateOffScreen, this));
     }
 
-    // Stop the background thread by setting mRunning to false
     void stopThreads() {
         mRunning = false;
     }
 
-    // Thread function to run in the background to handle updating the off-screen entities
-    void updateOffScreen() {
-        while (mRunning) {
-            for (std::pair<string, Entity*> e : mOffScreenEntityMap) {
-                e.second->update();
-            }
-        }
-    }
 
 private:
     string mSceneName;
@@ -142,6 +162,7 @@ private:
     unordered_map<string, Entity*> mEntityMap;
 
     unordered_map<string, AABBCollider*> mColliders;
+    unordered_map<string, AABBCollider*> mTriggers;
     // seperate thread from render
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;

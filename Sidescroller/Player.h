@@ -13,7 +13,8 @@ public:
     virtual void update();
     void handleInput();
 
-    virtual void handleCollision(std::string, AABBCollider);
+    virtual void handleCollisions();
+    virtual void handleTrigger(std::string);
     virtual void updateAABB();
 
     virtual void render(SDL_Rect*);

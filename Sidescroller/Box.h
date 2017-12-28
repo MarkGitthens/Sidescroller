@@ -20,7 +20,7 @@ public:
     void handleInput();
     virtual void render(SDL_Rect*);
 
-    virtual void handleCollision(std::string, AABBCollider);
+    virtual void handleCollisions();
     virtual void updateAABB();
 private:
     Texture* mTexture;

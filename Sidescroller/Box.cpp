@@ -23,7 +23,7 @@ void Box::render(SDL_Rect* camera) {
     Renderer::getInstance().drawTexture(getTexture(), &destRect);
 }
 
-void Box::handleCollision(std::string name, AABBCollider col) {
+void Box::handleCollisions() {
 
 }
 

@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
     scene.setTiledMap(map);
     scene.registerEntity(player);
 
-    scene.registerEntity(box);
+    //scene.registerEntity(box);
     scene.registerEntity(box2);
     scene.registerEntity(box3);
     scene.registerEntity(box4);
@@ -162,10 +162,10 @@ void initializeEntities() {
     player->setName("Player");
     player->createFromPath("images/ball.png");
 
-    box = new Box(0, 0, 128, 128);
-    box->setName("Box");
-    box->setTrigger(true);
-    box->createFromPath("images/block.png");
+    //box = new Box(0, 0, 128, 128);
+    //box->setName("Box");
+    //box->setTrigger(true);
+    //box->createFromPath("images/block.png");
 
     box2 = new Box(128, 0, 128, 128);
     box2->setName("Box2");
