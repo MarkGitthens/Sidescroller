@@ -8,6 +8,9 @@ AABBCollider::AABBCollider(double x, double y, int w, int h) {
     mHalfHeight = h/2;
 }
 
+AABBCollider::~AABBCollider() {
+	mColliders.clear();
+}
 Vector2D* AABBCollider::getPos() {
     return &mPos;
 }

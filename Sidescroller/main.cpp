@@ -15,11 +15,11 @@ void initializeEntities();
 bool initializeAudio();
 void registerInputs();
 void shutdown();
+void stopGame(int);
 
 //SDL specific pointers
 SDL_Window* window = nullptr;
 SDL_Surface* screenSurface = nullptr;
-
 
 //Entities
 Player* player;
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
     double fpsTimerStart = SDL_GetTicks();
     double updateTimerStart = SDL_GetTicks();
 
-    while (!InputHandler::getInstance().actionTriggered("SDL_QUIT")) {
+    while (running) {
         double newTime = SDL_GetTicks();
         double frameTime = newTime - currentTime;
 
@@ -113,8 +113,6 @@ int main(int argc, char* argv[]) {
 
         InputHandler::getInstance().handleInput();
 
-        if (InputHandler::getInstance().actionPressTriggered("test_scene"))
-            SceneHandler::getInstance().changeScene("test_scene");
         while (backlog >= deltaTime) {
             SceneHandler::getInstance().getCurrentScene()->updateScene();
             backlog -= deltaTime;
@@ -128,16 +126,19 @@ int main(int argc, char* argv[]) {
             updateTimerStart = currentTime;
         }
 
+
         SceneHandler::getInstance().getCurrentScene()->renderScene();
         fpsCounter++;
     }
 
-    shutdown();
+	shutdown();
     return 0;
 }
 
+void quitGame(int a) {
+	running = false;
+}
 void shutdown() {
-    scene.stopThreads();
     SDL_FreeSurface(screenSurface);
     screenSurface = nullptr;
 
@@ -160,44 +161,36 @@ void initializeEntities() {
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
-    player->setLayer(1);
 
     box = new Box(0, 0, 128, 128);
     box->setName("Box");
     box->setTrigger(true);
     box->createFromPath("images/block.png");
-    box->setLayer(1);
 
     box2 = new Box(128, 0, 128, 128);
     box2->setName("Box2");
     box2->createFromPath("images/block.png");
-    box2->setLayer(1);
 
     box3 = new Box(256, 0, 128, 128);
     box3->setName("Box3");
     box3->createFromPath("images/block.png");
-    box3->setLayer(1);
 
     box4 = new Box(256, -128, 128, 128);
     box4->setName("Box4");
     box4->createFromPath("images/block.png");
-    box4->setLayer(1);
 
     box5 = new Box(128, -256, 128, 128);
     box5->setName("Box5");
     box5->createFromPath("images/block.png");
-    box5->setLayer(1);
 
     box6 = new Box(0, -256, 128, 128);
     box6->setName("Box6");
     box6->createFromPath("images/block.png");
     box6->setTrigger(true);
-    box6->setLayer(1);
 
     box7 = new Box(0, 74, 10, 10);
     box7->setName("Box7");
     box7->createFromPath("images/block.png");
-    box7->setLayer(1);
 
     map = new TiledMap(15,10,128,128);
     map->setTileSheet("images/tilesheet_complete_2X.png");
@@ -215,7 +208,8 @@ void initializeEntities() {
 }
 
 void registerInputs() {
-    InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "SDL_QUIT");
+    InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
+	EventHandler::getInstance().listenEvent("quit_game", "main", std::bind(quitGame, std::placeholders::_1));
     InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
     InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
     InputHandler::getInstance().addKeyAction(SDLK_UP, "move_up");

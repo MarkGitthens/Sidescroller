@@ -30,17 +30,19 @@ public:
     //Register a new entity for use in the scene
     void registerEntity(Entity* entity) { 
         Renderable* temp = dynamic_cast<Renderable*>(entity);
+		if (mEntityMap.find(entity->getName()) != mEntityMap.end()) {
+			mEntityMap.erase(mEntityMap.find(entity->getName()));
+			//mRenderList.erase(mRenderList.begin() + temp->getRenderId());
+		}
         mEntityMap[entity->getName()] = entity;
         if (temp) {
-            if (mRenderList.size() <= temp->getLayer()) {
-                mRenderList.resize(temp->getLayer() + 1);
-            } 
-            mRenderList.at(temp->getLayer()-1).emplace_back(temp);
+            mRenderList.push_back(temp);
+			temp->setRenderId(mRenderList.size());
         }
 
         AABBCollider* tempCollider = dynamic_cast<AABBCollider*>(entity);
         if (tempCollider) {
-            mColliders.push_back(tempCollider);
+            mColliders.push_back(dynamic_cast<AABBCollider*>(entity));
         }
     }
 
@@ -67,7 +69,7 @@ public:
         }
     }
     Entity* getEntity(char* name) { return mEntityMap[name]; }
-    std::string getName() { return mSceneName.c_str(); }
+    std::string getName() { return mSceneName; }
 
     void updateScene() {
         for (std::pair<string, Entity*> e : mEntityMap) {
@@ -83,10 +85,9 @@ public:
         SDL_RenderClear(Renderer::getInstance().getRenderer());
 
         mTiledMap->render(mCamera->getCameraRect());
-        for (int i = 0; i < mRenderList.size(); i++) {
-            for (Renderable* r : mRenderList.at(i)) {
+
+        for (Renderable* r : mRenderList) {
                 r->render(mCamera->getCameraRect());
-            }
         }
 
         SDL_RenderPresent(Renderer::getInstance().getRenderer());
@@ -131,7 +132,7 @@ private:
     Camera* mCamera;
 
     TiledMap* mTiledMap;
-    std::vector<std::vector<Renderable*>> mRenderList;
+    std::vector<Renderable*> mRenderList;
     unordered_map<string, Entity*> mEntityMap;
 
     std::vector<AABBCollider*> mColliders;

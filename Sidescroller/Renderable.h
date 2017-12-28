@@ -23,8 +23,8 @@ public:
         mImage = texture;
     }
 
-    void setLayer(int layers) { layer = layers; }
-    int getLayer() { return layer; }
+    void setRenderId(int id) { mRenderId = id; }
+    int getRenderId() { return mRenderId; }
 
     Texture* getTexture() { return mImage; }
     SDL_Texture* getSDLTexture() { return mImage->getTexture(); }
@@ -33,7 +33,7 @@ public:
     virtual void render(SDL_Rect*) = 0;
 
 protected:
-    int layer = 0;
+    int mRenderId = 0;
     SDL_Rect mRect;
     Texture* mImage;
 };

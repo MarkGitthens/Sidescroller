@@ -9,7 +9,7 @@ class AABBCollider {
 public:
     AABBCollider() {}
     AABBCollider(double, double, int, int);
-
+	~AABBCollider();
     bool colliding(AABBCollider);
     //Get the list of AABBColliders that are colliding with this collider.
     vector<AABBCollider*> getColliders();

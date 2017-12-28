@@ -41,8 +41,7 @@ void Player::handleInput() {
 void Player::fireBullet(int val) {
 	Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10,0));
 	bullet->createFromPath("images/block.png");
-	bullet->setName("bullet");
-	bullet->setLayer(1);
+	bullet->setName("bullet"); 
 	bullet->setTrigger(true);
 	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
 }

@@ -14,7 +14,7 @@ void InputHandler::handleInput() {
     while (SDL_PollEvent(&mEvent) != 0) {
         std::string actionName = mKeyMap[mEvent.key.keysym.sym];
         if (mEvent.type == SDL_QUIT) {
-            mTriggeredActions["SDL_QUIT"] = true;
+			EventHandler::getInstance().triggerEvent("quit_game");
         }
             //send message to close window
         if (mEvent.type == SDL_KEYDOWN) {

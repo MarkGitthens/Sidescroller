@@ -143,6 +143,9 @@
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

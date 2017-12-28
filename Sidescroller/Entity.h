@@ -1,13 +1,13 @@
 #pragma once
+#include <vector>
 #include "Vector2D.h"
 #include <string>
 using std::string;
+using std::vector;
 class Entity {
 public:
-    Entity() : mID(0) {};
+    Entity() : mID(0), mName("new_entity") {};
     Entity(string name) : mName(name) {};
-
-    ~Entity() {}
 
     virtual void update() = 0;
     void setID(int id) { mID = id; }
@@ -17,7 +17,8 @@ public:
     string getName() { return mName; }
     
 private:
-    Vector2D* mPosition;
+	int x, y;
     int mID;
     string mName;
+	vector<Component> mComponents;
 };
