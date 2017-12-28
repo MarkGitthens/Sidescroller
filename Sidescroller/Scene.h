@@ -28,21 +28,19 @@ public:
     };
 
     //Register a new entity for use in the scene
-    void registerEntity(Entity* entity) { 
-        Renderable* temp = dynamic_cast<Renderable*>(entity);
-		if (mEntityMap.find(entity->getName()) != mEntityMap.end()) {
-			mEntityMap.erase(mEntityMap.find(entity->getName()));
-			//mRenderList.erase(mRenderList.begin() + temp->getRenderId());
-		}
+    void registerEntity(Entity* entity) {
+        string name = entity->getName();
+
         mEntityMap[entity->getName()] = entity;
+        Renderable* temp = dynamic_cast<Renderable*>(entity);
         if (temp) {
-            mRenderList.push_back(temp);
-			temp->setRenderId(mRenderList.size());
+            mRenderMap[name] = temp;
+			temp->setRenderId(mRenderMap.size());
         }
 
         AABBCollider* tempCollider = dynamic_cast<AABBCollider*>(entity);
         if (tempCollider) {
-            mColliders.push_back(dynamic_cast<AABBCollider*>(entity));
+            mColliders[name] = (dynamic_cast<AABBCollider*>(entity));
         }
     }
 
@@ -67,6 +65,12 @@ public:
         if (mEntityMap.find(name) != mEntityMap.end()) {
             mEntityMap.erase(name);
         }
+        if (mRenderMap.find(name) != mRenderMap.end()) {
+            mRenderMap.erase(name);
+        }
+        if (mColliders.find(name) != mColliders.end()) {
+            mColliders.erase(name);
+        }
     }
     Entity* getEntity(char* name) { return mEntityMap[name]; }
     std::string getName() { return mSceneName; }
@@ -86,8 +90,8 @@ public:
 
         mTiledMap->render(mCamera->getCameraRect());
 
-        for (Renderable* r : mRenderList) {
-                r->render(mCamera->getCameraRect());
+        for (std::pair<string, Renderable*> r : mRenderMap) {
+            r.second->render(mCamera->getCameraRect());
         }
 
         SDL_RenderPresent(Renderer::getInstance().getRenderer());
@@ -96,13 +100,15 @@ public:
     //collider list for further processing
     void checkCollisions() {
         for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
-            for (auto j = start + 1; j != mColliders.end(); j++) {
-                if ((*start)->colliding(**j)) {
-                    (*start)->addCollider(*j);
-                    (*j)->addCollider(*start);
+            for (auto j = start; j != mColliders.end(); ++j) {
+                if (start != j) {
+                    if ((*start).second->colliding(*(*j).second)) {
+                        (*start).second->addCollider((*j).second);
+                        (*j).second->addCollider((*start).second);
+                    }
                 }
             }
-            (*start)->handleCollision("test", **start);
+            (*start).second->handleCollision("test", *(*start).second);
         }
     }
 
@@ -132,10 +138,10 @@ private:
     Camera* mCamera;
 
     TiledMap* mTiledMap;
-    std::vector<Renderable*> mRenderList;
+    unordered_map<string, Renderable*> mRenderMap;
     unordered_map<string, Entity*> mEntityMap;
 
-    std::vector<AABBCollider*> mColliders;
+    unordered_map<string, AABBCollider*> mColliders;
     // seperate thread from render
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;

@@ -217,6 +217,8 @@ void registerInputs() {
     InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
 	InputHandler::getInstance().addKeyAction(SDLK_SPACE, "fire_bullet");
 
+    InputHandler::getInstance().addKeyAction(SDLK_d, "delete_box");
+
     InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
     InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());
     InputHandler::getInstance().addKeyAction(SDLK_EQUALS, music->getVolumeHigherActionName());

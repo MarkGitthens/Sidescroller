@@ -21,6 +21,10 @@ void Player::update() {
 }
 
 void Player::handleInput() {
+    if (InputHandler::getInstance().actionTriggered("delete_box")) {
+        std::cout << "Deleting Box \n";
+        SceneHandler::getInstance().getCurrentScene()->removeEntity("Box2");
+    }
     if (InputHandler::getInstance().actionTriggered("move_right")) {
         mVelocity.x = speed;
     } else if (InputHandler::getInstance().actionTriggered("move_left")) {

@@ -184,7 +184,6 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="InputHandler.h" />
