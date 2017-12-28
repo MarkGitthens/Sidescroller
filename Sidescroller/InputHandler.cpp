@@ -16,7 +16,6 @@ void InputHandler::handleInput() {
         if (mEvent.type == SDL_QUIT) {
 			EventHandler::getInstance().triggerEvent("quit_game");
         }
-            //send message to close window
         if (mEvent.type == SDL_KEYDOWN) {
             mTriggeredActions[actionName] = true;
         }

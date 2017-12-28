@@ -57,24 +57,27 @@ public:
     }
 
     void removeEntity(string name) {
-        if (mEntityMap.find(name) != mEntityMap.end()) {
-            mEntityMap.erase(name);
+        if (mTriggers.find(name) != mTriggers.end()) {
+            mTriggers.erase(name);
+        }
+        if (mColliders.find(name) != mColliders.end()) {
+            mColliders.erase(name);
         }
         if (mRenderMap.find(name) != mRenderMap.end()) {
             mRenderMap.erase(name);
         }
-
-        if (mColliders.find(name) != mColliders.end()) {
-            mColliders.erase(name);
-        }
-        if (mTriggers.find(name) != mTriggers.end()) {
-            mTriggers.erase(name);
+        if (mEntityMap.find(name) != mEntityMap.end()) {
+            delete mEntityMap.find(name)->second;
+            mEntityMap.find(name)->second = nullptr;
+            mEntityMap.erase(name);
         }
     }
 
     void updateScene() {
         for (std::pair<string, Entity*> e : mEntityMap) {
-            e.second->update();
+            if (e.second == nullptr)
+                continue;
+             e.second->update();
         }
 
         checkCollisions();
@@ -85,6 +88,8 @@ public:
     void updateOffScreen() {
         while (mRunning) {
             for (std::pair<string, Entity*> e : mOffScreenEntityMap) {
+                if (e.second == nullptr)
+                    continue;
                 e.second->update();
             }
         }
@@ -96,6 +101,8 @@ public:
         mTiledMap->render(mCamera->getCameraRect());
 
         for (std::pair<string, Renderable*> r : mRenderMap) {
+            if (r.second == nullptr)
+                continue;
             r.second->render(mCamera->getCameraRect());
         }
 
