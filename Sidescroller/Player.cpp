@@ -11,8 +11,7 @@ Player::Player(int x, int y, int width, int height) {
     mHalfWidth = width/2;
     mHalfHeight = height/2;
 
-    //TODO: The engine is not setup to support multithreading properly as of right now. Because of this random crashes are occuring due to pointers being modified and deleted when calling this event
-	EventHandler::getInstance().listenEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
+	EventHandler::getInstance().subscribeToEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
 }
 void Player::update() {
     handleInput();
@@ -24,7 +23,7 @@ void Player::update() {
 void Player::handleInput() {
     if (InputHandler::getInstance().actionTriggered("delete_box")) {
         std::cout << "Deleting Box \n";
-        SceneHandler::getInstance().getCurrentScene()->removeEntity("Box2");
+        SceneHandler::getInstance().getCurrentScene()->deleteEntity("Box2");
     }
     if (InputHandler::getInstance().actionTriggered("move_right")) {
         mVelocity.x = speed;
@@ -44,7 +43,6 @@ void Player::handleInput() {
 }
 
 void Player::fireBullet(int val) {
-    SceneHandler::getInstance().getCurrentScene()->removeEntity("player_bullet");
     Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
 	bullet->createFromPath("images/block.png");
 	bullet->setName("player_bullet"); 
@@ -91,7 +89,6 @@ void Player::handleCollisions() {
 }
 
 void Player::handleTrigger(std::string name) {
-    std::cout << "Triggering " << name << "\n";
 }
 
 void Player::updateAABB() {

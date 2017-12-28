@@ -18,9 +18,9 @@ void Music::update() {
 
 void Music::subscribeToEvents() {
     using std::placeholders::_1;
-    EventHandler::getInstance().listenEvent(mMuteAction, getName(), std::bind(&Music::mute, this, _1));
-    EventHandler::getInstance().listenEvent(mVolumeLowerAction, getName(), std::bind(&Music::lowerVolume, this, _1));
-    EventHandler::getInstance().listenEvent(mVolumeHigherAction, getName(), std::bind(&Music::increaseVolume, this, _1));
+    EventHandler::getInstance().subscribeToEvent(mMuteAction, getName(), std::bind(&Music::mute, this, _1));
+    EventHandler::getInstance().subscribeToEvent(mVolumeLowerAction, getName(), std::bind(&Music::lowerVolume, this, _1));
+    EventHandler::getInstance().subscribeToEvent(mVolumeHigherAction, getName(), std::bind(&Music::increaseVolume, this, _1));
 }
 
 void Music::mute(int value) {
@@ -121,7 +121,7 @@ void AudioClip::update() {
 
 void AudioClip::subscribeToEvents() {
     using std::placeholders::_1;
-    EventHandler::getInstance().listenEvent(mPlayAction, getName(), std::bind(&AudioClip::play, this, _1));
+    EventHandler::getInstance().subscribeToEvent(mPlayAction, getName(), std::bind(&AudioClip::play, this, _1));
 }
 
 void AudioClip::handleInput() {

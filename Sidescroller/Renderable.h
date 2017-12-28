@@ -2,11 +2,12 @@
 #include <SDL_image.h>
 #include "Texture.h"
 #include "Renderer.h"
-
+#include <iostream>
 class Renderable {
 public:
     Renderable() : mImage(nullptr) {};
-    ~Renderable() {
+    virtual ~Renderable() {
+        std::cout << "Destroying renderable" << std::endl;
         if (mImage)
             delete mImage;
         mImage = nullptr;

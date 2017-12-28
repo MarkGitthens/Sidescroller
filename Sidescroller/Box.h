@@ -15,7 +15,7 @@ public:
         mHalfWidth = w/2;
     }
     Box(Texture* texture) : mTexture(texture) {};
-    ~Box();
+    virtual ~Box();
     void update();
     void handleInput();
     virtual void render(SDL_Rect*);

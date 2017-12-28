@@ -10,8 +10,8 @@ public:
     static EventHandler& getInstance();
     typedef std::function<void(int)> EventFunc;
     void triggerEvent(std::string eventId);
-    void listenEvent(std::string eventId, std::string subscriberName, EventFunc func);
-    void removeFromEvent(std::string eventId, std::string subscriberName);
+    void subscribeToEvent(std::string eventId, std::string subscriberName, EventFunc func);
+    void unsubscribe(std::string eventId, std::string subscriberName);
 
 private:
     ~EventHandler() { if (instance) { delete instance; } instance = nullptr; }

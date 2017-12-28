@@ -1,6 +1,10 @@
 #include "Projectile.h"
+#include "SceneHandler.h"
 
+Projectile::~Projectile() {
+}
 void Projectile::update() {
+    handleCollisions();
 	mPos = mPos + mVelocity;
 }
 
@@ -13,5 +17,9 @@ void Projectile::render(SDL_Rect* offset) {
 	Renderer::getInstance().drawTexture(mImage, &destRect);
 }
 void Projectile::handleCollisions() {
-
+    for (auto c : mColliders) {
+        if (dynamic_cast<Entity*>(c)->getName() == "Box2") {
+            SceneHandler::getInstance().getCurrentScene()->deleteEntity(getName());
+        }
+    }
 }
