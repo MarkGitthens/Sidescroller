@@ -15,7 +15,6 @@ void initializeEntities();
 bool initializeAudio();
 void registerInputs();
 void shutdown();
-void stopGame(int);
 
 //SDL specific pointers
 SDL_Window* window = nullptr;
