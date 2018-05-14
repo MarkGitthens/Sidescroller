@@ -176,6 +176,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneHandler.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TiledParser.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>

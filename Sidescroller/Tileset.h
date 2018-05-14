@@ -19,6 +19,9 @@ public:
         image = nullptr;
     }
 
+    void setStartGID(int gID) {
+        firstGID = gID;
+    }
     string getName() {
         return name;
     }
@@ -43,8 +46,8 @@ public:
         return tileCount;
     }
 
-    Texture& getImage() {
-        return *image;
+    Texture* getImage() {
+        return image;
     }
 
 private:

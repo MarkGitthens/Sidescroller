@@ -10,6 +10,7 @@
 #include <map>
 #include <iostream>
 #include "Entity.h"
+#include "Renderable.h"
 #include "Tileset.h"
 
 using std::string;
@@ -27,33 +28,9 @@ public:
     int numLayers() {
         return layers.size();
     }
-    void parseFile(char* path) {
-        tinyxml2::XMLDocument file;
-        file.LoadFile(path);
-        if (file.Error())
-            std::cout << "Can't load file";
-        int layerNum = 0;
 
-        tinyxml2::XMLElement* map = file.FirstChildElement("map");
-        tinyxml2::XMLElement* layer = map->FirstChildElement("layer");
-
-        while (layer) {
-            layers.push_back(new int[width*height]);
-            tinyxml2::XMLElement* data = layer->FirstChildElement("data");
-
-            stringstream ss(data->GetText());
-
-            int count = 0;
-            string num;
-
-            while (std::getline(ss, num, ',')) {
-                layers.at(layerNum)[count] = atoi(num.c_str());
-                count++;
-            }
-
-            layerNum++;
-            layer = layer->NextSiblingElement("layer");
-        }
+    void insertLayer(int layer[]) {
+        layers.emplace_back(layer);
     }
 
     void drawLayer(int layer, int xOffset, int yOffset) {
@@ -72,7 +49,7 @@ public:
                 dest.y = j * tileHeight - yOffset;
                 dest.w = tileWidth;
                 dest.h = tileHeight;
-                Renderer::getInstance().drawTexture(mImage, &src, &dest);
+                Renderer::getInstance().drawTexture(tilesets.at(0)->getImage(), &src, &dest);
             }
         }
     }
@@ -95,7 +72,7 @@ public:
                     dest.y = j * tileHeight - yOffset;
                     dest.w = tileWidth;
                     dest.h = tileHeight;
-                    Renderer::getInstance().drawTexture(mImage, &src, &dest);
+                    Renderer::getInstance().drawTexture(tilesets.at(0)->getImage(), &src, &dest);
                 }
             }
         }
@@ -109,8 +86,8 @@ public:
         drawAllLayers(cameraRect->x, cameraRect->y);
     }
 
-    void setTileSheet(char* path) {
-        createFromPath(path);
+    void addTileSheet(Tileset* tileset) {
+        tilesets.emplace_back(tileset);
     }
 
 private:
@@ -118,5 +95,5 @@ private:
     int tileWidth, tileHeight;
 
     vector<int*> layers;
-    vector<Tileset> tilesets;
+    vector<Tileset*> tilesets;
 };

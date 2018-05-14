@@ -11,6 +11,8 @@
 #include "Scene.h"
 #include "Audio.h"
 
+#include "TiledParser.h"
+
 void initializeEntities();
 bool initializeAudio();
 void registerInputs();
@@ -67,7 +69,6 @@ int main(int argc, char* argv[]) {
     registerInputs();
 
     scene.setName("start");
-    scene.setTiledMap(map);
     scene.registerEntity(player);
 
     //scene.registerEntity(box);
@@ -194,9 +195,7 @@ void initializeEntities() {
     box7->setName("Box7");
     box7->createFromPath("images/block.png");
 
-    map = new TiledMap(15,10,128,128);
-    map->setTileSheet("images/tilesheet_complete_2X.png");
-    map->parseFile("tilesets/Level1.tmx");
+    TiledParser::parse("Level1.tmx", "tilesets/", &scene);
 
     camera = new Camera();
 

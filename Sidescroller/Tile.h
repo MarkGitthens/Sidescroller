@@ -11,8 +11,16 @@ private:
     string type;
 
     struct Property {
+        enum Type {
+            String,
+            Integer,
+            Float,
+            Bool,
+            Color,
+            File            
+        };
         string name;
-        string type;
+        Type type;
         string value;
     };
 
@@ -36,5 +44,4 @@ public:
     int frameCount() {
         return frames.size();
     }
-
 };

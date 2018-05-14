@@ -37,6 +37,12 @@
     <Filter Include="Header Files\collision">
       <UniqueIdentifier>{aba2deb7-accc-4a46-83ba-771b6aaabb80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\util\tiled">
+      <UniqueIdentifier>{79526ed3-6b96-4ae1-a733-46a5c1ce0f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util\tiled">
+      <UniqueIdentifier>{57ac171a-c393-460a-9923-79dd455cfd6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TiledParser.cpp">
+      <Filter>Source Files\util\tiled</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,14 +152,14 @@
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="TiledParser.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Header Files\util</Filter>
+      <Filter>Header Files\util\tiled</Filter>
+    </ClInclude>
+    <ClInclude Include="TiledParser.h">
+      <Filter>Header Files\util\tiled</Filter>
     </ClInclude>
     <ClInclude Include="Tileset.h">
-      <Filter>Header Files\util</Filter>
+      <Filter>Header Files\util\tiled</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
