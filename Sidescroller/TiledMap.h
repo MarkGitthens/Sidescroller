@@ -40,12 +40,12 @@ public:
         while (layer) {
             layers.push_back(new int[width*height]);
             tinyxml2::XMLElement* data = layer->FirstChildElement("data");
-            
+
             stringstream ss(data->GetText());
 
             int count = 0;
             string num;
-                
+
             while (std::getline(ss, num, ',')) {
                 layers.at(layerNum)[count] = atoi(num.c_str());
                 count++;
@@ -54,8 +54,6 @@ public:
             layerNum++;
             layer = layer->NextSiblingElement("layer");
         }
-
-        this->numLayers = layerNum;
     }
 
     void drawLayer(int layer, int xOffset, int yOffset) {
