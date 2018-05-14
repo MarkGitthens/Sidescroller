@@ -54,36 +54,14 @@ public:
         }
     }
 
-    void drawAllLayers(int xOffset, int yOffset) {
-        SDL_Rect src;
-        SDL_Rect dest;
-        int numLayers = layers.size();
-        for (int layer = 0; layer < numLayers; layer++) {
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
-                    if (layers.at(layer)[j * width + i] == 0)
-                        continue;
-                    src.x = ((layers.at(layer)[j * width + i] % 22) - 1) * tileWidth;
-                    src.y = ((layers.at(layer)[j * width + i] / 22)) * tileHeight;
-                    src.w = tileWidth;
-                    src.h = tileHeight;
-
-                    dest.x = i * tileWidth - xOffset;
-                    dest.y = j * tileHeight - yOffset;
-                    dest.w = tileWidth;
-                    dest.h = tileHeight;
-                    Renderer::getInstance().drawTexture(tilesets.at(0)->getImage(), &src, &dest);
-                }
-            }
-        }
-    }
-
     virtual void update() {
         //Stub Tilemap will never need to perform any game logic.
     }
 
     virtual void render(SDL_Rect* cameraRect) {
-        drawAllLayers(cameraRect->x, cameraRect->y);
+        for (int i = 0; i < layers.size(); i++) {
+            drawLayer(i, cameraRect->x, cameraRect->y);
+        }
     }
 
     void addTileSheet(Tileset* tileset) {
