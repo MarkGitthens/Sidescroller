@@ -76,10 +76,11 @@ Tileset* TiledParser::parseTileset(string path) {
         int tileWidth = tilesetNode->IntAttribute("tilewidth");
         int tileHeight = tilesetNode->IntAttribute("tileheight");
 
+        int columns = tilesetNode->IntAttribute("columns");
         XMLElement* image = tilesetNode->FirstChildElement("image");
         string pathToTileset = image->Attribute("source");
 
-        Tileset* tileset = new Tileset(tilesetName, pathToTileset, tileWidth, tileHeight, tileCount);
+        Tileset* tileset = new Tileset(tilesetName, pathToTileset, tileWidth, tileHeight, tileCount, columns);
 
         return tileset;
     }

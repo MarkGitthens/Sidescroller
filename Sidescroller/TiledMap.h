@@ -36,12 +36,13 @@ public:
     void drawLayer(int layer, int xOffset, int yOffset) {
         SDL_Rect src;
         SDL_Rect dest;
+        int tilesetColumns = tilesets.at(0)->getColumnCount();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (layers.at(layer)[j * width + i] == 0)
                     continue;
-                src.x = ((layers.at(layer)[j * width + i] % 22)-1) * tileWidth;
-                src.y = ((layers.at(layer)[j * width + i] / 22)) * tileHeight;
+                src.x = ((layers.at(layer)[j * width + i] % tilesetColumns)-1) * tileWidth;
+                src.y = ((layers.at(layer)[j * width + i] / tilesetColumns)) * tileHeight;
                 src.w = tileWidth;  
                 src.h = tileHeight;
 

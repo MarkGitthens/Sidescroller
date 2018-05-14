@@ -8,8 +8,8 @@ using std::string;
 
 class Tileset {
 public:
-    Tileset(string name, string path, int tWidth, int tHeight, int tCount) :
-        name(name), path(path), tileWidth(tWidth), tileHeight(tHeight), tileCount(tCount)
+    Tileset(string name, string path, int tWidth, int tHeight, int tCount, int columns) :
+        name(name), path(path), tileWidth(tWidth), tileHeight(tHeight), tileCount(tCount), columns(columns)
     {
         image = new Texture(path);
     }
@@ -46,6 +46,8 @@ public:
         return tileCount;
     }
 
+    int getColumnCount() { return columns; }
+
     Texture* getImage() {
         return image;
     }
@@ -55,6 +57,7 @@ private:
     string path;
     string name;
 
+    int columns = 0;
     int tileCount = 0;
     int tileWidth, tileHeight = 128;
     int spacing = 0;
