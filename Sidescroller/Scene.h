@@ -23,11 +23,7 @@ public:
     Scene(const string name, SDL_Rect world) : mSceneName(name), mWorldSpace(world) {};
     Scene(const Scene& old) : mSceneName(old.mSceneName), mWorldSpace(old.mWorldSpace), mEntityMap(old.mEntityMap) {};
     ~Scene() {
-        stopThreads();
-        //This causes a crash
-        mBackgroundThread.join();
-        delete mCamera;
-        delete mTiledMap;
+
     };
 
     void registerEntity(Entity* entity) {
@@ -159,6 +155,14 @@ public:
         mRunning = false;
     }
 
+    void destroy() {
+        stopThreads();
+        //This causes a crash
+        mBackgroundThread.join();
+        delete mCamera;
+        delete mTiledMap;
+    }
+
 
 private:
     string mSceneName;
@@ -167,6 +171,7 @@ private:
 
     TiledMap* mTiledMap;
 
+    //TODO: Need to assign entities valid Unique ID's so that I can do all references to the entity with those instead of the string names.
     unordered_map<string, Renderable*> mRenderMap;
     unordered_map<string, Entity*> mEntityMap;
     unordered_map<string, AABBCollider*> mColliders;

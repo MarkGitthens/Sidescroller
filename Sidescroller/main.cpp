@@ -138,6 +138,9 @@ void quitGame(int a) {
 	running = false;
 }
 void shutdown() {
+    //TODO: Ideally scenes are going to be cached so I will have to destroy each cached scene.
+    SceneHandler::getInstance().getCurrentScene()->destroy();
+
     SDL_FreeSurface(screenSurface);
     screenSurface = nullptr;
 
@@ -187,7 +190,7 @@ void initializeEntities() {
     box6->createFromPath("images/block.png");
     box6->setTrigger(true);
 
-    box7 = new Box(0, 74, 10, 10);
+    box7 = new Box(-20, 0, 64, 64);
     box7->setName("Box7");
     box7->createFromPath("images/block.png");
 
