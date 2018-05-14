@@ -4,6 +4,7 @@
 #include <string>
 using std::unordered_map;
 using std::string;
+
 class SceneHandler {
 public:    
     void changeScene(Scene*);
@@ -18,6 +19,12 @@ public:
 
 private:
     ~SceneHandler() {
+        auto deleteMap = mRegisteredScenes.begin();
+
+        while (deleteMap != mRegisteredScenes.end()) {
+            delete deleteMap->second;
+            deleteMap = mRegisteredScenes.erase(deleteMap);
+        }
         if (instance) { 
             delete instance;
         } 
