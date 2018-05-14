@@ -7,15 +7,21 @@
 
 #include <sstream>
 #include <string>
+#include <map>
 #include <iostream>
 #include "Entity.h"
+#include "Tileset.h"
+
+using std::string;
+using std::vector;
+using std::stringstream;
 
 class TiledMap : public Entity, public Renderable{
 public:
     TiledMap() {};
     TiledMap(int width, int height, int tilew, int tileh) : width(width), height(height), tileWidth(tilew), tileHeight(tileh) {}
 
-    std::vector<int> getLayer(int index) {
+    int* getLayer(int index) {
         return layers.at(index);
     }
     int numLayers() {
@@ -27,28 +33,29 @@ public:
         if (file.Error())
             std::cout << "Can't load file";
         int layerNum = 0;
-        tinyxml2::XMLElement* map = file.FirstChildElement("map");
 
+        tinyxml2::XMLElement* map = file.FirstChildElement("map");
         tinyxml2::XMLElement* layer = map->FirstChildElement("layer");
 
         while (layer) {
-            
-            layers.push_back(std::vector<int>(width*height));
+            layers.push_back(new int[width*height]);
             tinyxml2::XMLElement* data = layer->FirstChildElement("data");
             
-            std::stringstream ss(data->GetText());
+            stringstream ss(data->GetText());
 
             int count = 0;
-            std::string num;
+            string num;
                 
             while (std::getline(ss, num, ',')) {
-                layers.at(layerNum).at(count) = atoi(num.c_str());
+                layers.at(layerNum)[count] = atoi(num.c_str());
                 count++;
             }
 
             layerNum++;
             layer = layer->NextSiblingElement("layer");
         }
+
+        this->numLayers = layerNum;
     }
 
     void drawLayer(int layer, int xOffset, int yOffset) {
@@ -56,17 +63,17 @@ public:
         SDL_Rect dest;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (layers.at(layer).at(j * width + i) == 0)
+                if (layers.at(layer)[j * width + i] == 0)
                     continue;
-                src.x = ((layers.at(layer).at(j * width + i) % 22)-1) * tileWidth;
-                src.y = ((layers.at(layer).at(j * width + i) / 22)) * tileHeight;
+                src.x = ((layers.at(layer)[j * width + i] % 22)-1) * tileWidth;
+                src.y = ((layers.at(layer)[j * width + i] / 22)) * tileHeight;
                 src.w = tileWidth;  
                 src.h = tileHeight;
 
-                dest.x = i * 128 - xOffset;
-                dest.y = j * 128 - yOffset;
-                dest.w = 128;
-                dest.h = 128;
+                dest.x = i * tileWidth - xOffset;
+                dest.y = j * tileHeight - yOffset;
+                dest.w = tileWidth;
+                dest.h = tileHeight;
                 Renderer::getInstance().drawTexture(mImage, &src, &dest);
             }
         }
@@ -77,27 +84,28 @@ public:
         SDL_Rect dest;
         int numLayers = layers.size();
         for (int layer = 0; layer < numLayers; layer++) {
-
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
-                    if (layers.at(layer).at(j * width + i) == 0)
+                    if (layers.at(layer)[j * width + i] == 0)
                         continue;
-                    src.x = ((layers.at(layer).at(j * width + i) % 22) - 1) * tileWidth;
-                    src.y = ((layers.at(layer).at(j * width + i) / 22)) * tileHeight;
+                    src.x = ((layers.at(layer)[j * width + i] % 22) - 1) * tileWidth;
+                    src.y = ((layers.at(layer)[j * width + i] / 22)) * tileHeight;
                     src.w = tileWidth;
                     src.h = tileHeight;
 
-                    dest.x = i * 128 - xOffset;
-                    dest.y = j * 128 - yOffset;
-                    dest.w = 128;
-                    dest.h = 128;
+                    dest.x = i * tileWidth - xOffset;
+                    dest.y = j * tileHeight - yOffset;
+                    dest.w = tileWidth;
+                    dest.h = tileHeight;
                     Renderer::getInstance().drawTexture(mImage, &src, &dest);
                 }
             }
         }
     }
 
-    virtual void update() {}
+    virtual void update() {
+        //Stub Tilemap will never need to perform any game logic.
+    }
 
     virtual void render(SDL_Rect* cameraRect) {
         drawAllLayers(cameraRect->x, cameraRect->y);
@@ -108,7 +116,9 @@ public:
     }
 
 private:
-    std::vector<std::vector<int>> layers;
     int width, height;
     int tileWidth, tileHeight;
+
+    vector<int*> layers;
+    vector<Tileset> tilesets;
 };

@@ -143,6 +143,15 @@
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
+    <ClInclude Include="TiledParser.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Tileset.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

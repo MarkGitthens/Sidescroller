@@ -196,7 +196,10 @@
     <ClInclude Include="SceneHandler.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TiledMap.h" />
+    <ClInclude Include="TiledParser.h" />
+    <ClInclude Include="Tileset.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

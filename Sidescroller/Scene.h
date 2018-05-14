@@ -67,7 +67,6 @@ public:
         }
     }
     
-
     void updateScene() {
         for (std::pair<string, Entity*> e : mEntityMap) {
              e.second->update();
