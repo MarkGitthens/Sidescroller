@@ -70,15 +70,6 @@ int main(int argc, char* argv[]) {
 
     scene.setName("start");
     scene.registerEntity(player);
-
-    //scene.registerEntity(box);
-    scene.registerEntity(box2);
-    scene.registerEntity(box3);
-    scene.registerEntity(box4);
-    scene.registerEntity(box5);
-    scene.registerEntity(box6);
-    scene.registerEntity(box7);
-
     scene.setCamera(camera);
 
     scene.initThreads();
@@ -164,36 +155,6 @@ void initializeEntities() {
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
-
-    //box = new Box(0, 0, 128, 128);
-    //box->setName("Box");
-    //box->setTrigger(true);
-    //box->createFromPath("images/block.png");
-
-    box2 = new Box(128, 0, 128, 128);
-    box2->setName("Box2");
-    box2->createFromPath("images/block.png");
-
-    box3 = new Box(256, 0, 128, 128);
-    box3->setName("Box3");
-    box3->createFromPath("images/block.png");
-
-    box4 = new Box(256, -128, 128, 128);
-    box4->setName("Box4");
-    box4->createFromPath("images/block.png");
-
-    box5 = new Box(128, -256, 128, 128);
-    box5->setName("Box5");
-    box5->createFromPath("images/block.png");
-
-    box6 = new Box(0, -256, 128, 128);
-    box6->setName("Box6");
-    box6->createFromPath("images/block.png");
-    box6->setTrigger(true);
-
-    box7 = new Box(-20, 0, 64, 64);
-    box7->setName("Box7");
-    box7->createFromPath("images/block.png");
 
     TiledParser::parse("Level1.tmx", "tilesets/", &scene);
 

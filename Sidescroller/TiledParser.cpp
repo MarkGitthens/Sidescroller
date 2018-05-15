@@ -1,5 +1,5 @@
 #include "TiledParser.h"
-
+#include "Box.h"
 //arg1: Name of the map file
 //arg2: Path to file location
 //arg3: scene to insert parsed information to.
@@ -57,12 +57,44 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
             layer = layer->NextSiblingElement("layer");
         }
         scene->setTiledMap(tiledMap);
+
+        XMLElement* objectGroup = map->FirstChildElement("objectgroup");
+        XMLElement* object = objectGroup->FirstChildElement("object");
+
+        if (objectGroup && object) {
+            while (object) {
+                string name = object->Attribute("name");
+                string type = object->Attribute("type");
+                int x = object->IntAttribute("x");
+                int y = object->IntAttribute("y");
+
+                int width = object->IntAttribute("width");
+                int height = object->IntAttribute("height");
+                
+                if (type == "Box") {
+                    XMLElement* properties = object->FirstChildElement("properties");
+                    XMLElement* prop = properties->FirstChildElement("property");
+
+                    Box* box = new Box(x+(width/2), y-(height/2), width, height);
+                    box->setName(name);
+                    box->createFromPath("images/block.png");
+                    
+                    string propertyName = prop->Attribute("name");
+                    if (propertyName == "Trigger") {
+                        box->setTrigger(prop->BoolAttribute("value"));
+                    }
+                    scene->registerEntity(box);
+                }
+                object = object->NextSiblingElement();
+            }
+        }
     }
 }
 
 //TODO: parse individual tile information.
 Tileset* TiledParser::parseTileset(string path) {
     XMLDocument file;
+    
     file.LoadFile(path.c_str());
     if (file.Error()) {
         std::cerr << "Can't load tileset";
