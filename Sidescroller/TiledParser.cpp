@@ -61,6 +61,7 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
         XMLElement* objectGroup = map->FirstChildElement("objectgroup");
         XMLElement* object = objectGroup->FirstChildElement("object");
 
+        //TODO: Valid objects should be defined somewhere else that can also generate the object given the parameters
         if (objectGroup && object) {
             while (object) {
                 string name = object->Attribute("name");

@@ -15,6 +15,10 @@ Player::Player(int x, int y, int width, int height) {
 }
 void Player::update() {
     handleInput();
+    int gravity = 1;
+
+    if(mVelocity.y < 24)
+        mVelocity.y += gravity;
 
     mPos.x += mVelocity.x;
     mPos.y += mVelocity.y;
@@ -33,12 +37,8 @@ void Player::handleInput() {
         mVelocity.x = 0;
     }
 
-    if (InputHandler::getInstance().actionTriggered("move_up")) {
-        mVelocity.y = -speed;
-    } else if (InputHandler::getInstance().actionTriggered("move_down")) {
-        mVelocity.y = speed;
-    } else {
-        mVelocity.y = 0;
+    if (InputHandler::getInstance().actionPressTriggered("jump")) {
+        mVelocity.y = -24;
     }
 }
 

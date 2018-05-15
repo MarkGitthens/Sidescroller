@@ -151,7 +151,9 @@ bool initializeAudio() {
 }
 
 void initializeEntities() {
-    player = new Player(64, 300, 64, 64);
+
+    //TODO: Should probably make player a unique entity that will only ever have one copy
+    player = new Player(64, 300, 128, 128);
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
@@ -170,16 +172,13 @@ void initializeEntities() {
 }
 
 void registerInputs() {
+    //TODO: Should really verify this is how I actually want InputHandler and EventHandler to work.
     InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
 	EventHandler::getInstance().subscribeToEvent("quit_game", "main", std::bind(quitGame, std::placeholders::_1));
     InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
     InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
-    InputHandler::getInstance().addKeyAction(SDLK_UP, "move_up");
-    InputHandler::getInstance().addKeyAction(SDLK_DOWN, "move_down");
     InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
-	InputHandler::getInstance().addKeyAction(SDLK_SPACE, "fire_bullet");
-
-    InputHandler::getInstance().addKeyAction(SDLK_d, "delete_box");
+	InputHandler::getInstance().addKeyAction(SDLK_SPACE, "jump");
 
     InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
     InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());
