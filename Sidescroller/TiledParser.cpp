@@ -59,34 +59,36 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
         scene->setTiledMap(tiledMap);
 
         XMLElement* objectGroup = map->FirstChildElement("objectgroup");
-        XMLElement* object = objectGroup->FirstChildElement("object");
+        if (objectGroup) {
+            XMLElement* object = objectGroup->FirstChildElement("object");
 
-        //TODO: Valid objects should be defined somewhere else that can also generate the object given the parameters
-        if (objectGroup && object) {
-            while (object) {
-                string name = object->Attribute("name");
-                string type = object->Attribute("type");
-                int x = object->IntAttribute("x");
-                int y = object->IntAttribute("y");
+            //TODO: Valid objects should be defined somewhere else that can also generate the object given the parameters
+            if (object) {
+                while (object) {
+                    string name = object->Attribute("name");
+                    string type = object->Attribute("type");
+                    int x = object->IntAttribute("x");
+                    int y = object->IntAttribute("y");
 
-                int width = object->IntAttribute("width");
-                int height = object->IntAttribute("height");
-                
-                if (type == "Box") {
-                    XMLElement* properties = object->FirstChildElement("properties");
-                    XMLElement* prop = properties->FirstChildElement("property");
+                    int width = object->IntAttribute("width");
+                    int height = object->IntAttribute("height");
 
-                    Box* box = new Box(x+(width/2), y-(height/2), width, height);
-                    box->setName(name);
-                    box->createFromPath("images/block.png");
-                    
-                    string propertyName = prop->Attribute("name");
-                    if (propertyName == "Trigger") {
-                        box->setTrigger(prop->BoolAttribute("value"));
+                    if (type == "Box") {
+                        XMLElement* properties = object->FirstChildElement("properties");
+                        XMLElement* prop = properties->FirstChildElement("property");
+
+                        Box* box = new Box(x + (width / 2), y - (height / 2), width, height);
+                        box->setName(name);
+                        box->createFromPath("images/block.png");
+
+                        string propertyName = prop->Attribute("name");
+                        if (propertyName == "Trigger") {
+                            box->setTrigger(prop->BoolAttribute("value"));
+                        }
+                        scene->registerEntity(box);
                     }
-                    scene->registerEntity(box);
+                    object = object->NextSiblingElement();
                 }
-                object = object->NextSiblingElement();
             }
         }
     }

@@ -153,7 +153,7 @@ bool initializeAudio() {
 void initializeEntities() {
 
     //TODO: Should probably make player a unique entity that will only ever have one copy
-    player = new Player(64, 300, 128, 128);
+    player = new Player(64, 300, 64, 64);
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
