@@ -5,9 +5,10 @@
 #include "Renderable.h"
 #include "AABBCollider.h"
 
+//TODO: Entities shouldn't inherit AABBCollider since a single entity have multiple colliders
 class Player : public Entity, public AABBCollider, public Renderable {
 public:
-    Player() : mVelocity(0, 0){}
+    Player() : mVelocity(0, 0) {};
     Player(int, int, int, int);
     virtual void update();
     void handleInput();
@@ -22,5 +23,6 @@ public:
 
 	void fireBullet(int);
 private:
+    bool canJump = true;
     Vector2D mVelocity;
 };

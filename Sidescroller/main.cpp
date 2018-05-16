@@ -10,6 +10,7 @@
 #include "Box.h"
 #include "Scene.h"
 #include "Audio.h"
+#include "ResetBox.h"
 
 #include "TiledParser.h"
 
@@ -34,6 +35,7 @@ Box* box7;
 TiledMap* map;
 Camera* camera;
 
+ResetBox* reset;
 Scene scene;
 
 bool running = true;
@@ -80,6 +82,7 @@ int main(int argc, char* argv[]) {
     testScene.registerEntity(player);
     testScene.setCamera(camera);
     testScene.setTiledMap(map);
+    scene.registerEntity(reset);
 
     SceneHandler::getInstance().registerScene(&scene);
     SceneHandler::getInstance().registerScene(&testScene);
@@ -162,6 +165,11 @@ void initializeEntities() {
 
     camera = new Camera();
 
+    reset = new ResetBox(-1000, 1500, 10000, 128);
+    reset->setName("reset_box");
+    reset->setTrigger(true);
+
+    std::cout << "reset created" << std::endl;
     SDL_Rect* cameraRect = new SDL_Rect();
     cameraRect->x = 0;
     cameraRect->y = 0;

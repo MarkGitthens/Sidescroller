@@ -126,6 +126,14 @@ public:
         }
     }
 
+    bool checkCollisions(AABBCollider* collider) {
+        for (auto check = mColliders.begin(); check != mColliders.end(); check++) {
+            if (collider->colliding(*(*check).second)) {
+                return true;
+            }
+        }
+        return false;
+    }
     void setName(std::string name) {
         mSceneName = name;
     }
