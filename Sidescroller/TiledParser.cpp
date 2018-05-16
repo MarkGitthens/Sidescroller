@@ -71,7 +71,7 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Scene* scene) {
                     XMLElement* properties = object->FirstChildElement("properties");
                     XMLElement* prop = properties->FirstChildElement("property");
 
-                    Box* box = new Box(x + (width / 2), y - (height / 2), width, height);
+                    Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
                     box->createFromPath("images/block.png");
 
@@ -99,7 +99,8 @@ Tileset* TiledParser::parseTileset(XMLElement* tilesetNode)  {
 
         int columns = tilesetNode->IntAttribute("columns");
         XMLElement* image = tilesetNode->FirstChildElement("image");
-        string pathToTileset = image->Attribute("source");
+        string pathToTileset = "tilesets/";
+        pathToTileset+=image->Attribute("source");
 
         Tileset* tileset = new Tileset(tilesetName, pathToTileset, tileWidth, tileHeight, tileCount, columns);
         tileset->setStartGID(firstGID);
