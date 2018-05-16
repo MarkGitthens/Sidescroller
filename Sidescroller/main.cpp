@@ -46,16 +46,12 @@ Music* music = nullptr;
 int main(int argc, char* argv[]) {
     
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-        //error
         std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
     }
     if (IMG_Init(IMG_INIT_PNG) < 0) {
         std::cerr << "SDL_Img could not be initialized!\n" << IMG_GetError() << std::endl;
     }
-
-    //Initialize SDL_mixer
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-    {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         std::cerr << "SDL_mixer could not initialize!\n" << Mix_GetError() << std::endl;
     }
 
@@ -65,7 +61,6 @@ int main(int argc, char* argv[]) {
 
     screenSurface = SDL_GetWindowSurface(window);
 
-    
     initializeEntities();
     initializeAudio();
     registerInputs();
@@ -77,15 +72,10 @@ int main(int argc, char* argv[]) {
     scene.initThreads();
     music->subscribeToEvents();
     
-    Scene testScene;
-    testScene.setName("test_scene");
-    testScene.registerEntity(player);
-    testScene.setCamera(camera);
-    testScene.setTiledMap(map);
     scene.registerEntity(reset);
 
     SceneHandler::getInstance().registerScene(&scene);
-    SceneHandler::getInstance().registerScene(&testScene);
+
     //Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
     double deltaTime = 16.667;
 
@@ -120,7 +110,6 @@ int main(int argc, char* argv[]) {
             updateTimerStart = currentTime;
         }
 
-
         SceneHandler::getInstance().getCurrentScene()->renderScene();
         fpsCounter++;
     }
@@ -133,7 +122,6 @@ void quitGame(int a) {
 	running = false;
 }
 void shutdown() {
-    //TODO: Ideally scenes are going to be cached so I will have to destroy each cached scene.
     SceneHandler::getInstance().getCurrentScene()->destroy();
 
     SDL_FreeSurface(screenSurface);
@@ -154,7 +142,6 @@ bool initializeAudio() {
 }
 
 void initializeEntities() {
-
     //TODO: Should probably make player a unique entity that will only ever have one copy
     player = new Player(64, 300, 64, 64);
 
@@ -169,7 +156,6 @@ void initializeEntities() {
     reset->setName("reset_box");
     reset->setTrigger(true);
 
-    std::cout << "reset created" << std::endl;
     SDL_Rect* cameraRect = new SDL_Rect();
     cameraRect->x = 0;
     cameraRect->y = 0;

@@ -30,43 +30,47 @@ public:
         if (entity == nullptr) {
             return;
         }
+
+        currentEntity++;
+        entity->setID(currentEntity);
+
         string name = entity->getName();
 
-        if (mEntityMap.find(name) != mEntityMap.end()) {
-            removeEntity(name);
+        if (mEntityMap.find(currentEntity) != mEntityMap.end()) {
+            removeEntity(currentEntity);
         }
 
-        mEntityMap[name] = entity;
+        mEntityMap[currentEntity] = entity;
         Renderable* temp = dynamic_cast<Renderable*>(entity);
         if (temp) {
-            mRenderMap[name] = temp;
+            mRenderMap[currentEntity] = temp;
 			temp->setRenderId(mRenderMap.size());
         }
 
         AABBCollider* tempCollider = dynamic_cast<AABBCollider*>(entity);
         if (tempCollider) {
             if (tempCollider->isTrigger())
-                mTriggers[name] = tempCollider;
+                mTriggers[currentEntity] = tempCollider;
             else
-                mColliders[name] = tempCollider;
+                mColliders[currentEntity] = tempCollider;
         }
     }
 
     //Register an entity that should be tracked on a seperate thread
     void registerOffScreenEntity(Entity* entity) {
         if (entity != nullptr) {
-            mOffScreenEntityMap[entity->getName()] = entity;
+            mOffScreenEntityMap[entity->getID()] = entity;
         }
     }
 
-    void deleteEntity(string name) {
-        if (mEntityMap.find(name) != mEntityMap.end()) {
-            mDeletedEntities.emplace_back(name);
+    void deleteEntity(int id) {
+        if (mEntityMap.find(id) != mEntityMap.end()) {
+            mDeletedEntities.emplace_back(id);
         }
     }
     
     void updateScene() {
-        for (std::pair<string, Entity*> e : mEntityMap) {
+        for (std::pair<int, Entity*> e : mEntityMap) {
              e.second->update();
         }
 
@@ -84,7 +88,7 @@ public:
     // Thread function to run in the background to handle updating the off-screen entities
     void updateOffScreen() {
         while (mRunning) {
-            for (std::pair<string, Entity*> e : mOffScreenEntityMap) {
+            for (std::pair<int, Entity*> e : mOffScreenEntityMap) {
                 e.second->update();
             }
         }
@@ -95,7 +99,7 @@ public:
 
         mTiledMap->render(mCamera->getCameraRect());
 
-        for (std::pair<string, Renderable*> r : mRenderMap) {
+        for (std::pair<int, Renderable*> r : mRenderMap) {
             if (r.second == nullptr)
                 continue;
             r.second->render(mCamera->getCameraRect());
@@ -134,9 +138,11 @@ public:
         }
         return false;
     }
+
     void setName(std::string name) {
         mSceneName = name;
     }
+
     void setCamera(Camera* camera) {
         mCamera = camera;
     }
@@ -145,8 +151,8 @@ public:
         mTiledMap = tiledMap;
     }
 
-    Entity* getEntity(char* name) { 
-        return mEntityMap[name];
+    Entity* getEntity(int id) { 
+        return mEntityMap[id];
     }
     
     std::string getName() { 
@@ -179,33 +185,36 @@ private:
 
     TiledMap* mTiledMap;
 
-    //TODO: Need to assign entities valid Unique ID's so that I can do all references to the entity with those instead of the string names.
-    unordered_map<string, Renderable*> mRenderMap;
-    unordered_map<string, Entity*> mEntityMap;
-    unordered_map<string, AABBCollider*> mColliders;
-    unordered_map<string, AABBCollider*> mTriggers;
+    //References the ID of the last registered entity
+    int currentEntity = 0;
 
-    std::vector<string> mDeletedEntities;
+    //TODO: Need to assign entities valid Unique ID's so that I can do all references to the entity with those instead of the string names.
+    unordered_map<int, Renderable*> mRenderMap;
+    unordered_map<int, Entity*> mEntityMap;
+    unordered_map<int, AABBCollider*> mColliders;
+    unordered_map<int, AABBCollider*> mTriggers;
+
+    std::vector<int> mDeletedEntities;
 
     std::atomic<bool> mRunning;
     std::thread mBackgroundThread;
 
-    unordered_map<string, Entity*> mOffScreenEntityMap;
+    unordered_map<int, Entity*> mOffScreenEntityMap;
 
-    void removeEntity(string name) {
-        if (mTriggers.find(name) != mTriggers.end()) {
-            mTriggers.erase(name);
+    void removeEntity(int id) {
+        if (mTriggers.find(id) != mTriggers.end()) {
+            mTriggers.erase(id);
         }
-        if (mColliders.find(name) != mColliders.end()) {
-            mColliders.erase(name);
+        if (mColliders.find(id) != mColliders.end()) {
+            mColliders.erase(id);
         }
-        if (mRenderMap.find(name) != mRenderMap.end()) {
-            mRenderMap.erase(name);
+        if (mRenderMap.find(id) != mRenderMap.end()) {
+            mRenderMap.erase(id);
         }
-        if (mEntityMap.find(name) != mEntityMap.end()) {
-            delete mEntityMap.find(name)->second;
-            mEntityMap.find(name)->second = nullptr;
-            mEntityMap.erase(name);
+        if (mEntityMap.find(id) != mEntityMap.end()) {
+            delete mEntityMap.find(id)->second;
+            mEntityMap.find(id)->second = nullptr;
+            mEntityMap.erase(id);
         }
     }
 };

@@ -19,7 +19,7 @@ void Projectile::render(SDL_Rect* offset) {
 void Projectile::handleCollisions() {
     for (auto c : mColliders) {
         if (dynamic_cast<Entity*>(c)->getName() == "Box2") {
-            SceneHandler::getInstance().getCurrentScene()->deleteEntity(getName());
+            SceneHandler::getInstance().getCurrentScene()->deleteEntity(getID());
         }
     }
 }
