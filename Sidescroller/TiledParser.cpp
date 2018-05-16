@@ -17,34 +17,24 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
     }
     else {
         XMLElement* map = file.FirstChildElement("map");
+
         int mapWidth = map->IntAttribute("width");
         int mapHeight = map->IntAttribute("height");
-
         int tileWidth = map->IntAttribute("tilewidth");
         int tileHeight = map->IntAttribute("tileheight");
 
-        XMLElement* tileset = map->FirstChildElement("tileset");
-
         TiledMap* tiledMap = new TiledMap(mapWidth, mapHeight, tileWidth, tileHeight);
 
-        string tilesetPath = path;
-
-        tilesetPath.append(tileset->Attribute("source"));
-        Tileset* tSet = parseTileset(tilesetPath);
-
-        tSet->setStartGID(tileset->IntAttribute("firstgid"));
-
-        tiledMap->addTileSheet(tSet);
+        Tileset* tileset = parseTileset(map->FirstChildElement("tileset"));
+        tiledMap->addTileSheet(tileset);
 
         XMLElement* layer = map->FirstChildElement("layer");
-      
         while (layer) {
             int *tileList = new int[mapWidth * mapHeight];
 
             tinyxml2::XMLElement* data = layer->FirstChildElement("data");
 
             stringstream ss(data->GetText());
-
             int count = 0;
             string num;
 
@@ -58,54 +48,50 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
         }
         scene->setTiledMap(tiledMap);
 
-        XMLElement* objectGroup = map->FirstChildElement("objectgroup");
-        if (objectGroup) {
-            XMLElement* object = objectGroup->FirstChildElement("object");
+        parseObjects(map->FirstChildElement("objectgroup"), scene);
+    }
+}
 
-            //TODO: Valid objects should be defined somewhere else that can also generate the object given the parameters
-            if (object) {
-                while (object) {
-                    string name = object->Attribute("name");
-                    string type = object->Attribute("type");
-                    int x = object->IntAttribute("x");
-                    int y = object->IntAttribute("y");
+void TiledParser::parseObjects(XMLElement* objectGroup, Scene* scene) {
+    if (objectGroup) {
+        XMLElement* object = objectGroup->FirstChildElement("object");
 
-                    int width = object->IntAttribute("width");
-                    int height = object->IntAttribute("height");
+        //TODO: Valid objects should be defined somewhere else that can also generate the object given the parameters
+        if (object) {
+            while (object) {
+                string name = object->Attribute("name");
+                string type = object->Attribute("type");
+                int x = object->IntAttribute("x");
+                int y = object->IntAttribute("y");
 
-                    if (type == "Box") {
-                        XMLElement* properties = object->FirstChildElement("properties");
-                        XMLElement* prop = properties->FirstChildElement("property");
+                int width = object->IntAttribute("width");
+                int height = object->IntAttribute("height");
 
-                        Box* box = new Box(x + (width / 2), y - (height / 2), width, height);
-                        box->setName(name);
-                        box->createFromPath("images/block.png");
+                if (type == "Box") {
+                    XMLElement* properties = object->FirstChildElement("properties");
+                    XMLElement* prop = properties->FirstChildElement("property");
 
-                        string propertyName = prop->Attribute("name");
-                        if (propertyName == "Trigger") {
-                            box->setTrigger(prop->BoolAttribute("value"));
-                        }
-                        scene->registerEntity(box);
+                    Box* box = new Box(x + (width / 2), y - (height / 2), width, height);
+                    box->setName(name);
+                    box->createFromPath("images/block.png");
+
+                    string propertyName = prop->Attribute("name");
+                    if (propertyName == "Trigger") {
+                        box->setTrigger(prop->BoolAttribute("value"));
                     }
-                    object = object->NextSiblingElement();
+                    scene->registerEntity(box);
                 }
+                object = object->NextSiblingElement();
             }
         }
     }
 }
-
 //TODO: parse individual tile information.
-Tileset* TiledParser::parseTileset(string path) {
-    XMLDocument file;
-    
-    file.LoadFile(path.c_str());
-    if (file.Error()) {
-        std::cerr << "Can't load tileset";
+Tileset* TiledParser::parseTileset(XMLElement* tilesetNode)  {
+    if (tilesetNode == NULL) {
         return nullptr;
-    }
-    else {
-        XMLElement* tilesetNode = file.FirstChildElement("tileset");
-        
+    } else {
+        int firstGID = tilesetNode->IntAttribute("firstgid");
         string tilesetName = tilesetNode->Attribute("name");
         int tileCount = tilesetNode->IntAttribute("tilecount");
         int tileWidth = tilesetNode->IntAttribute("tilewidth");
@@ -116,6 +102,7 @@ Tileset* TiledParser::parseTileset(string path) {
         string pathToTileset = image->Attribute("source");
 
         Tileset* tileset = new Tileset(tilesetName, pathToTileset, tileWidth, tileHeight, tileCount, columns);
+        tileset->setStartGID(firstGID);
 
         return tileset;
     }

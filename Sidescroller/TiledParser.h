@@ -14,5 +14,7 @@ using namespace tinyxml2;
 class TiledParser {
 public:
     static bool parse(string filename, string path, Scene* scene);
-    static Tileset* parseTileset(string path);
+private:
+    static void parseObjects(XMLElement*,Scene*);
+    static Tileset* parseTileset(XMLElement*);
 };
