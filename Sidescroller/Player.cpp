@@ -17,7 +17,7 @@ void Player::update() {
     handleInput();
     int gravity = 1;
 
-    if(mVelocity.y < 24)
+    if(mVelocity.y < 30)
         mVelocity.y += gravity;
 
     mPos.x += mVelocity.x;
@@ -96,7 +96,6 @@ void Player::handleCollisions() {
 
 void Player::handleTrigger(std::string name) {
     if (name == "reset_box") {
-        std::cout << "Hit reset_box" << std::endl;
         mPos.x = 64;
         mPos.y = 300;
     }

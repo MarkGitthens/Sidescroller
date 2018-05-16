@@ -14,6 +14,7 @@
 
 #include "TiledParser.h"
 
+//TODO: Should define a consistent unit of measurement instead of just using pixel size
 void initializeEntities();
 bool initializeAudio();
 void registerInputs();
@@ -25,14 +26,6 @@ SDL_Surface* screenSurface = nullptr;
 
 //Entities
 Player* player;
-Box* box;
-Box* box2;
-Box* box3;
-Box* box4;
-Box* box5;
-Box* box6;
-Box* box7;
-TiledMap* map;
 Camera* camera;
 
 ResetBox* reset;
