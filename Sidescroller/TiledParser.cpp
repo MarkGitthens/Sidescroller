@@ -68,17 +68,22 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Scene* scene) {
                 int height = object->IntAttribute("height");
 
                 if (type == "Box") {
-                    XMLElement* properties = object->FirstChildElement("properties");
-                    XMLElement* prop = properties->FirstChildElement("property");
-
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
                     box->createFromPath("images/block.png");
 
-                    string propertyName = prop->Attribute("name");
-                    if (propertyName == "Trigger") {
-                        box->setTrigger(prop->BoolAttribute("value"));
+                    XMLElement* properties = object->FirstChildElement("properties");
+                    if (properties) {
+                        XMLElement* prop = properties->FirstChildElement("property");
+                        string propertyName = prop->Attribute("name");
+                        if (propertyName == "Trigger") {
+                            box->setTrigger(prop->BoolAttribute("value"));
+                        }
                     }
+                    else {
+                        std::cerr << "Missing required Object properties." << std::endl;
+                    }
+
                     scene->registerEntity(box);
                 }
                 object = object->NextSiblingElement();
