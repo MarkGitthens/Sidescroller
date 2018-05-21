@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 
     SceneHandler::getInstance().registerScene(&scene);
 
-    //Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
+    //TODO: Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
     double deltaTime = 16.667;
 
     double currentTime = SDL_GetTicks();
@@ -87,8 +87,6 @@ int main(int argc, char* argv[]) {
 
         currentTime = newTime;
         backlog += frameTime;
-
-        
 
         while (backlog >= deltaTime) {
             InputHandler::getInstance().handleInput();

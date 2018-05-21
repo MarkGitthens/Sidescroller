@@ -164,6 +164,9 @@
     <ClInclude Include="ResetBox.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

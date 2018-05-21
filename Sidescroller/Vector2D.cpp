@@ -1,5 +1,8 @@
 #include "Vector2D.h"
 #include <iostream>
+
+using namespace Vulture2D;
+
 Vector2D::~Vector2D() {
     x = y = 0;
 }

@@ -3,38 +3,40 @@
 #include "Texture.h"
 #include "Renderer.h"
 #include <iostream>
-class Renderable {
-public:
-    Renderable() : mImage(nullptr) {};
-    virtual ~Renderable() {
-        std::cout << "Destroying renderable" << std::endl;
-        if (mImage)
-            delete mImage;
-        mImage = nullptr;
-    }
+namespace Vulture2D {
+    class Renderable {
+    public:
+        Renderable() : mImage(nullptr) {};
+        virtual ~Renderable() {
+            std::cout << "Destroying renderable" << std::endl;
+            if (mImage)
+                delete mImage;
+            mImage = nullptr;
+        }
 
-    void createFromPath(char* path) {
-        mImage = new Texture(path);
-        mRect.w = mImage->getWidth();
-        mRect.h = mImage->getHeight();
-    }
-    void setSprite(Texture* texture) {
-        if (mImage)
-            delete mImage;
-        mImage = texture;
-    }
+        void createFromPath(char* path) {
+            mImage = new Texture(path);
+            mRect.w = mImage->getWidth();
+            mRect.h = mImage->getHeight();
+        }
+        void setSprite(Texture* texture) {
+            if (mImage)
+                delete mImage;
+            mImage = texture;
+        }
 
-    void setRenderId(int id) { mRenderId = id; }
-    int getRenderId() { return mRenderId; }
+        void setRenderId(int id) { mRenderId = id; }
+        int getRenderId() { return mRenderId; }
 
-    Texture* getTexture() { return mImage; }
-    SDL_Texture* getSDLTexture() { return mImage->getTexture(); }
+        Texture* getTexture() { return mImage; }
+        SDL_Texture* getSDLTexture() { return mImage->getTexture(); }
 
-    SDL_Rect* getRenderRect() { return &mRect; }
-    virtual void render(SDL_Rect*) = 0;
+        SDL_Rect* getRenderRect() { return &mRect; }
+        virtual void render(SDL_Rect*) = 0;
 
-protected:
-    int mRenderId = 0;
-    SDL_Rect mRect;
-    Texture* mImage;
-};
+    protected:
+        int mRenderId = 0;
+        SDL_Rect mRect;
+        Texture* mImage;
+    };
+}

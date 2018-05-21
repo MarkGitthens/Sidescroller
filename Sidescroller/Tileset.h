@@ -11,7 +11,7 @@ public:
     Tileset(string name, string path, int tWidth, int tHeight, int tCount, int columns) :
         name(name), path(path), tileWidth(tWidth), tileHeight(tHeight), tileCount(tCount), columns(columns)
     {
-        image = new Texture(path);
+        image = new Vulture2D::Texture(path);
     }
 
     ~Tileset() {
@@ -48,7 +48,7 @@ public:
 
     int getColumnCount() { return columns; }
 
-    Texture* getImage() {
+    Vulture2D::Texture* getImage() {
         return image;
     }
 
@@ -64,5 +64,5 @@ private:
     int margin = 0;
 
     std::map<int, Tile> tiles;
-    Texture* image;
+    Vulture2D::Texture* image;
 };

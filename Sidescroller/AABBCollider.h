@@ -5,6 +5,9 @@
 
 using std::string;
 using std::vector;
+
+using namespace Vulture2D;
+
 class AABBCollider {
 public:
     AABBCollider() : mHalfWidth(0), mHalfHeight(0) {}

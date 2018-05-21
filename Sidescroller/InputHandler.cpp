@@ -1,6 +1,8 @@
 #include "InputHandler.h"
-
 #include <iostream>
+
+using namespace Vulture2D;
+
 InputHandler* InputHandler::instance = nullptr;
 
 InputHandler& InputHandler::getInstance() {

@@ -1,5 +1,7 @@
 #include "Audio.h"
 
+using namespace Vulture2D;
+
 Music::Music(char* name) {
     setName(name);
     mMuteAction = std::string(name) + "_mute";

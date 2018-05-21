@@ -1,5 +1,6 @@
 #include "EventHandler.h"
 
+using namespace Vulture2D;
 EventHandler* EventHandler::instance = nullptr;
 
 EventHandler& EventHandler::getInstance() {

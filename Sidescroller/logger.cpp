@@ -1,5 +1,7 @@
 #include "logger.h"
 
+using namespace Vulture2D;
+
 Log::Log() {}
 
 Log::Log(std::string file) {

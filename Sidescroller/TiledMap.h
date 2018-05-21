@@ -17,7 +17,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
-class TiledMap : public Entity, public Renderable{
+class TiledMap : public Vulture2D::Entity, public Vulture2D::Renderable{
 public:
     TiledMap() {};
     TiledMap(int width, int height, int tilew, int tileh) : width(width), height(height), tileWidth(tilew), tileHeight(tileh) {}
@@ -50,7 +50,7 @@ public:
                 dest.y = j * tileHeight - yOffset;
                 dest.w = tileWidth;
                 dest.h = tileHeight;
-                Renderer::getInstance().drawTexture(tilesets.at(0)->getImage(), &src, &dest);
+                Vulture2D::Renderer::getInstance().drawTexture(tilesets.at(0)->getImage(), &src, &dest);
             }
         }
     }

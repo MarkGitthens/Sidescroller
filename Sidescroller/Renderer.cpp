@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+using namespace Vulture2D;
+
 Renderer* Renderer::instance = nullptr;
 
 Renderer::Renderer() {

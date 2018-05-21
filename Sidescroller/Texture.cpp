@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Renderer.h"
 #include "SDL.h"
+
+using namespace Vulture2D;
+
 Texture::Texture() {
     mTexture = nullptr;
     mWidth = mHeight = 0;
