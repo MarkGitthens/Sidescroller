@@ -11,52 +11,59 @@ InputHandler& InputHandler::getInstance() {
 }
 
 void InputHandler::handleInput() {
+
+    mPressedKeys.clear();
+    mReleasedKeys.clear();
+
     while (SDL_PollEvent(&mEvent) != 0) {
-        std::string actionName = mKeyMap[mEvent.key.keysym.sym];
+        int key = mEvent.key.keysym.sym;
+        std::string actionName = mKeyMap[key];
+        
         if (mEvent.type == SDL_QUIT) {
 			EventHandler::getInstance().triggerEvent("quit_game");
         }
         if (mEvent.type == SDL_KEYDOWN) {
-            mTriggeredActions[actionName] = true;
+            if (!mHeldKeys[key]) {
+                mPressedKeys[key] = true;
+                mHeldKeys[key] = true;
+            }
         }
         if (mEvent.type == SDL_KEYUP) {
-            mTriggeredActions[actionName] = false;
-            if (mPressedTriggeredActions[actionName] < 1)
-                mPressedTriggeredActions[actionName] = mActions[actionName];
+            mPressedKeys[key] = false;
+            mHeldKeys[key] = false;
+            mReleasedKeys[key] = true;
+
             EventHandler::getInstance().triggerEvent(actionName);
         }
     }
 }
 
 bool InputHandler::actionTriggered(std::string action) {
-    if (mTriggeredActions.find(action) != mTriggeredActions.end())
-        return mTriggeredActions[action];
-    else
-        return false;
+    return mPressedKeys[mActionMap[action]];
 }
 
-bool InputHandler::actionPressTriggered(std::string action) {
-    if (mPressedTriggeredActions.find(action) != mPressedTriggeredActions.end()) {
-        int eventsLeftToTrigger = mPressedTriggeredActions[action];
-        if (eventsLeftToTrigger > 0) {
-            mPressedTriggeredActions[action] = eventsLeftToTrigger - 1;
-            return true;
-        }
-    }
-    return false;
+bool InputHandler::actionHeld(std::string action) {
+    return mHeldKeys[mActionMap[action]];
 }
 
 void InputHandler::addKeyAction(int key, std::string tag) {
     mKeyMap.emplace(key, tag);
-    if (mActions.find(tag) != mActions.end()) {
-        mActions[tag] = mActions[tag] + 1;
-    }
-    else {
-        mActions[tag] = 1;
-        mPressedTriggeredActions[tag] = 0;
-    }
+    mActionMap.emplace(tag, key);
 }
 
 void InputHandler::removeKeyAction(int key) {
+    mActionMap.erase(mKeyMap[key]);
     mKeyMap.erase(key);
+}
+
+bool InputHandler::keyPressed(int key) {
+    return mPressedKeys[key];
+}
+
+bool InputHandler::keyHeld(int key) {
+    return mHeldKeys[key];
+}
+
+bool InputHandler::keyReleased(int key) {
+    return mReleasedKeys[key];
 }

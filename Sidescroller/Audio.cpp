@@ -51,13 +51,13 @@ void Music::mute(int value) {
 
 void Music::handleInput() {
     // Handle muting the music
-    if (InputHandler::getInstance().actionPressTriggered(mMuteAction)) {
+    if (InputHandler::getInstance().actionTriggered(mMuteAction)) {
         mute(0);
     }
-    else if (InputHandler::getInstance().actionPressTriggered(mVolumeLowerAction)) {
+    else if (InputHandler::getInstance().actionTriggered(mVolumeLowerAction)) {
         lowerVolume(0);
     }
-    else if (InputHandler::getInstance().actionPressTriggered(mVolumeHigherAction)) {
+    else if (InputHandler::getInstance().actionTriggered(mVolumeHigherAction)) {
         increaseVolume(0);
     }
 }
@@ -126,7 +126,7 @@ void AudioClip::subscribeToEvents() {
 
 void AudioClip::handleInput() {
     // Play the sound clip
-    if (InputHandler::getInstance().actionPressTriggered(mPlayAction)) {
+    if (InputHandler::getInstance().actionTriggered(mPlayAction)) {
         play(0);
     }
 }

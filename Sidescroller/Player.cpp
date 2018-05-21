@@ -25,16 +25,16 @@ void Player::update() {
 }
 
 void Player::handleInput() {
-    if (InputHandler::getInstance().actionTriggered("move_right")) {
+    if (InputHandler::getInstance().actionHeld("move_right")) {
         mVelocity.x = speed;
-    } else if (InputHandler::getInstance().actionTriggered("move_left")) {
+    } else if (InputHandler::getInstance().actionHeld("move_left")) {
         mVelocity.x = -speed;
     } else {
         mVelocity.x = 0;
     }
 
-    if (InputHandler::getInstance().actionPressTriggered("jump") && canJump) {
-        mVelocity.y = -24;
+    if (InputHandler::getInstance().actionTriggered("jump") && canJump) {
+            mVelocity.y = -24;
     }
 }
 
