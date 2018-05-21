@@ -15,30 +15,26 @@ Player::Player(int x, int y, int width, int height) {
 }
 void Player::update() {
     handleInput();
+    int gravity = 1;
+
+    if(mVelocity.y < 30)
+        mVelocity.y += gravity;
 
     mPos.x += mVelocity.x;
     mPos.y += mVelocity.y;
 }
 
 void Player::handleInput() {
-    if (InputHandler::getInstance().actionTriggered("delete_box")) {
-        std::cout << "Deleting Box \n";
-        SceneHandler::getInstance().getCurrentScene()->deleteEntity("Box2");
-    }
-    if (InputHandler::getInstance().actionTriggered("move_right")) {
+    if (InputHandler::getInstance().actionHeld("move_right")) {
         mVelocity.x = speed;
-    } else if (InputHandler::getInstance().actionTriggered("move_left")) {
+    } else if (InputHandler::getInstance().actionHeld("move_left")) {
         mVelocity.x = -speed;
     } else {
         mVelocity.x = 0;
     }
 
-    if (InputHandler::getInstance().actionTriggered("move_up")) {
-        mVelocity.y = -speed;
-    } else if (InputHandler::getInstance().actionTriggered("move_down")) {
-        mVelocity.y = speed;
-    } else {
-        mVelocity.y = 0;
+    if (InputHandler::getInstance().actionTriggered("jump") && canJump) {
+            mVelocity.y = -24;
     }
 }
 
@@ -70,6 +66,12 @@ void Player::render(SDL_Rect* cameraRect) {
 }
 
 void Player::handleCollisions() {
+    if (mColliders.empty()) {
+        canJump = false;
+    }
+    else {
+        canJump = true;
+    }
     while (!mColliders.empty()) {
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
@@ -85,10 +87,18 @@ void Player::handleCollisions() {
         }
         mPos = mPos + getProjectionVector(*mColliders.at(greatestIndex));
         mColliders.erase(mColliders.begin() + greatestIndex);
+
+        //TODO: Need to make this more intelligent.
+        mVelocity.x = 0;
+        mVelocity.y = 0;
     }
 }
 
 void Player::handleTrigger(std::string name) {
+    if (name == "reset_box") {
+        mPos.x = 64;
+        mPos.y = 300;
+    }
 }
 
 void Player::updateAABB() {

@@ -9,7 +9,7 @@ public:
     Texture();
     ~Texture();
     Texture(SDL_Texture*);
-    Texture(const char*);
+    Texture(string);
     SDL_Texture* getTexture();
     const unsigned int getWidth();
     const unsigned int getHeight();

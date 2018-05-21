@@ -10,7 +10,11 @@
 #include "Box.h"
 #include "Scene.h"
 #include "Audio.h"
+#include "ResetBox.h"
 
+#include "TiledParser.h"
+
+//TODO: Should define a consistent unit of measurement instead of just using pixel size
 void initializeEntities();
 bool initializeAudio();
 void registerInputs();
@@ -22,16 +26,9 @@ SDL_Surface* screenSurface = nullptr;
 
 //Entities
 Player* player;
-Box* box;
-Box* box2;
-Box* box3;
-Box* box4;
-Box* box5;
-Box* box6;
-Box* box7;
-TiledMap* map;
 Camera* camera;
 
+ResetBox* reset;
 Scene scene;
 
 bool running = true;
@@ -42,16 +39,12 @@ Music* music = nullptr;
 int main(int argc, char* argv[]) {
     
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-        //error
         std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
     }
     if (IMG_Init(IMG_INIT_PNG) < 0) {
         std::cerr << "SDL_Img could not be initialized!\n" << IMG_GetError() << std::endl;
     }
-
-    //Initialize SDL_mixer
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-    {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         std::cerr << "SDL_mixer could not initialize!\n" << Mix_GetError() << std::endl;
     }
 
@@ -61,36 +54,21 @@ int main(int argc, char* argv[]) {
 
     screenSurface = SDL_GetWindowSurface(window);
 
-    
     initializeEntities();
     initializeAudio();
     registerInputs();
 
     scene.setName("start");
-    scene.setTiledMap(map);
     scene.registerEntity(player);
-
-    //scene.registerEntity(box);
-    scene.registerEntity(box2);
-    scene.registerEntity(box3);
-    scene.registerEntity(box4);
-    scene.registerEntity(box5);
-    scene.registerEntity(box6);
-    scene.registerEntity(box7);
-
     scene.setCamera(camera);
 
     scene.initThreads();
     music->subscribeToEvents();
     
-    Scene testScene;
-    testScene.setName("test_scene");
-    testScene.registerEntity(player);
-    testScene.setCamera(camera);
-    testScene.setTiledMap(map);
+    scene.registerEntity(reset);
 
     SceneHandler::getInstance().registerScene(&scene);
-    SceneHandler::getInstance().registerScene(&testScene);
+
     //Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks manually
     double deltaTime = 16.667;
 
@@ -110,9 +88,10 @@ int main(int argc, char* argv[]) {
         currentTime = newTime;
         backlog += frameTime;
 
-        InputHandler::getInstance().handleInput();
+        
 
         while (backlog >= deltaTime) {
+            InputHandler::getInstance().handleInput();
             SceneHandler::getInstance().getCurrentScene()->updateScene();
             backlog -= deltaTime;
             updateCounter++;
@@ -124,7 +103,6 @@ int main(int argc, char* argv[]) {
             fpsTimerStart = currentTime;
             updateTimerStart = currentTime;
         }
-
 
         SceneHandler::getInstance().getCurrentScene()->renderScene();
         fpsCounter++;
@@ -138,6 +116,8 @@ void quitGame(int a) {
 	running = false;
 }
 void shutdown() {
+    SceneHandler::getInstance().getCurrentScene()->destroy();
+
     SDL_FreeSurface(screenSurface);
     screenSurface = nullptr;
 
@@ -156,46 +136,19 @@ bool initializeAudio() {
 }
 
 void initializeEntities() {
+    //TODO: Should probably make player a unique entity that will only ever have one copy
     player = new Player(64, 300, 64, 64);
 
     player->setName("Player");
     player->createFromPath("images/ball.png");
 
-    //box = new Box(0, 0, 128, 128);
-    //box->setName("Box");
-    //box->setTrigger(true);
-    //box->createFromPath("images/block.png");
-
-    box2 = new Box(128, 0, 128, 128);
-    box2->setName("Box2");
-    box2->createFromPath("images/block.png");
-
-    box3 = new Box(256, 0, 128, 128);
-    box3->setName("Box3");
-    box3->createFromPath("images/block.png");
-
-    box4 = new Box(256, -128, 128, 128);
-    box4->setName("Box4");
-    box4->createFromPath("images/block.png");
-
-    box5 = new Box(128, -256, 128, 128);
-    box5->setName("Box5");
-    box5->createFromPath("images/block.png");
-
-    box6 = new Box(0, -256, 128, 128);
-    box6->setName("Box6");
-    box6->createFromPath("images/block.png");
-    box6->setTrigger(true);
-
-    box7 = new Box(0, 74, 10, 10);
-    box7->setName("Box7");
-    box7->createFromPath("images/block.png");
-
-    map = new TiledMap(15,10,128,128);
-    map->setTileSheet("images/tilesheet_complete_2X.png");
-    map->parseFile("tilesets/Level1.tmx");
+    TiledParser::parse("Level1.tmx", "tilesets/", &scene);
 
     camera = new Camera();
+
+    reset = new ResetBox(-1000, 1500, 10000, 128);
+    reset->setName("reset_box");
+    reset->setTrigger(true);
 
     SDL_Rect* cameraRect = new SDL_Rect();
     cameraRect->x = 0;
@@ -207,16 +160,13 @@ void initializeEntities() {
 }
 
 void registerInputs() {
+    //TODO: Should really verify this is how I actually want InputHandler and EventHandler to work.
     InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
 	EventHandler::getInstance().subscribeToEvent("quit_game", "main", std::bind(quitGame, std::placeholders::_1));
     InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
     InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
-    InputHandler::getInstance().addKeyAction(SDLK_UP, "move_up");
-    InputHandler::getInstance().addKeyAction(SDLK_DOWN, "move_down");
     InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
-	InputHandler::getInstance().addKeyAction(SDLK_SPACE, "fire_bullet");
-
-    InputHandler::getInstance().addKeyAction(SDLK_d, "delete_box");
+	InputHandler::getInstance().addKeyAction(SDLK_SPACE, "jump");
 
     InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
     InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());

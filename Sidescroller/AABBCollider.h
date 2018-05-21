@@ -7,7 +7,7 @@ using std::string;
 using std::vector;
 class AABBCollider {
 public:
-    AABBCollider() {}
+    AABBCollider() : mHalfWidth(0), mHalfHeight(0) {}
     AABBCollider(double, double, int, int);
 	virtual ~AABBCollider();
     bool colliding(AABBCollider);

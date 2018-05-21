@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="128" tileheight="128" nextobjectid="26">
- <tileset firstgid="1" source="tileset.tsx"/>
+<map version="1.0" tiledversion="2017.09.08" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="128" tileheight="128" infinite="0" nextobjectid="60">
+ <tileset firstgid="1" name="tilesheet_complete_2X" tilewidth="128" tileheight="128" tilecount="264" columns="22">
+  <grid orientation="orthogonal" width="64" height="64"/>
+  <image source="tilesheet_complete_2X.png" width="2816" height="1536"/>
+  <tile id="134">
+   <objectgroup draworder="index">
+    <object id="1" name="Blue Floor" type="Box" x="0" y="0" width="128" height="128"/>
+   </objectgroup>
+  </tile>
+  <tile id="140">
+   <objectgroup draworder="index">
+    <object id="1" name="Blue Platform" type="Box" x="0" y="0" width="128" height="96"/>
+   </objectgroup>
+  </tile>
+ </tileset>
  <layer name="Background" width="15" height="10">
   <data encoding="csv">
 67,67,67,67,67,67,67,67,67,67,67,67,67,67,67,
@@ -44,6 +57,21 @@
 </data>
  </layer>
  <objectgroup name="Objects">
-  <object id="25" name="PuzzlePiece1" type="Collectable" gid="81" x="1410" y="1150" width="128" height="128"/>
+  <object id="49" name="Box" type="Box" x="0" y="1024" width="384" height="128"/>
+  <object id="55" name="Box" type="Box" x="1024" y="256" width="128" height="1024">
+   <properties>
+    <property name="Trigger" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="56" name="Box" type="Box" x="1280" y="512" width="256" height="128">
+   <properties>
+    <property name="Trigger" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="59" name="Box" type="Box" x="1664" y="256" width="256" height="128">
+   <properties>
+    <property name="Trigger" type="bool" value="false"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

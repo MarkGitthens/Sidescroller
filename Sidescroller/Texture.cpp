@@ -16,9 +16,9 @@ Texture::~Texture() {
 Texture::Texture(SDL_Texture* texture) {
     mTexture = texture;
 }
-Texture::Texture(const char* path) {
+Texture::Texture(string path) {
     SDL_Surface* temp;
-    temp = IMG_Load(path);
+    temp = IMG_Load(path.c_str());
     if (!temp) {
         std::cout << "Couldn't load image" << std::endl;
     }
