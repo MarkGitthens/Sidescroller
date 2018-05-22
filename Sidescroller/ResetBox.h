@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "AABBCollider.h"
 
-class ResetBox : public Entity, public AABBCollider {
+class ResetBox : public Vulture2D::Entity, public AABBCollider {
 public:
     ResetBox() {};
     ResetBox(int x, int y, int w, int h) {

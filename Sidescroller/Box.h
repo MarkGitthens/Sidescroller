@@ -4,7 +4,7 @@
 #include "Renderable.h"
 #include "AABBCollider.h"
 
-class Box : public Entity, public AABBCollider, public Renderable {
+class Box : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {
 public:
     Box(): mTexture(nullptr) {};
     Box(int x, int y, int w, int h) {

@@ -6,7 +6,7 @@
 #include "AABBCollider.h"
 
 //TODO: Entities shouldn't inherit AABBCollider since a single entity have multiple colliders
-class Player : public Entity, public AABBCollider, public Renderable {
+class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {
 public:
     Player() : mVelocity(0, 0) {};
     Player(int, int, int, int);
