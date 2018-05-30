@@ -23,9 +23,7 @@ namespace Vulture2D {
         Scene(const string name) : mSceneName(name) {};
         Scene(const string name, SDL_Rect world) : mSceneName(name), mWorldSpace(world) {};
         Scene(const Scene& old) : mSceneName(old.mSceneName), mWorldSpace(old.mWorldSpace), mEntityMap(old.mEntityMap) {};
-        ~Scene() {
-
-        };
+        ~Scene() {};
 
         void registerEntity(Entity* entity) {
             if (entity == nullptr) {
@@ -87,13 +85,13 @@ namespace Vulture2D {
         }
 
         // Thread function to run in the background to handle updating the off-screen entities
-        void updateOffScreen() {
+   /*     void updateOffScreen() {
             while (mRunning) {
                 for (std::pair<int, Entity*> e : mOffScreenEntityMap) {
                     e.second->update();
                 }
             }
-        }
+        } */
 
         void renderScene() {
             SDL_RenderClear(Renderer::getInstance().getRenderer());
@@ -160,20 +158,7 @@ namespace Vulture2D {
             return mSceneName;
         }
 
-        // Init and start the background thread
-        void initThreads() {
-            mRunning = true;
-            mBackgroundThread = std::move(std::thread(&Scene::updateOffScreen, this));
-        }
-
-        void stopThreads() {
-            mRunning = false;
-        }
-
         void destroy() {
-            stopThreads();
-            //This causes a crash
-            mBackgroundThread.join();
             delete mCamera;
             delete mTiledMap;
         }
@@ -196,9 +181,6 @@ namespace Vulture2D {
         unordered_map<int, AABBCollider*> mTriggers;
 
         std::vector<int> mDeletedEntities;
-
-        std::atomic<bool> mRunning;
-        std::thread mBackgroundThread;
 
         unordered_map<int, Entity*> mOffScreenEntityMap;
 

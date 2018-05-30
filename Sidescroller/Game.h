@@ -11,8 +11,9 @@ namespace Vulture2D {
     public:
         void init();
         void run();
+        void registerInputs();
         void destroy();
-
+        
     private:
         SDL_Window * window;
         SDL_Surface* screenSurface;
