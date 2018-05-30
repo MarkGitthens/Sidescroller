@@ -169,6 +169,7 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="logger.cpp" />
     <ClCompile Include="main.cpp" />

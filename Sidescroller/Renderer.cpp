@@ -1,63 +1,65 @@
 #include "Renderer.h"
 
-using namespace Vulture2D;
 
-Renderer* Renderer::instance = nullptr;
+namespace Vulture2D {
 
-Renderer::Renderer() {
-    mRenderer = nullptr;
-}
+    Renderer* Renderer::instance = nullptr;
 
-Renderer::Renderer(SDL_Window* window, Uint32 flags) {
-    createFromWindow(window, flags);
-}
+    Renderer::Renderer() {
+        mRenderer = nullptr;
+    }
 
-void Renderer::init(SDL_Window* window, Uint32 flags) {
-    createFromWindow(window, flags);
-}
+    Renderer::Renderer(SDL_Window* window, Uint32 flags) {
+        createFromWindow(window, flags);
+    }
 
-void Renderer::destroy() {
-    if (mRenderer)
-        SDL_DestroyRenderer(mRenderer);
-    mRenderer = nullptr;
-}
+    void Renderer::init(SDL_Window* window, Uint32 flags) {
+        createFromWindow(window, flags);
+    }
 
-Renderer& Renderer::getInstance() {
-    if (!instance)
-        instance = new Renderer();
-    return *instance;
-}
+    void Renderer::destroy() {
+        if (mRenderer)
+            SDL_DestroyRenderer(mRenderer);
+        mRenderer = nullptr;
+    }
 
-void Renderer::createFromWindow(SDL_Window* window, Uint32 flags) {
-    //TODO: Need to do error checking.
-    mRenderer = SDL_CreateRenderer(window, -1, flags);
-}
+    Renderer& Renderer::getInstance() {
+        if (!instance)
+            instance = new Renderer();
+        return *instance;
+    }
 
-void Renderer::drawTexture(Texture* texture, int x, int y, int w, int h) {
-    SDL_Rect* dest = new SDL_Rect;
+    void Renderer::createFromWindow(SDL_Window* window, Uint32 flags) {
+        //TODO: Need to do error checking.
+        mRenderer = SDL_CreateRenderer(window, -1, flags);
+    }
 
-    dest->x = x;
-    dest->y = y;
-    dest->w = w;
-    dest->h = h;
+    void Renderer::drawTexture(Texture* texture, int x, int y, int w, int h) {
+        SDL_Rect* dest = new SDL_Rect;
 
-    SDL_RenderCopy(mRenderer, texture->getTexture(), NULL, dest);
-}
+        dest->x = x;
+        dest->y = y;
+        dest->w = w;
+        dest->h = h;
 
-void Renderer::drawTexture(Texture* texture, SDL_Rect* dest) {
-    SDL_RenderCopy(mRenderer, texture->getTexture(), NULL, dest);
-}
+        SDL_RenderCopy(mRenderer, texture->getTexture(), NULL, dest);
+    }
 
-void Renderer::drawTexture(Texture* texture, SDL_Rect* src, SDL_Rect* dest) {
-    SDL_RenderCopy(mRenderer, texture->getTexture(), src, dest);
-}
+    void Renderer::drawTexture(Texture* texture, SDL_Rect* dest) {
+        SDL_RenderCopy(mRenderer, texture->getTexture(), NULL, dest);
+    }
+
+    void Renderer::drawTexture(Texture* texture, SDL_Rect* src, SDL_Rect* dest) {
+        SDL_RenderCopy(mRenderer, texture->getTexture(), src, dest);
+    }
 
 
 
-void Renderer::setClearColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-    SDL_SetRenderDrawColor(mRenderer, r, g, b, a);
-}
+    void Renderer::setClearColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+        SDL_SetRenderDrawColor(mRenderer, r, g, b, a);
+    }
 
-SDL_Renderer* Renderer::getRenderer() {
-    return mRenderer;
+    SDL_Renderer* Renderer::getRenderer() {
+        return mRenderer;
+    }
 }
