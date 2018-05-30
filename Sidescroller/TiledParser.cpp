@@ -49,6 +49,8 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
         scene->setTiledMap(tiledMap);
 
         parseObjects(map->FirstChildElement("objectgroup"), scene);
+
+        return true;
     }
 }
 
