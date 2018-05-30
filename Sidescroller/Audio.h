@@ -7,7 +7,7 @@
 #include <string>
 #include <mutex>
 
-class Music : public Entity {
+class Music : public Vulture2D::Entity{
 public:
     Music(char* name);
     virtual ~Music();
@@ -30,7 +30,7 @@ private:
     std::string mVolumeHigherAction;
 };
 
-class AudioClip : public Entity {
+class AudioClip : public Vulture2D::Entity {
 public:
     AudioClip(char* name);
     ~AudioClip();

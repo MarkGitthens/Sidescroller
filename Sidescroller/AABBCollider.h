@@ -5,25 +5,28 @@
 
 using std::string;
 using std::vector;
+
+using namespace Vulture2D;
+
 class AABBCollider {
 public:
     AABBCollider() : mHalfWidth(0), mHalfHeight(0) {}
     AABBCollider(double, double, int, int);
 	virtual ~AABBCollider();
-    bool colliding(AABBCollider);
+    bool colliding(AABBCollider) noexcept;
 
     vector<AABBCollider*> getColliders();
 
     void addCollider(AABBCollider*);
 
-    void clearColliders();
+    void clearColliders() noexcept;
 
     //Get the affected area of the colliding objects.
     double getInterArea(AABBCollider);
 
     Vector2D getProjectionVector(AABBCollider);
 
-    Vector2D* getPos();
+    Vector2D* getPos() noexcept;
 
     bool isTrigger();
 

@@ -93,6 +93,9 @@
     <ClCompile Include="TiledParser.cpp">
       <Filter>Source Files\util\tiled</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderable.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="ResetBox.h">
       <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

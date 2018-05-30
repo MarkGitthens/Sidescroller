@@ -4,7 +4,7 @@
 #include "Vector2D.h"
 #include "Entity.h"
 
-class Camera : public Entity {
+class Camera : public Vulture2D::Entity {
 public:
     Camera();
     virtual ~Camera();
@@ -16,10 +16,10 @@ public:
     void setWidth(int);
     void setHeight(int);
     void setCameraRect(SDL_Rect*);
-    void setParentPos(Vector2D*);
+    void setParentPos(Vulture2D::Vector2D*);
     SDL_Rect* getCameraRect();
-    Vector2D* getParentPos();
+    Vulture2D::Vector2D* getParentPos();
 private:
-    Vector2D* mParentPos;
+    Vulture2D::Vector2D* mParentPos;
     SDL_Rect* mCameraViewport;
 };

@@ -4,35 +4,37 @@
 #include "Texture.h"
 
 //Should probably make this an interface to ease the transition from rendering using SDL2 to OpenGL.
-class Renderer {
-public:
+namespace Vulture2D {
+    class Renderer {
+    public:
 
-    static Renderer& getInstance();
+        static Renderer& getInstance();
 
-    Renderer();
-    Renderer(SDL_Window*, Uint32);
+        Renderer();
+        Renderer(SDL_Window*, Uint32);
 
-    void init(SDL_Window*, Uint32);
-    void destroy();
+        void init(SDL_Window*, Uint32);
+        void destroy();
 
-    void createFromWindow(SDL_Window*, Uint32);
-    void drawTexture(Texture*, int x, int y, int w, int h);
-    void drawTexture(Texture*, SDL_Rect*);
-    void drawTexture(Texture*, SDL_Rect*, SDL_Rect*);
-    void setClearColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+        void createFromWindow(SDL_Window*, Uint32);
+        void drawTexture(Texture*, int x, int y, int w, int h);
+        void drawTexture(Texture*, SDL_Rect*);
+        void drawTexture(Texture*, SDL_Rect*, SDL_Rect*);
+        void setClearColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
-    SDL_Renderer* getRenderer();
+        SDL_Renderer* getRenderer();
 
-private:
-    static Renderer* instance;
+    private:
+        static Renderer* instance;
 
-    Renderer(Renderer const&) {}
-    Renderer& operator=(Renderer const& e) {}
-    ~Renderer() { 
-        if (instance) { 
-            delete instance; 
+        Renderer(Renderer const&) {}
+        Renderer& operator=(Renderer const& e) {}
+        ~Renderer() {
+            if (instance) {
+                delete instance;
+            }
+            instance = nullptr;
         }
-        instance = nullptr; 
-    }
-    SDL_Renderer* mRenderer;
-};
+        SDL_Renderer* mRenderer;
+    };
+}
