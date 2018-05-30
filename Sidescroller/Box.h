@@ -16,12 +16,16 @@ public:
     }
     Box(Texture* texture) : mTexture(texture) {};
     virtual ~Box();
+    
     void update();
     void handleInput();
     virtual void render(SDL_Rect*);
-
     virtual void handleCollisions();
     virtual void updateAABB();
+    bool visibility();
+    void setVisible(bool);
+
 private:
     Texture* mTexture;
+    bool visible = true;
 };

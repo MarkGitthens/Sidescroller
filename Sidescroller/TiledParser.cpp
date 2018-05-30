@@ -67,10 +67,14 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Scene* scene) {
                 int width = object->IntAttribute("width");
                 int height = object->IntAttribute("height");
 
+                int visible = 1;
+                object->QueryIntAttribute("visible", &visible);
+
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
                     box->createFromPath("images/block.png");
+                    box->setVisible(visible);
 
                     XMLElement* properties = object->FirstChildElement("properties");
                     if (properties) {
