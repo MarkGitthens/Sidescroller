@@ -8,10 +8,10 @@
 #include <thread>
 #include "Entity.h"
 #include "Renderable.h"
-#include "TiledMap.h"
-#include "Camera.h"
-#include "Audio.h"
-#include "AABBCollider.h"
+#include "../entities/TiledMap.h"
+#include "../entities/Camera.h"
+#include "../entities/Audio.h"
+#include "../physics/AABBCollider.h"
 
 using std::string;
 using std::unordered_map;

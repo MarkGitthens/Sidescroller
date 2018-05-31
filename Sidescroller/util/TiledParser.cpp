@@ -1,5 +1,5 @@
 #include "TiledParser.h"
-#include "Box.h"
+
 //arg1: Name of the map file
 //arg2: Path to file location
 //arg3: scene to insert parsed information to.
@@ -54,7 +54,7 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
     }
 }
 
-void TiledParser::parseObjects(XMLElement* objectGroup, Scene* scene) {
+void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene) {
     if (objectGroup) {
         XMLElement* object = objectGroup->FirstChildElement("object");
 

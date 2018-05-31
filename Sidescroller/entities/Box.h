@@ -1,8 +1,8 @@
 #pragma once
-#include "Entity.h"
-#include "Texture.h"
-#include "Renderable.h"
-#include "AABBCollider.h"
+#include "../core/Entity.h"
+#include "../core/Texture.h"
+#include "../core/Renderable.h"
+#include "../physics/AABBCollider.h"
 
 class Box : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {
 public:

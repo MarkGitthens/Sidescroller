@@ -1,14 +1,16 @@
-#include "SceneHandler.h"
+#include "core/SceneHandler.h"
+#include "core/Scene.h"
+#include "core/Game.h"
 
-#include "Player.h"
-#include "Box.h"
-#include "Scene.h"
-#include "Audio.h"
-#include "ResetBox.h"
-#include "Game.h"
+#include "entities/Player.h"
+#include "entities/Box.h"
+#include "entities/Camera.h"
+#include "entities/Audio.h"
+#include "entities/ResetBox.h"
 
-#include "TiledParser.h"
+#include "util/TiledParser.h"
 
+using namespace Vulture2D;
 //TODO: Should define a consistent unit of measurement instead of just using pixel size
 void initializeEntities();
 

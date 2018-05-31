@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include "Entity.h"
-#include "AABBCollider.h"
+#include "../core/Entity.h"
+#include "../physics/AABBCollider.h"
 
 class ResetBox : public Vulture2D::Entity, public AABBCollider {
 public:

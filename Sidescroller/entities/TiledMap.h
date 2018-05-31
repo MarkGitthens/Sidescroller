@@ -1,17 +1,16 @@
 #pragma once
 #include <vector>
-#include <SDL.h>
-#include "Renderer.h"
-#include "tinyxml2.h"
-#include "Texture.h"
-
 #include <sstream>
 #include <string>
 #include <map>
 #include <iostream>
-#include "Entity.h"
-#include "Renderable.h"
-#include "Tileset.h"
+#include <SDL.h>
+#include "../util/tinyxml2.h"
+#include "../util/Tileset.h"
+#include "../core/Texture.h"
+#include "../core/Entity.h"
+#include "../core/Renderable.h"
+#include "../core/Renderer.h"
 
 using std::string;
 using std::vector;

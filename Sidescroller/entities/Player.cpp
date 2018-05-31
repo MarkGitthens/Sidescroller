@@ -2,8 +2,8 @@
 #include <string>
 #include <iostream>
 #include "Projectile.h"
-#include "InputHandler.h"
-#include "SceneHandler.h"
+#include "../core/InputHandler.h"
+#include "../core/SceneHandler.h"
 const int speed = 8;
 Player::Player(int x, int y, int width, int height) {
     mPos.x = x;

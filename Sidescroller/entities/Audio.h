@@ -1,11 +1,11 @@
 #pragma once
-#include "Entity.h"
-#include "InputHandler.h"
-#include "EventHandler.h"
-#include "SDL_mixer.h"
 #include <iostream>
 #include <string>
 #include <mutex>
+#include "../SDL_mixer.h"
+#include "../core/Entity.h"
+#include "../core/InputHandler.h"
+#include "../core/EventHandler.h"
 
 class Music : public Vulture2D::Entity{
 public:
