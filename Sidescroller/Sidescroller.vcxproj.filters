@@ -105,7 +105,7 @@
     <ClCompile Include="util\logger.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
-    <ClCompile Include="util\TiledParser.cpp">
+    <ClCompile Include="util\tiled\TiledParser.cpp">
       <Filter>Source Files\util\tiled</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,13 +173,13 @@
     <ClInclude Include="util\Vector2D.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="util\TiledParser.h">
+    <ClInclude Include="util\tiled\Tile.h">
       <Filter>Header Files\util\tiled</Filter>
     </ClInclude>
-    <ClInclude Include="util\Tileset.h">
+    <ClInclude Include="util\tiled\TiledParser.h">
       <Filter>Header Files\util\tiled</Filter>
     </ClInclude>
-    <ClInclude Include="util\Tile.h">
+    <ClInclude Include="util\tiled\Tileset.h">
       <Filter>Header Files\util\tiled</Filter>
     </ClInclude>
   </ItemGroup>

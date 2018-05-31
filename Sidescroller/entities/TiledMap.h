@@ -6,7 +6,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "../util/tinyxml2.h"
-#include "../util/Tileset.h"
+#include "../util/tiled/Tileset.h"
 #include "../core/Texture.h"
 #include "../core/Entity.h"
 #include "../core/Renderable.h"

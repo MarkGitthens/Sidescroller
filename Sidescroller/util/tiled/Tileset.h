@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 #include "Tile.h"
-#include "../core/Texture.h"
+#include "../../core/Texture.h"
 
 using std::string;
 

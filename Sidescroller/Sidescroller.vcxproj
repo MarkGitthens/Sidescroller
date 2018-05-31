@@ -179,7 +179,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physics\AABBCollider.cpp" />
     <ClCompile Include="util\logger.cpp" />
-    <ClCompile Include="util\TiledParser.cpp" />
+    <ClCompile Include="util\tiled\TiledParser.cpp" />
     <ClCompile Include="util\tinyxml2.cpp" />
     <ClCompile Include="util\Vector2D.cpp" />
   </ItemGroup>
@@ -203,9 +203,9 @@
     <ClInclude Include="physics\AABBCollider.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="util\logger.h" />
-    <ClInclude Include="util\Tile.h" />
-    <ClInclude Include="util\TiledParser.h" />
-    <ClInclude Include="util\Tileset.h" />
+    <ClInclude Include="util\tiled\Tile.h" />
+    <ClInclude Include="util\tiled\TiledParser.h" />
+    <ClInclude Include="util\tiled\Tileset.h" />
     <ClInclude Include="util\tinyxml2.h" />
     <ClInclude Include="util\Vector2D.h" />
   </ItemGroup>

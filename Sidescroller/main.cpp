@@ -8,7 +8,7 @@
 #include "entities/Audio.h"
 #include "entities/ResetBox.h"
 
-#include "util/TiledParser.h"
+#include "util/tiled/TiledParser.h"
 
 using namespace Vulture2D;
 //TODO: Should define a consistent unit of measurement instead of just using pixel size

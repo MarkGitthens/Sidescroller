@@ -2,13 +2,13 @@
 #include <sstream>
 #include <SDL.h>
 #include <vector>
-#include "tinyxml2.h"
+#include "../tinyxml2.h"
 #include "Tile.h"
 #include "Tileset.h"
-#include "../core/Entity.h"
-#include "../core/Scene.h"
-#include "../entities/TiledMap.h"
-#include "../entities/Box.h"
+#include "../../core/Entity.h"
+#include "../../core/Scene.h"
+#include "../../entities/TiledMap.h"
+#include "../../entities/Box.h"
 
 
 
