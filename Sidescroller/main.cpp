@@ -1,5 +1,3 @@
-//#include "SDL_mixer.h"
-
 #include "SceneHandler.h"
 
 #include "Player.h"

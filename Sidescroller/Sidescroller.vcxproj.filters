@@ -31,17 +31,17 @@
     <Filter Include="Header Files\util">
       <UniqueIdentifier>{12cdce82-c179-43df-bae6-b67a7148010b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\collision">
-      <UniqueIdentifier>{1677dd44-1ef2-4ffd-b87f-8adcd95a9fe8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\collision">
-      <UniqueIdentifier>{aba2deb7-accc-4a46-83ba-771b6aaabb80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\util\tiled">
       <UniqueIdentifier>{79526ed3-6b96-4ae1-a733-46a5c1ce0f64}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\util\tiled">
       <UniqueIdentifier>{57ac171a-c393-460a-9923-79dd455cfd6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\physics">
+      <UniqueIdentifier>{aba2deb7-accc-4a46-83ba-771b6aaabb80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\physics">
+      <UniqueIdentifier>{1677dd44-1ef2-4ffd-b87f-8adcd95a9fe8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +79,7 @@
       <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="AABBCollider.cpp">
-      <Filter>Source Files\collision</Filter>
+      <Filter>Source Files\physics</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files\util</Filter>
@@ -138,7 +138,7 @@
       <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="AABBCollider.h">
-      <Filter>Header Files\collision</Filter>
+      <Filter>Header Files\physics</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files\util</Filter>
