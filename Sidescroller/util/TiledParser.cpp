@@ -75,7 +75,7 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
-                    box->createFromPath("images/block.png");
+                    box->createFromPath("resources/images/block.png");
                     box->setVisible(visible);
 
                     XMLElement* properties = object->FirstChildElement("properties");
@@ -110,7 +110,7 @@ Tileset* TiledParser::parseTileset(XMLElement* tilesetNode)  {
 
         int columns = tilesetNode->IntAttribute("columns");
         XMLElement* image = tilesetNode->FirstChildElement("image");
-        string pathToTileset = "tilesets/";
+        string pathToTileset = "resources/tilesets/";
         pathToTileset+=image->Attribute("source");
 
         Tileset* tileset = new Tileset(tilesetName, pathToTileset, tileWidth, tileHeight, tileCount, columns);

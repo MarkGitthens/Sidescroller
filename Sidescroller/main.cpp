@@ -54,9 +54,9 @@ void initializeEntities() {
     player = new Player(64, 300, 64, 64);
 
     player->setName("Player");
-    player->createFromPath("images/ball.png");
+    player->createFromPath("resources/images/ball.png");
 
-    TiledParser::parse("Level1.tmx", "tilesets/", &scene);
+    TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
     camera = new Camera();
 

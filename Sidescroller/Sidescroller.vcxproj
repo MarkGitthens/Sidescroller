@@ -212,9 +212,19 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="post_build.bat" />
+    <None Include="resources\tilesets\Level1.tmx" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2_mixer.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\ball.png" />
+    <Image Include="resources\images\block.png" />
+    <Image Include="resources\tilesets\tilesheet_complete_2X.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\audio\beat.wav" />
+    <Media Include="resources\audio\low.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

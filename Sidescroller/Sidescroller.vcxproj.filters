@@ -43,6 +43,15 @@
     <Filter Include="Source Files\physics">
       <UniqueIdentifier>{1677dd44-1ef2-4ffd-b87f-8adcd95a9fe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\audio">
+      <UniqueIdentifier>{35c9628b-2fab-4e99-925b-b5e84b5835af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\images">
+      <UniqueIdentifier>{f1dae076-2888-4d18-a4e3-cc6bd9bdcc11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tilesets">
+      <UniqueIdentifier>{66784e74-36b4-4d00-aaef-da698ee8be2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -177,8 +186,30 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="post_build.bat" />
+    <None Include="resources\tilesets\Level1.tmx">
+      <Filter>Resource Files\tilesets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="SDL2_mixer.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\ball.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="resources\images\block.png">
+      <Filter>Resource Files\images</Filter>
+    </Image>
+    <Image Include="resources\tilesets\tilesheet_complete_2X.png">
+      <Filter>Resource Files\tilesets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\audio\beat.wav">
+      <Filter>Resource Files\audio</Filter>
+    </Media>
+    <Media Include="resources\audio\low.wav">
+      <Filter>Resource Files\audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>
