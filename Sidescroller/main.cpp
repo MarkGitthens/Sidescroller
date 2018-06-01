@@ -1,14 +1,16 @@
-#include "SceneHandler.h"
+#include "core/SceneHandler.h"
+#include "core/Scene.h"
+#include "core/Game.h"
 
-#include "Player.h"
-#include "Box.h"
-#include "Scene.h"
-#include "Audio.h"
-#include "ResetBox.h"
-#include "Game.h"
+#include "entities/Player.h"
+#include "entities/Box.h"
+#include "entities/Camera.h"
+#include "entities/Audio.h"
+#include "entities/ResetBox.h"
 
-#include "TiledParser.h"
+#include "util/tiled/TiledParser.h"
 
+using namespace Vulture2D;
 //TODO: Should define a consistent unit of measurement instead of just using pixel size
 void initializeEntities();
 
@@ -52,9 +54,9 @@ void initializeEntities() {
     player = new Player(64, 300, 64, 64);
 
     player->setName("Player");
-    player->createFromPath("images/ball.png");
+    player->createFromPath("resources/images/ball.png");
 
-    TiledParser::parse("Level1.tmx", "tilesets/", &scene);
+    TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
     camera = new Camera();
 

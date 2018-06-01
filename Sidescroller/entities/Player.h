@@ -1,9 +1,9 @@
 #pragma once
-#include "Texture.h"
-#include "Entity.h"
-#include "InputHandler.h"
-#include "Renderable.h"
-#include "AABBCollider.h"
+#include "../core/Texture.h"
+#include "../core/Entity.h"
+#include "../core/InputHandler.h"
+#include "../core/Renderable.h"
+#include "../physics/AABBCollider.h"
 
 //TODO: Entities shouldn't inherit AABBCollider since a single entity have multiple colliders
 class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {

@@ -1,7 +1,7 @@
 #pragma once
-#include "Entity.h"
-#include "Renderable.h"
-#include "AABBCollider.h"
+#include "../core/Entity.h"
+#include "../core/Renderable.h"
+#include "../physics/AABBCollider.h"
 
 class Projectile : public Vulture2D::Entity, public Vulture2D::Renderable, public AABBCollider {
 public:

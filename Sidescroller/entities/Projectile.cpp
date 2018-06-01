@@ -1,5 +1,5 @@
 #include "Projectile.h"
-#include "SceneHandler.h"
+#include "../core/SceneHandler.h"
 
 Projectile::~Projectile() {
 }
