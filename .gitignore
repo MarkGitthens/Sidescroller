@@ -13,6 +13,17 @@
 # Dependencies
 dependencies/SDL2/*
 
+#CMake 
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -20,7 +31,6 @@ dependencies/SDL2/*
 [Rr]eleases/
 [Xx]64/
 [Xx]86/
-[Bb]uild/*
 bld/
 [Bb]in/
 [Oo]bj/
