@@ -1,0 +1,1 @@
+Extract include/ and lib/ from both SDL2 and SDL2_image here.
