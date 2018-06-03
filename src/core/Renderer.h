@@ -3,7 +3,6 @@
 #include <SDL.h>
 #include "Texture.h"
 
-//Should probably make this an interface to ease the transition from rendering using SDL2 to OpenGL.
 namespace Vulture2D {
     class Renderer {
     public:
