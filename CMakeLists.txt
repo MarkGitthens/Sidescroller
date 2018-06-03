@@ -9,20 +9,20 @@ set(CMAKE_CXX_STANDARD 11)
 add_executable(sidescroller ${VULTURE2D_SRC})
 
 if(MSVC)
-    set(SDL2_DIR ../dependencies/SDL2)
-    set(SDL2_INCLUDE ${SDL2_DIR}/include)
-    set(SDL2_LIB ${SDL2_DIR}/lib)
+    set(SDL2_DIR dependencies/SDL2)
+    set(SDL2_INCLUDE dependencies/SDL2/include)
+    set(SDL2_LIB ../dependencies/SDL2/lib)
 
     include_directories(${SDL2_INCLUDE})
 
-	target_link_libraries(sidescroller
+    target_link_libraries(sidescroller
+            ${SDL2_LIB}/x86/SDL2
+            ${SDL2_LIB}/x86/SDL2main
+            ${SDL2_LIB}/x86/SDL2_image)
 
-	    				${SDL2_LIB}/x86/SDL2
-	    				${SDL2_LIB}/x86/SDL2main
-	    				${SDL2_LIB}/x86/SDL2_image)
     #TODO: check to see if we are creating a 32 or 64 bit msvc project
     #if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64") 
-	    #target_link_libraries(sidescroller ${SDL2_LIB}/x64/*)	    
+        #target_link_libraries(sidescroller ${SDL2_LIB}/x64/*)        
     #endif()
 endif()
 
