@@ -45,7 +45,10 @@ if(MSVC)
         COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_LIB}/x86/LICENSE.png.txt     ${CMAKE_BINARY_DIR}/Debug
         COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_LIB}/x86/LICENSE.tiff.txt    ${CMAKE_BINARY_DIR}/Debug
         COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_LIB}/x86/LICENSE.webp.txt    ${CMAKE_BINARY_DIR}/Debug
-        COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_LIB}/x86/LICENSE.zlib.txt    ${CMAKE_BINARY_DIR}/Debug )    
+        COMMAND ${CMAKE_COMMAND} -E copy ${SDL2_LIB}/x86/LICENSE.zlib.txt    ${CMAKE_BINARY_DIR}/Debug ) 
+
+    ADD_CUSTOM_COMMAND (TARGET sidescroller POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources  ${CMAKE_BINARY_DIR}/Debug/resources)   
 endif()
 
 if(UNIX)
@@ -64,5 +67,4 @@ if(UNIX)
 endif()
 
 ADD_CUSTOM_COMMAND (TARGET sidescroller POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources       ${CMAKE_BINARY_DIR}/Debug/resources
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources       ${CMAKE_BINARY_DIR}/resources )
