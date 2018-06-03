@@ -8,6 +8,12 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_executable(sidescroller ${VULTURE2D_SRC})
 
+foreach(source IN LISTS VULTURE2D_SRC)
+    get_filename_component(source_path "${source}" PATH)
+    string(REPLACE "/" "\\" source_path_msvc "${source_path}")
+    source_group("${source_path_msvc}" FILES "${source}")
+endforeach()
+
 if(MSVC)
     set(SDL2_DIR dependencies/SDL2)
     set(SDL2_INCLUDE dependencies/SDL2/include)
