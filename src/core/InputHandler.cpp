@@ -22,7 +22,6 @@ namespace Vulture2D {
 
             if (mEvent.type == SDL_QUIT) {
 				mHeldKeys[mActionMap["quit_game"]] = true;
-                EventHandler::getInstance().triggerEvent("quit_game");
             }
             if (mEvent.type == SDL_KEYDOWN) {
                 if (!mHeldKeys[key]) {
@@ -34,8 +33,6 @@ namespace Vulture2D {
                 mPressedKeys[key] = false;
                 mHeldKeys[key] = false;
                 mReleasedKeys[key] = true;
-
-                EventHandler::getInstance().triggerEvent(actionName);
             }
         }
     }

@@ -29,9 +29,8 @@ namespace Vulture2D {
                 return;
             }
 
-            int currentEntity = entity->getNextValidID();
-            entity->setID(currentEntity);
-
+            int currentEntity = entity->getID();
+            
             string name = entity->getName();
 
             if (mEntityMap.find(currentEntity) != mEntityMap.end()) {
@@ -82,15 +81,6 @@ namespace Vulture2D {
 
             mCamera->update();
         }
-
-        // Thread function to run in the background to handle updating the off-screen entities
-   /*     void updateOffScreen() {
-            while (mRunning) {
-                for (std::pair<int, Entity*> e : mOffScreenEntityMap) {
-                    e.second->update();
-                }
-            }
-        } */
 
         void renderScene() {
             SDL_RenderClear(Renderer::getInstance().getRenderer());

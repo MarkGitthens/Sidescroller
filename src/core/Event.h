@@ -1,4 +1,8 @@
+#pragma once
+#include <string>
+#include <vector>
 
+using std::string;
 namespace Vulture2D {
     class Event {
     public:
@@ -7,28 +11,29 @@ namespace Vulture2D {
             FLOAT,
             STRING
         };
-        
-        Event(std:string name, EventType type, bool propogateUp = false) : event_name(name), 
-                                                                           type(type),
-                                                                           propagateUp(propagateUp) {};
+
+        Event(string name, EventType type, bool propogateUp = false) : event_name(name),
+            type(type),
+            propagateUp(propagateUp) {};
         ~Event();
-        std::string getStringData();
+        string getStringData();
         int getIntData();
         float getFloatData();
-        std::string getName();
-        EnumType getDataType();
+        string getName();
+        EventType getDataType();
 
-        void setData(std::string);
+        void setData(string);
         void setData(int);
         void setData(float);
-        void setName(std::string);
-        
+        void setName(string);
+
     private:
         int intData;
         float floatData;
-        std::string stringData;
+        string stringData;
 
         EventType type;
-        std::string event_name;
+        string event_name;
         bool propagateUp;
-}   
+    };
+}

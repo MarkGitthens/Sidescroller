@@ -10,7 +10,7 @@ namespace Vulture2D {
         mWidth = mHeight = 0;
     }
     Texture::~Texture() {
-        mWidth = mHeight = 0;
+        //mWidth = mHeight = 0;
         std::cout << "destroying Texture" << std::endl;
         if (mTexture) {
             SDL_DestroyTexture(mTexture);
