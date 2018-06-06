@@ -29,7 +29,7 @@ namespace Vulture2D {
                 return;
             }
 
-            currentEntity++;
+            int currentEntity = entity->getNextValidID();
             entity->setID(currentEntity);
 
             string name = entity->getName();
@@ -169,9 +169,6 @@ namespace Vulture2D {
         Camera* mCamera;
 
         TiledMap* mTiledMap;
-
-        //References the ID of the last registered entity
-        int currentEntity = 0;
 
         //TODO: Need to assign entities valid Unique ID's so that I can do all references to the entity with those instead of the string names.
         unordered_map<int, Renderable*> mRenderMap;

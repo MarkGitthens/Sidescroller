@@ -10,19 +10,21 @@ using std::vector;
 namespace Vulture2D {
     class Entity {
     public:
-        Entity() : mID(0), mName("new_entity") {};
-        Entity(string name) : mName(name) {};
-        virtual ~Entity() { std::cout << "delete Entity" << std::endl; }
+        Entity() : mID(0), mName("new_entity"), x(0), y(0) {};
+        Entity(string name) : mID(0), mName(name), x(0), y(0) {};
+        virtual ~Entity() { std::cout << "Deleting Entity" << std::endl; }
         virtual void update() = 0;
-        void setID(int id) { mID = id; }
-        void setName(string name) { mName = name; }
+        void setID(int id);
+        void setName(string name);
 
-        int getID() { return mID; }
-        string getName() { return mName; }
+        int getID();  
+        static int getNextValidID();
+        string getName();
     
     private:
 	    int x, y;
         int mID;
         string mName;
+        static int nextValidID;
     };
 }

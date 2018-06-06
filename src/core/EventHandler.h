@@ -4,6 +4,8 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+#include "Event.h"
+#include "SceneHandler.h"
 
 namespace Vulture2D {
     //TODO: I really need to rework this. I don't like the idea of having to bind a function to an event. 

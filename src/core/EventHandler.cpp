@@ -15,12 +15,6 @@ namespace Vulture2D {
         if (mSubscribedKeyEvents.find(eventId) != mSubscribedKeyEvents.end()) {
             for (auto pair : *mSubscribedKeyEvents[eventId])
                 pair.second(0);
-
-            /*std::thread([&, eventId]() {
-                for (auto pair : *mSubscribedKeyEvents[eventId]) {
-                    pair.second(0);
-                }
-            }).detach();*/
         }
     }
 

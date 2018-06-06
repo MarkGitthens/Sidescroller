@@ -55,7 +55,6 @@ namespace Vulture2D {
             SceneHandler::getInstance().getCurrentScene()->renderScene();
             fpsCounter++;
 
-            //TODO: Not sure if this is a good way for checking when to end the game loop, it seems sketchy though.
             if (InputHandler::getInstance().actionHeld("quit_game"))
                 running = false;
         }
