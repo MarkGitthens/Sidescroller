@@ -4,6 +4,8 @@
 #include "../util/Vector2D.h"
 #include "../core/Entity.h"
 
+
+//TODO: Update camera to work with new graph based approach for handling entites.
 class Camera : public Vulture2D::Entity {
 public:
     Camera();
