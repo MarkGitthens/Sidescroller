@@ -6,25 +6,45 @@
 
 using std::string;
 using std::vector;
-
+/*
+    Entity: An Entity is the base type for anything that is tracked and updated by a Scene.
+    Scenes are created and managed using a scene-graph type of structure, too support this Entities may have
+    any number of children and can be attached to a single parent.
+*/
 namespace Vulture2D {
     class Entity {
     public:
-        Entity() : mID(nextValidID), mName("new_entity"), x(0), y(0) { nextValidID++;  };
-        Entity(string name) : mID(0), mName(name), x(0), y(0) {};
-        virtual ~Entity() { std::cout << "Deleting Entity" << std::endl; }
+        Entity() : id(nextValidID), name("new_entity"), x(0), y(0) { nextValidID++;  };
+        Entity(string name) : id(0), name(name), x(0), y(0) {};
+        virtual ~Entity();
+
         virtual void update() = 0;
+        
         void setID(int id);
         void setName(string name);
+        void setParent(Entity*);
+
+        void removeParent();
+        void attachChild(Entity*);
+        Entity* detachChild(int id);
 
         int getID();  
         static int getNextValidID();
         string getName();
+        vector<Entity*> getChildren();
+        Entity* getChild(int id);
+
+        //name is not a unique identifier for entities so it is possible to have multiple children with the same name
+        vector<Entity*> getChild(string name);
+
+        vector<Entity*> removeAllChildren();
     
     private:
 	    int x, y;
-        int mID;
-        string mName;
+        int id;
+        string name;
         static int nextValidID;
+        Entity* parent = nullptr;
+        vector<Entity*> children;
     };
 }
