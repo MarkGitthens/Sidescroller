@@ -2,38 +2,25 @@
 #include <string>
 #include <vector>
 
+#include "Entity.h"
 using std::string;
 namespace Vulture2D {
+    enum EventType {
+        CLICK//enumarate different possible default EventTypes here.
+    };
+
     class Event {
     public:
-        enum EventType {
-            INT,
-            FLOAT,
-            STRING
-        };
-
-        Event(string name, EventType type, bool propogateUp = false) : event_name(name),
-            type(type),
+        Event(string name, EventType type, bool propogateUp = false) : type(type),
             propagateUp(propagateUp) {};
-        ~Event();
-        string getStringData();
-        int getIntData();
-        float getFloatData();
-        string getName();
-        EventType getDataType();
 
-        void setData(string);
-        void setData(int);
-        void setData(float);
-        void setName(string);
+        EventType getType();
+        bool propogatesUp();
+        void setPropogatesUp(bool);
 
     private:
-        int intData;
-        float floatData;
-        string stringData;
-
+        Entity* target;
         EventType type;
-        string event_name;
         bool propagateUp;
     };
 }

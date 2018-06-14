@@ -7,18 +7,26 @@
 #include "Event.h"
 #include "SceneHandler.h"
 
+/* Event Handler implementation based off the following article.
+    https://github.com/oxygine/oxygine-framework/wiki/events
+    
+*/
 namespace Vulture2D {
+    typedef std::function<void(Event*)> Callback;
+
     class EventHandler {
     public:
-        static EventHandler& getInstance();
-
+        int addListener(EventType type, Callback);
+        void removeListener(EventType type, Callback);
+        void dispatchEvent(Event*);
 
     private:
-        ~EventHandler() { if (instance) { delete instance; } instance = nullptr; }
-        EventHandler() { }
-        EventHandler(EventHandler const&) {}
-        EventHandler& operator=(EventHandler const& e) {}
-
-        static EventHandler* instance;
+        int lastID = 0;
+        struct Listener {
+            int id;
+            Callback cb;
+            EventType type;
+        };
+        std::vector<Listener> listeners;
     };
 }
