@@ -1,11 +1,9 @@
 #pragma once
 #include <SDL.h>
-#include <atomic>
 #include <string>
 #include <queue>
 #include <unordered_map>
 #include <iostream>
-#include <thread>
 #include "Entity.h"
 #include "Renderable.h"
 #include "../entities/TiledMap.h"
