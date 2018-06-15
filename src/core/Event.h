@@ -5,22 +5,22 @@
 #include "Entity.h"
 using std::string;
 namespace Vulture2D {
-    enum EventType {
-        CLICK//enumarate different possible default EventTypes here.
-    };
+
+    typedef unsigned int EventType;
 
     class Event {
     public:
-        Event(string name, EventType type, bool propogateUp = false) : type(type),
-            propagateUp(propagateUp) {};
+        Event(string name, EventType type, bool propagates = false) : type(type),
+            propagates(propagates) {};
+        virtual ~Event() {}
 
-        EventType getType();
-        bool propogatesUp();
-        void setPropogatesUp(bool);
+        EventType getType() { return type; }
+        bool propagatesUp() { return propagates; }
+        void setPropogatesUp(bool flag) { propagates = flag; }
 
     private:
         Entity* target;
         EventType type;
-        bool propagateUp;
+        bool propagates;
     };
 }
