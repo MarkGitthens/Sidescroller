@@ -1,11 +1,9 @@
 #pragma once
 #include <SDL.h>
-#include <atomic>
 #include <string>
 #include <queue>
 #include <unordered_map>
 #include <iostream>
-#include <thread>
 #include "Entity.h"
 #include "Renderable.h"
 #include "../entities/TiledMap.h"
@@ -29,9 +27,8 @@ namespace Vulture2D {
                 return;
             }
 
-            currentEntity++;
-            entity->setID(currentEntity);
-
+            int currentEntity = entity->getID();
+            
             string name = entity->getName();
 
             if (mEntityMap.find(currentEntity) != mEntityMap.end()) {
@@ -82,15 +79,6 @@ namespace Vulture2D {
 
             mCamera->update();
         }
-
-        // Thread function to run in the background to handle updating the off-screen entities
-   /*     void updateOffScreen() {
-            while (mRunning) {
-                for (std::pair<int, Entity*> e : mOffScreenEntityMap) {
-                    e.second->update();
-                }
-            }
-        } */
 
         void renderScene() {
             SDL_RenderClear(Renderer::getInstance().getRenderer());
@@ -169,9 +157,6 @@ namespace Vulture2D {
         Camera* mCamera;
 
         TiledMap* mTiledMap;
-
-        //References the ID of the last registered entity
-        int currentEntity = 0;
 
         //TODO: Need to assign entities valid Unique ID's so that I can do all references to the entity with those instead of the string names.
         unordered_map<int, Renderable*> mRenderMap;

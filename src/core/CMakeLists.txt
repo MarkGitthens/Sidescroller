@@ -1,5 +1,6 @@
 set(VULTURE2D_CORE_HEADERS
 	
+    src/core/Event.h
 	src/core/Entity.h
 	src/core/EventHandler.h
 	src/core/Game.h
@@ -12,6 +13,7 @@ set(VULTURE2D_CORE_HEADERS
 
 set(VULTURE2D_CORE_SRC
 	
+    src/core/Entity.cpp
 	src/core/EventHandler.cpp
 	src/core/Game.cpp
 	src/core/InputHandler.cpp

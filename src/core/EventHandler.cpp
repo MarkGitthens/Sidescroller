@@ -1,47 +1,22 @@
 #include "EventHandler.h"
 
 namespace Vulture2D {
-    EventHandler* EventHandler::instance = nullptr;
+    int EventHandler::addListener(EventType type, Callback cb) {
+        Listener listener;
+        listener.type = type;
+        listener.cb = cb;
+        listener.id = lastID++;
 
-    EventHandler& EventHandler::getInstance() {
-        if (!instance) {
-            instance = new EventHandler();
-        }
-        return *instance;
+        listeners.push_back(listener);
+
+        return lastID;
     }
 
-    // Trigger the eventId and call all of the subscribed functions.
-    void EventHandler::triggerEvent(std::string eventId) {
-        if (mSubscribedKeyEvents.find(eventId) != mSubscribedKeyEvents.end()) {
-            for (auto pair : *mSubscribedKeyEvents[eventId])
-                pair.second(0);
-
-            /*std::thread([&, eventId]() {
-                for (auto pair : *mSubscribedKeyEvents[eventId]) {
-                    pair.second(0);
-                }
-            }).detach();*/
-        }
-    }
-
-    // Listen to a new eventId as a subscriber and assign the function to be called when 
-    // the event is triggered.
-    void EventHandler::subscribeToEvent(std::string eventId, std::string subscriberName, EventFunc func) {
-        if (mSubscribedKeyEvents.find(eventId) == mSubscribedKeyEvents.end()) {
-            // If the eventId already exists, assign a new subscriber to the event
-            mSubscribedKeyEvents.emplace(eventId, new std::unordered_map<std::string, EventFunc>());
-        }
-        mSubscribedKeyEvents[eventId]->emplace(subscriberName, func);
-    }
-
-    // Remove a subscriberName from an eventId
-    void EventHandler::unsubscribe(std::string eventId, std::string subscriberName) {
-        // Check to make sure that the event id exists
-        auto item = mSubscribedKeyEvents.find(eventId);
-        if (item != mSubscribedKeyEvents.end()) {
-            if (item->second->find(subscriberName) != item->second->end()) {
-                item->second->erase(subscriberName);
-            }
+    //TODO: Need to be able to propogate the event up the scenegraph eventually.
+    void EventHandler::dispatchEvent(Event* event) {
+        for (Listener l : listeners) {
+            if (l.type == event->getType())
+                l.cb(event); 
         }
     }
 }

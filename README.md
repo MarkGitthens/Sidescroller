@@ -13,5 +13,3 @@ This is a sample project being used to learn more about creating a custom 2d gam
 -Navigate into build/ directory.
 
 -From command prompt run cmake ..
-
--Copy resources folder and DLL's from SDL2/lib into executable folder.

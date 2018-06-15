@@ -10,8 +10,6 @@ Player::Player(int x, int y, int width, int height) {
     mPos.y = y;
     mHalfWidth = width/2;
     mHalfHeight = height/2;
-
-	EventHandler::getInstance().subscribeToEvent("fire_bullet", getName(), std::bind(&Player::fireBullet, this, std::placeholders::_1));
 }
 void Player::update() {
     handleInput();
