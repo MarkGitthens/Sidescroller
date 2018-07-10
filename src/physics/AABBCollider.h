@@ -10,6 +10,7 @@ using namespace Vulture2D;
 
 class AABBCollider {
 public:
+    int mHalfHeight;
     AABBCollider() : mHalfWidth(0), mHalfHeight(0) {}
     AABBCollider(double, double, int, int);
 	virtual ~AABBCollider();
@@ -39,7 +40,6 @@ protected:
     vector<AABBCollider*> mColliders;
     Vector2D mPos;
     int mHalfWidth;
-    int mHalfHeight;
 
     bool trigger = false;
 };

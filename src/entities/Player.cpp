@@ -32,7 +32,7 @@ void Player::handleInput() {
     }
 
     if (InputHandler::getInstance().actionTriggered("jump") && canJump) {
-            mVelocity.y = -24;
+            mVelocity.y = -28;
     }
 }
 
@@ -66,11 +66,13 @@ void Player::render(SDL_Rect* cameraRect) {
 void Player::handleCollisions() {
     if (mColliders.empty()) {
         canJump = false;
+        grounded = false;
     }
     else {
         canJump = true;
     }
     while (!mColliders.empty()) {
+        
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
         int greatestIndex = 0;
@@ -83,12 +85,26 @@ void Player::handleCollisions() {
                 greatest = temp;
             }
         }
+        
         mPos = mPos + getProjectionVector(*mColliders.at(greatestIndex));
+        
+        //hit top of object
+        if(mVelocity.y > 0 && mPos.y+mHalfHeight <= mColliders.at(greatestIndex)->getPos()->y - mColliders.at(greatestIndex)->mHalfHeight) {
+            grounded = true;
+            mVelocity.y = 0;
+            std::cout << "grounded: " << grounded << std::endl;
+        } else {
+            grounded = false;
+        }
+
+        //hit bottom of object
+        if(mVelocity.y < 0 && mPos.y- mHalfHeight >= mColliders.at(greatestIndex)->getPos()->y + mColliders.at(greatestIndex)->mHalfHeight) {
+            mVelocity.y = 0;
+        } 
         mColliders.erase(mColliders.begin() + greatestIndex);
 
+        
         //TODO: Need to make this more intelligent.
-        mVelocity.x = 0;
-        mVelocity.y = 0;
     }
 }
 

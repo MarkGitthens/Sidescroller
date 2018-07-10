@@ -24,5 +24,6 @@ public:
 	void fireBullet(int);
 private:
     bool canJump = true;
+    bool grounded = false;
     Vector2D mVelocity;
 };
