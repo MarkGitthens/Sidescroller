@@ -49,9 +49,31 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
         scene->setTiledMap(tiledMap);
 
         parseObjects(map->FirstChildElement("objectgroup"), scene);
-
+        
+        createBoundsBlock(tiledMap, scene);
         return true;
     }
+}
+
+void TiledParser::createBoundsBlock(TiledMap* map, Vulture2D::Scene* scene) {
+    Box* left = new Box(-64, map->getHeight()/2, 128, map->getHeight());
+    left->setName("level_edge_box");
+    left->createFromPath("resources/images/block.png");
+    left->setVisible(true);
+    
+    Box* right = new Box(map->getWidth() + 64, map->getHeight()/2, 128, map->getHeight());
+    right->setName("level_edge_box");
+    right->createFromPath("resources/images/block.png");
+    right->setVisible(true);
+
+    Box* top = new Box(map->getWidth()/2, -64, map->getWidth(), 128);
+    top->setName("leve_edge_box");
+    top->createFromPath("resources/images/block.png");
+    top->setVisible(true);
+    
+    scene->registerEntity(top);
+    scene->registerEntity(left);
+    scene->registerEntity(right);
 }
 
 void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene) {

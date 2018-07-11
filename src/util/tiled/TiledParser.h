@@ -19,5 +19,7 @@ public:
     static bool parse(string filename, string path, Vulture2D::Scene* scene);
 private:
     static void parseObjects(XMLElement*, Vulture2D::Scene*);
+    static void createBoundsBlock(TiledMap*, Vulture2D::Scene*);
     static Tileset* parseTileset(XMLElement*);
 };
+    

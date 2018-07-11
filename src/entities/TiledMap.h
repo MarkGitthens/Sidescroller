@@ -73,7 +73,7 @@ public:
     }
 
     int getHeight() {
-        return height*tileHeight;
+        return height * tileHeight;
     }
 
 private:
