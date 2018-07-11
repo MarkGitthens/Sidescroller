@@ -3,9 +3,8 @@
 #include <SDL.h>
 #include "../util/Vector2D.h"
 #include "../core/Entity.h"
+#include "TiledMap.h"
 
-
-//TODO: Update camera to work with new graph based approach for handling entites.
 class Camera : public Vulture2D::Entity {
 public:
     Camera();
@@ -13,6 +12,7 @@ public:
     
     void update();
     
+    void setTiledMap(TiledMap*);
     void setX(int);
     void setY(int);
     void setWidth(int);
@@ -22,6 +22,7 @@ public:
     SDL_Rect* getCameraRect();
     Vulture2D::Vector2D* getParentPos();
 private:
+    TiledMap* loadedMap;
     Vulture2D::Vector2D* mParentPos;
     SDL_Rect* mCameraViewport;
 };

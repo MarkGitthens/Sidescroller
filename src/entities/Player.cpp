@@ -92,7 +92,6 @@ void Player::handleCollisions() {
         if(mVelocity.y > 0 && mPos.y+mHalfHeight <= mColliders.at(greatestIndex)->getPos()->y - mColliders.at(greatestIndex)->mHalfHeight) {
             grounded = true;
             mVelocity.y = 0;
-            std::cout << "grounded: " << grounded << std::endl;
         } else {
             grounded = false;
         }
@@ -102,9 +101,6 @@ void Player::handleCollisions() {
             mVelocity.y = 0;
         } 
         mColliders.erase(mColliders.begin() + greatestIndex);
-
-        
-        //TODO: Need to make this more intelligent.
     }
 }
 

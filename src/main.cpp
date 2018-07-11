@@ -58,7 +58,8 @@ void initializeEntities() {
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
     camera = new Camera();
-
+    
+    camera->setTiledMap(scene.getTiledMap());
     reset = new ResetBox(-1000, 1500, 10000, 128);
     reset->setName("reset_box");
     reset->setTrigger(true);

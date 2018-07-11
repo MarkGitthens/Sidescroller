@@ -51,13 +51,6 @@ namespace Vulture2D {
             }
         }
 
-        //Register an entity that should be tracked on a seperate thread
-        void registerOffScreenEntity(Entity* entity) {
-            if (entity != nullptr) {
-                mOffScreenEntityMap[entity->getID()] = entity;
-            }
-        }
-
         void deleteEntity(int id) {
             if (mEntityMap.find(id) != mEntityMap.end()) {
                 mDeletedEntities.emplace_back(id);
@@ -144,6 +137,10 @@ namespace Vulture2D {
         std::string getName() {
             return mSceneName;
         }
+        
+        TiledMap* getTiledMap() {
+            return mTiledMap;
+        }
 
         void destroy() {
             delete mCamera;
@@ -158,7 +155,6 @@ namespace Vulture2D {
 
         TiledMap* mTiledMap;
 
-        //TODO: Need to assign entities valid Unique ID's so that I can do all references to the entity with those instead of the string names.
         unordered_map<int, Renderable*> mRenderMap;
         unordered_map<int, Entity*> mEntityMap;
         unordered_map<int, AABBCollider*> mColliders;

@@ -67,6 +67,14 @@ public:
     void addTileSheet(Tileset* tileset) {
         tilesets.emplace_back(tileset);
     }
+    
+    int getWidth() {
+        return width * tileWidth;
+    }
+
+    int getHeight() {
+        return height*tileHeight;
+    }
 
 private:
     int width, height;
