@@ -22,29 +22,16 @@ namespace Vulture2D {
         
         void setID(int id);
         void setName(string name);
-        void setParent(Entity*);
-
-        void removeParent();
-        void attachChild(Entity*);
-        Entity* detachChild(int id);
 
         int getID();  
         static int getNextValidID();
         string getName();
-        vector<Entity*> getChildren();
-        Entity* getChild(int id);
 
-        //name is not a unique identifier for entities so it is possible to have multiple children with the same name
-        vector<Entity*> getChild(string name);
-
-        vector<Entity*> removeAllChildren();
-    
     private:
 	    int x, y;
         int id;
         string name;
         static int nextValidID;
         Entity* parent = nullptr;
-        vector<Entity*> children;
     };
 }
