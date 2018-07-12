@@ -61,18 +61,11 @@ namespace Vulture2D {
     }
 
     void Game::registerInputs() {
-        //TODO: Should really verify this is how I actually want InputHandler and EventHandler to work.
         InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
-
-        //EventHandler::getInstance().subscribeToEvent("quit_game", "main", std::bind(&quitGame, std::placeholders::_1));
         InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
         InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
         InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
         InputHandler::getInstance().addKeyAction(SDLK_SPACE, "jump");
-
-        //InputHandler::getInstance().addKeyAction(SDLK_m, music->getMuteActionName());
-        //InputHandler::getInstance().addKeyAction(SDLK_MINUS, music->getVolumeLowerActionName());
-        //InputHandler::getInstance().addKeyAction(SDLK_EQUALS, music->getVolumeHigherActionName());
     }
 
     void Game::destroy() {

@@ -14,30 +14,25 @@ Camera::~Camera() {
 }
 
 void Camera::update() {
-    
-    if(mParentPos->x + mCameraViewport->w/2 <= loadedMap->getWidth()) {
+    if(mParentPos->x + mCameraViewport->w/2 <= sceneWidth) {
         if(mParentPos->x - mCameraViewport->w/2 > 0) {
             mCameraViewport->x = round(mParentPos->x) - mCameraViewport->w/2;
         } else {
             mCameraViewport->x = 0;
         }    
     } else {
-        mCameraViewport->x = loadedMap->getWidth() - mCameraViewport->w; 
+        mCameraViewport->x = sceneWidth - mCameraViewport->w; 
     }
     
-    if(mParentPos->y + mCameraViewport->h/2 <= loadedMap->getHeight()) {
+    if(mParentPos->y + mCameraViewport->h/2 <= sceneHeight) {
         if(mParentPos->y - mCameraViewport->h/2 > 0) {
             mCameraViewport->y = round(mParentPos->y) - mCameraViewport->h/2;
         } else {
             mCameraViewport->y = 0;
         }
     } else {
-        mCameraViewport->y = loadedMap->getHeight() - mCameraViewport->h;
+        mCameraViewport->y = sceneHeight - mCameraViewport->h;
     }
-}
-
-void Camera::setTiledMap(TiledMap* map) {
-    loadedMap = map;
 }
 
 void Camera::setX(int x) {
@@ -61,6 +56,14 @@ void Camera::setCameraRect(SDL_Rect* rect) {
 }
 void Camera::setParentPos(Vector2D* parent) {
     mParentPos = parent;
+}
+
+void Camera::setSceneWidth(int width) {
+    sceneWidth = width;
+}
+
+void Camera::setSceneHeight(int height) {
+    sceneHeight = height;
 }
 
 SDL_Rect* Camera::getCameraRect() {
