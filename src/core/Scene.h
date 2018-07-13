@@ -125,12 +125,21 @@ namespace Vulture2D {
             mSceneName = name;
         }
 
+        void setSceneWidth(int width) {
+            sceneWidth = width;
+        }
+
+        void setSceneHeight(int height) {
+            sceneHeight = height;
+        }
         void setCamera(Camera* camera) {
             mCamera = camera;
         }
 
         void setTiledMap(TiledMap* tiledMap) {
             mTiledMap = tiledMap;
+            sceneWidth = tiledMap->getWidth();
+            sceneHeight = tiledMap->getHeight();
         }
 
         Entity* getEntity(int id) {
@@ -150,6 +159,13 @@ namespace Vulture2D {
             delete mTiledMap;
         }
 
+        int getSceneWidth() {
+            return sceneWidth;
+        }
+
+        int getSceneHeight() {
+            return sceneHeight;
+        }
 
     private:
         string mSceneName;
@@ -157,6 +173,9 @@ namespace Vulture2D {
         Camera* mCamera;
 
         TiledMap* mTiledMap;
+
+        int sceneWidth;
+        int sceneHeight;
 
         unordered_map<int, Renderable*> mRenderMap;
         unordered_map<int, Entity*> mEntityMap;

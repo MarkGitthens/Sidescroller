@@ -32,7 +32,8 @@ void Player::handleInput() {
     }
 
     if (InputHandler::getInstance().actionTriggered("jump") && canJump) {
-            mVelocity.y = -28;
+        canJump = false;
+        mVelocity.y = -28;
     }
 }
 
@@ -65,7 +66,6 @@ void Player::render(SDL_Rect* cameraRect) {
 
 void Player::handleCollisions() {
     if (mColliders.empty()) {
-        canJump = false;
         grounded = false;
     }
     else {
