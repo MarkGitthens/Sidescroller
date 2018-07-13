@@ -12,7 +12,7 @@ using std::vector;
     any number of children and can be attached to a single parent.
 */
 namespace Vulture2D {
-    class Entity {
+    class Entity{
     public:
         Entity() : id(nextValidID), name("new_entity"), x(0), y(0) { nextValidID++;  };
         Entity(string name) : id(0), name(name), x(0), y(0) {};
