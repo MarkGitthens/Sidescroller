@@ -3,7 +3,6 @@
 #include <iostream>
 #include "Projectile.h"
 
-
 const int speed = 8;
 Player::Player(int x, int y, int width, int height) {
     mPos.x = x;
@@ -34,8 +33,10 @@ void Player::handleInput(Event* event) {
     KeyboardEvent* e = (KeyboardEvent*)event;
     if (event->getType() == KeyboardEvent::KeyPress) {
         if (e->keyID == SDLK_SPACE) {
-            canJump = false;
-            mVelocity.y = -28;
+            if (canJump) {
+                canJump = false;
+                mVelocity.y = -28;
+            }
         }
 
         if (e->keyID == SDLK_RIGHT) {
