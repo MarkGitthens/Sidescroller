@@ -1,6 +1,5 @@
 #include "Camera.h"
 
-
 using namespace Vulture2D;
 
 Camera::Camera() {

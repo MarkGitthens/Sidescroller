@@ -1,7 +1,4 @@
 #include "Player.h"
-#include <string>
-#include <iostream>
-#include "Projectile.h"
 
 const int speed = 8;
 Player::Player(int x, int y, int width, int height) {
@@ -60,7 +57,7 @@ void Player::handleInput(Event* event) {
 
 void Player::fireBullet(int val) {
     Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
-	bullet->createFromPath("resources/images/block.png");
+    bullet->createFromPath("resources/images/block.png", Game::getRenderer());
 	bullet->setName("player_bullet"); 
 	bullet->setTrigger(true);
 	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
@@ -97,7 +94,7 @@ void Player::handleCollisions() {
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
         int greatestIndex = 0;
-        for (int i = 0; i < mColliders.size(); i++) {
+        for (unsigned int i = 0; i < mColliders.size(); i++) {
             double temp = getInterArea(*mColliders.at(i));
             if (i == 0) {
                 greatest = temp;

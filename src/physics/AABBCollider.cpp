@@ -1,5 +1,5 @@
 #include "AABBCollider.h"
-#include <iostream>
+
 AABBCollider::AABBCollider(double x, double y, int w, int h) {
     mPos.x = x;
     mPos.y = y;

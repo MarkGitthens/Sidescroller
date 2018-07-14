@@ -59,7 +59,7 @@ public:
     }
 
     virtual void render(SDL_Rect* cameraRect) {
-        for (int i = 0; i < layers.size(); i++) {
+        for (unsigned int i = 0; i < layers.size(); i++) {
             drawLayer(i, cameraRect->x, cameraRect->y);
         }
     }

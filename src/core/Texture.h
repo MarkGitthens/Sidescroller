@@ -1,7 +1,7 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
-#include <string>
+#include <iostream>
+#include "SDL.h"
+#include "SDL_image.h"
 
 using std::string;
 namespace Vulture2D {
@@ -10,7 +10,7 @@ namespace Vulture2D {
         Texture();
         ~Texture();
         Texture(SDL_Texture*);
-        Texture(string);
+        Texture(string, SDL_Renderer*);
         SDL_Texture* getTexture();
         const unsigned int getWidth();
         const unsigned int getHeight();

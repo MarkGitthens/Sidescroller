@@ -1,7 +1,6 @@
 #include "EventHandler.h"
 
 namespace Vulture2D {
-
     int EventHandler::addListener(EventType type, Callback cb) {
         Listener listener;
         listener.type = type;

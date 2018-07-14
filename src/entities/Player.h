@@ -1,6 +1,7 @@
 #pragma once
-#include <functional>
-#include "../core/Texture.h"
+#include <string>
+#include "Projectile.h"
+#include "../core/Game.h"
 #include "../core/Entity.h"
 #include "../core/InputHandler.h"
 #include "../core/Renderable.h"

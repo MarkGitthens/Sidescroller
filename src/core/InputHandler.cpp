@@ -1,7 +1,4 @@
 #include "InputHandler.h"
-#include <iostream>
-#include "KeyboardEvent.h"
-#include "SceneHandler.h"
 
 namespace Vulture2D {
     InputHandler* InputHandler::instance = nullptr;
@@ -23,9 +20,6 @@ namespace Vulture2D {
                 int key = mEvent.key.keysym.sym;
                 std::string actionName = mKeyMap[key];
 
-                if (!mHeldKeys[key]) {
-                    SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&KeyboardEvent(KeyboardEvent::KeyPress, key));
-                }
                 if (mEvent.type == SDL_QUIT) {
                     mHeldKeys[mActionMap["quit_game"]] = true;
                 }
@@ -38,15 +32,9 @@ namespace Vulture2D {
                 if (mEvent.type == SDL_KEYUP) {
                     mPressedKeys[key] = false;
                     mHeldKeys[key] = false;
-                    mReleasedKeys[key] = true;
-                    SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&KeyboardEvent(KeyboardEvent::KeyReleased, key));
+                    mReleasedKeys[key] = true;                    
                 }
             }
-        }
-
-        for (auto k : mHeldKeys) {
-            if(k.second)
-                SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&KeyboardEvent(KeyboardEvent::KeyHeld, k.first));
         }
     }
 
@@ -78,5 +66,35 @@ namespace Vulture2D {
 
     bool InputHandler::keyReleased(int key) {
         return mReleasedKeys[key];
+    }
+
+    vector<int> InputHandler::getPressedKeys() {
+        vector<int> temp;
+
+        for (auto k : mPressedKeys) {
+            if (k.second)
+                temp.push_back(k.first);
+        }
+        return temp;
+    }
+
+    vector<int> InputHandler::getHeldKeys() {
+        vector<int> temp;
+
+        for (auto k : mHeldKeys) {
+            if (k.second)
+                temp.push_back(k.first);
+        }
+        return temp;
+    }
+
+    vector<int> InputHandler::getReleasedKeys() {
+        vector<int> temp;
+
+        for (auto k : mReleasedKeys) {
+            if (k.second)
+                temp.push_back(k.first);
+        }
+        return temp;
     }
 }

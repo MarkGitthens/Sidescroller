@@ -14,8 +14,8 @@ namespace Vulture2D {
             mImage = nullptr;
         }
 
-        void createFromPath(char* path) {
-            mImage = new Texture(path);
+        void createFromPath(char* path, SDL_Renderer* renderer) {
+            mImage = new Texture(path, renderer);
             mRect.w = mImage->getWidth();
             mRect.h = mImage->getHeight();
         }
