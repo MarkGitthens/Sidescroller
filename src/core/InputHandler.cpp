@@ -18,17 +18,13 @@ namespace Vulture2D {
         mPressedKeys.clear();
         mReleasedKeys.clear();
 
-        for (auto k : mHeldKeys) {
-            if(k.second)
-                SceneHandler::getInstance().getCurrentScene()->dispatchEvent(KeyboardEvent(KeyboardEvent::KeyHeld, k.first));
-        }
         while (SDL_PollEvent(&mEvent) != 0) {
             if (mEvent.type == SDL_KEYDOWN || mEvent.type == SDL_KEYUP) {
                 int key = mEvent.key.keysym.sym;
                 std::string actionName = mKeyMap[key];
 
                 if (!mHeldKeys[key]) {
-                    SceneHandler::getInstance().getCurrentScene()->dispatchEvent(KeyboardEvent(KeyboardEvent::KeyPress, key));
+                    SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&KeyboardEvent(KeyboardEvent::KeyPress, key));
                 }
                 if (mEvent.type == SDL_QUIT) {
                     mHeldKeys[mActionMap["quit_game"]] = true;
@@ -43,9 +39,14 @@ namespace Vulture2D {
                     mPressedKeys[key] = false;
                     mHeldKeys[key] = false;
                     mReleasedKeys[key] = true;
-                    SceneHandler::getInstance().getCurrentScene()->dispatchEvent(KeyboardEvent(KeyboardEvent::KeyReleased, key));
+                    SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&KeyboardEvent(KeyboardEvent::KeyReleased, key));
                 }
             }
+        }
+
+        for (auto k : mHeldKeys) {
+            if(k.second)
+                SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&KeyboardEvent(KeyboardEvent::KeyHeld, k.first));
         }
     }
 

@@ -4,6 +4,7 @@
 namespace Vulture2D {
     class KeyboardEvent : public Event {
     public:
+        KeyboardEvent() {};
         KeyboardEvent(EventType type, int id) : keyID(id) {
             this->type = type;
         };

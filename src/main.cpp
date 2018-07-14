@@ -28,19 +28,16 @@ int main(int argc, char* argv[]) {
     game = new Game();
 
     game->init();
-
-    //TODO: the following should be part of a default loaded scene to keep Main simple.
-    initializeEntities();
-
     game->registerInputs();
 
     scene.setName("start");
+    SceneHandler::getInstance().registerScene(&scene);
+    
+    initializeEntities();
+    
     scene.registerEntity(player);
     scene.setCamera(camera);
-    //music->subscribeToEvents();
-    scene.registerEntity(reset);
-
-    SceneHandler::getInstance().registerScene(&scene);
+    scene.registerEntity(reset); 
 
     game->run();
     game->destroy();

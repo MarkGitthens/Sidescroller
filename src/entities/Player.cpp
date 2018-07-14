@@ -2,17 +2,24 @@
 #include <string>
 #include <iostream>
 #include "Projectile.h"
-#include "../core/InputHandler.h"
-#include "../core/SceneHandler.h"
+
+
 const int speed = 8;
 Player::Player(int x, int y, int width, int height) {
     mPos.x = x;
     mPos.y = y;
     mHalfWidth = width/2;
     mHalfHeight = height/2;
+
+    Callback input = [this](Event* e) {
+        this->handleInput(e);
+    };
+
+    SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyPress, input);
+    SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyReleased, input);
 }
+
 void Player::update() {
-    handleInput();
     int gravity = 1;
 
     if(mVelocity.y < 30)
@@ -22,18 +29,31 @@ void Player::update() {
     mPos.y += mVelocity.y;
 }
 
-void Player::handleInput() {
-    if (InputHandler::getInstance().actionHeld("move_right")) {
-        mVelocity.x = speed;
-    } else if (InputHandler::getInstance().actionHeld("move_left")) {
-        mVelocity.x = -speed;
-    } else {
-        mVelocity.x = 0;
+void Player::handleInput(Event* event) {
+
+    KeyboardEvent* e = (KeyboardEvent*)event;
+    if (event->getType() == KeyboardEvent::KeyPress) {
+        if (e->keyID == SDLK_SPACE) {
+            canJump = false;
+            mVelocity.y = -28;
+        }
+
+        if (e->keyID == SDLK_RIGHT) {
+            mVelocity.x += speed;
+        }
+        else if (e->keyID == SDLK_LEFT) {
+            mVelocity.x += -speed;
+        }
     }
 
-    if (InputHandler::getInstance().actionTriggered("jump") && canJump) {
-        canJump = false;
-        mVelocity.y = -28;
+    if (event->getType() == KeyboardEvent::KeyReleased) {
+        if (e->keyID == SDLK_RIGHT) {
+            mVelocity.x -= speed;
+        }
+
+        if (e->keyID == SDLK_LEFT) {
+            mVelocity.x -= -speed;
+        }
     }
 }
 

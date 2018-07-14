@@ -1,6 +1,7 @@
 #include "EventHandler.h"
 
 namespace Vulture2D {
+
     int EventHandler::addListener(EventType type, Callback cb) {
         Listener listener;
         listener.type = type;
@@ -20,10 +21,9 @@ namespace Vulture2D {
         }
     }
 
-    void EventHandler::dispatchEvent(Event event) {
-        std::cout << "Dispatching event: " << event.getType() << std::endl;
+    void EventHandler::dispatchEvent(Event* event) {
         for (Listener l : listeners) {
-            if (l.type == event.getType())
+            if (l.type == event->getType())
                 l.cb(event); 
         }
     }

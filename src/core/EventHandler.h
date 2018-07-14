@@ -5,13 +5,13 @@
 
 namespace Vulture2D {
 
-    typedef std::function<void(Event)> Callback;
+    typedef std::function<void(Event*)> Callback;
 
     class EventHandler {
     public:
         int addListener(EventType type, Callback);
         void removeListener(int id);
-        void dispatchEvent(Event);
+        void dispatchEvent(Event*);
 
     private:
         int lastID = 0;

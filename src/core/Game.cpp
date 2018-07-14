@@ -37,9 +37,9 @@ namespace Vulture2D {
 
             currentTime = newTime;
             backlog += frameTime;
+            InputHandler::getInstance().handleInput();
 
             while (backlog >= deltaTime) {
-                InputHandler::getInstance().handleInput();
                 SceneHandler::getInstance().getCurrentScene()->updateScene();
                 backlog -= deltaTime;
                 updateCounter++;
