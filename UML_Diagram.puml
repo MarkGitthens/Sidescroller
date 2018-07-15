@@ -29,8 +29,26 @@ package Core {
 
     }
 
-    class Renderable {
+    abstract class Renderable {
+        +void createFromPath(string, SDL_Renderer)
+        +void setSprite(Texture*)
+        +void setRenderId(int)
+        +int getRenderId(int)
+        +Texture* getTexture()
+        +SDL_Texture* getSDLTexture()
+        +SDL_Rect* getRenderRect()
+        +void render(SDL_Rect*)
 
+        #int renderId
+        #Texture* image
+    }
+
+    class AnimatedSprite {
+        +void render(SDL_Rect*)
+        #SDL_Rect currentFrame
+        #int frameCount
+        #bool cyclic
+        #bool loops
     }
 
     class Entity {
@@ -44,9 +62,9 @@ package Core {
     abstract class EventHandler {
 
     }
-
 }
 
+Renderable <|-- AnimatedSprite
 
 Game --> InputHandler
 Game --> SceneHandler

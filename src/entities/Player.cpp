@@ -64,9 +64,6 @@ void Player::fireBullet(int val) {
 }
 
 void Player::setPosition(int x, int y) {
-    mRect.x = x;
-    mRect.y = y;
-
     mPos.x = x;
     mPos.y = y;
     mHalfHeight = 32;
@@ -135,8 +132,3 @@ void Player::handleTrigger(std::string name) {
         mPos.y = 300;
     }
 }
-
-void Player::updateAABB() {
-    mPos.x = mRect.x + mHalfWidth;
-    mPos.y = mRect.y + mHalfHeight;
-}   

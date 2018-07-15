@@ -19,7 +19,6 @@ public:
 
     virtual void handleCollisions();
     virtual void handleTrigger(std::string);
-    virtual void updateAABB();
 
     virtual void render(SDL_Rect*);
 
