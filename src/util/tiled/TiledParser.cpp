@@ -58,17 +58,17 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
 void TiledParser::createBoundsBlock(TiledMap* map, Vulture2D::Scene* scene) {
     Box* left = new Box(-64, map->getHeight()/2, 128, map->getHeight());
     left->setName("level_edge_box");
-    left->createFromPath("resources/images/block.png", Game::getRenderer());
+    left->createFromPath("resources/images/block.png", Game::getSDLRenderer());
     left->setVisible(true);
     
     Box* right = new Box(map->getWidth() + 64, map->getHeight()/2, 128, map->getHeight());
     right->setName("level_edge_box");
-    right->createFromPath("resources/images/block.png", Game::getRenderer());
+    right->createFromPath("resources/images/block.png", Game::getSDLRenderer());
     right->setVisible(true);
 
     Box* top = new Box(map->getWidth()/2, -64, map->getWidth(), 128);
     top->setName("leve_edge_box");
-    top->createFromPath("resources/images/block.png", Game::getRenderer());
+    top->createFromPath("resources/images/block.png", Game::getSDLRenderer());
     top->setVisible(true);
     
     scene->registerEntity(top);
@@ -97,7 +97,7 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
-                    box->createFromPath("resources/images/block.png", Game::getRenderer());
+                    box->createFromPath("resources/images/block.png", Game::getSDLRenderer());
                     box->setVisible(visible);
 
                     XMLElement* properties = object->FirstChildElement("properties");
@@ -135,7 +135,7 @@ Tileset* TiledParser::parseTileset(XMLElement* tilesetNode)  {
         string pathToTileset = "resources/tilesets/";
         pathToTileset+=image->Attribute("source");
 
-        Tileset* tileset = new Tileset(tilesetName, pathToTileset, Game::getRenderer(), tileWidth, tileHeight, tileCount, columns);
+        Tileset* tileset = new Tileset(tilesetName, pathToTileset, Game::getSDLRenderer(), tileWidth, tileHeight, tileCount, columns);
         tileset->setStartGID(firstGID);
 
         return tileset;

@@ -16,6 +16,21 @@ Player::Player(int x, int y, int width, int height) {
 }
 
 void Player::update() {
+    elapsedFrames++;
+
+    if (elapsedFrames % frameDelay == 0) {
+        if (incrementing) {
+            currentFrame++;
+            if (currentFrame == frameCount-1)
+                incrementing = false;
+        }
+        else {
+            currentFrame--;
+            if (currentFrame == 0)
+                incrementing = true;
+        }
+    }
+
     int gravity = 1;
 
     if(mVelocity.y < 30)
@@ -55,12 +70,33 @@ void Player::handleInput(Event* event) {
     }
 }
 
+void Player::render(SDL_Rect* cameraRect) {
+    SDL_Rect destRect;
+    destRect.x = mPos.x - mHalfWidth - cameraRect->x;
+    destRect.y = mPos.y - mHalfHeight - cameraRect->y;
+    destRect.w = mHalfWidth * 2;
+    destRect.h = mHalfHeight * 2;
+
+    if (mVelocity.x < 0)
+        currentFramePosition.y = 0;
+    if (mVelocity.x > 0)
+        currentFramePosition.y = 1;
+
+    SDL_Rect srcRect;
+    srcRect.x = currentFramePosition.x + (currentFrame * frameWidth);
+    srcRect.y = currentFramePosition.y * 16;
+    srcRect.w = frameWidth;
+    srcRect.h = frameHeight;
+
+    Game::getRenderer().drawTexture(getTexture(), &srcRect, &destRect);
+}
+
 void Player::fireBullet(int val) {
     Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
-    bullet->createFromPath("resources/images/block.png", Game::getRenderer());
+    bullet->createFromPath("resources/images/block.png", Game::getSDLRenderer());
 	bullet->setName("player_bullet"); 
 	bullet->setTrigger(true);
-	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
+	Game::getSceneHandler().getCurrentScene()->registerEntity(bullet);
 }
 
 void Player::setPosition(int x, int y) {
@@ -70,21 +106,7 @@ void Player::setPosition(int x, int y) {
     mHalfWidth = 32;
 }
 
-void Player::render(SDL_Rect* cameraRect) {
-    SDL_Rect destRect;
-    destRect.x = mPos.x - mHalfWidth - cameraRect->x;
-    destRect.y = mPos.y - mHalfHeight - cameraRect->y;
-    destRect.w = mHalfWidth * 2;
-    destRect.h = mHalfHeight * 2;
 
-    SDL_Rect srcRect;
-    srcRect.x = 0;
-    srcRect.y = 0;
-    srcRect.w = 16;
-    srcRect.h = 16;
-
-    Renderer::getInstance().drawTexture(getTexture(), &srcRect, &destRect);
-}
 
 void Player::handleCollisions() {
     if (mColliders.empty()) {

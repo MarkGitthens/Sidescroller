@@ -3,14 +3,12 @@
 #include "Projectile.h"
 #include "../core/Game.h"
 #include "../core/Entity.h"
-#include "../core/InputHandler.h"
-#include "../core/Renderable.h"
+#include "../core/AnimatedSprite.h"
 #include "../physics/AABBCollider.h"
-#include "../core/SceneHandler.h"
 #include "../core/KeyboardEvent.h"
 
 //TODO: Entities shouldn't inherit AABBCollider since a single entity have multiple colliders
-class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {
+class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::AnimatedSprite {
 public:
     Player() : mVelocity(0, 0) {};
     Player(int, int, int, int);
