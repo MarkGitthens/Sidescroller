@@ -1,3 +1,4 @@
+[![Build Status](https://semaphoreci.com/api/v1/maelstromdrift/sidescroller/branches/master/badge.svg)](https://semaphoreci.com/maelstromdrift/sidescroller)
 # Sidescroller
 This is a sample project being used to learn more about creating a custom 2d game engine using SDL2 and then eventually openGL.
 # Requirments
