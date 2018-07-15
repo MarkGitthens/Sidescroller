@@ -1,9 +1,10 @@
 #pragma once
 #include <SDL.h>
 #include <string>
+#include <iostream>
 #include <unordered_map>
 #include "EventHandler.h"
-#include "Entity.h"
+#include "KeyboardEvent.h"
 
 namespace Vulture2D {
     class InputHandler {
@@ -19,6 +20,10 @@ namespace Vulture2D {
         bool keyHeld(int key);
         bool keyPressed(int key);
         bool keyReleased(int key);
+
+        vector<int> getPressedKeys();
+        vector<int> getHeldKeys();
+        vector<int> getReleasedKeys();
 
     private:
         ~InputHandler() { if (instance) { delete instance; } instance = nullptr; }

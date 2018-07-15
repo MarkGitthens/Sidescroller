@@ -4,6 +4,7 @@
 #include <queue>
 #include <unordered_map>
 #include <iostream>
+#include "EventHandler.h"
 #include "Entity.h"
 #include "Renderable.h"
 #include "../entities/TiledMap.h"
@@ -14,7 +15,7 @@ using std::string;
 using std::unordered_map;
 
 namespace Vulture2D {
-    class Scene {
+    class Scene : public EventHandler{
     public:
         Scene() : mSceneName("default") {};
         Scene(const string name) : mSceneName(name) {};
@@ -58,6 +59,8 @@ namespace Vulture2D {
         }
 
         void updateScene() {
+
+
             for (std::pair<int, Entity*> e : mEntityMap) {
                 e.second->update();
             }

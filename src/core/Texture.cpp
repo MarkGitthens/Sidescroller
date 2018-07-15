@@ -1,17 +1,11 @@
 #include "Texture.h"
-#include <iostream>
-#include "Renderer.h"
-#include "SDL.h"
 
 namespace Vulture2D {
-
     Texture::Texture() {
         mTexture = nullptr;
         mWidth = mHeight = 0;
     }
     Texture::~Texture() {
-        //mWidth = mHeight = 0;
-        std::cout << "destroying Texture" << std::endl;
         if (mTexture) {
             SDL_DestroyTexture(mTexture);
         }
@@ -19,7 +13,7 @@ namespace Vulture2D {
     Texture::Texture(SDL_Texture* texture) {
         mTexture = texture;
     }
-    Texture::Texture(string path) {
+    Texture::Texture(string path, SDL_Renderer* renderer) {
         SDL_Surface* temp;
         temp = IMG_Load(path.c_str());
         if (!temp) {
@@ -29,7 +23,7 @@ namespace Vulture2D {
             mWidth = temp->w;
             mHeight = temp->h;
 
-            mTexture = SDL_CreateTextureFromSurface(Renderer::getInstance().getRenderer(), temp);
+            mTexture = SDL_CreateTextureFromSurface(renderer, temp);
             SDL_FreeSurface(temp);
         }
 

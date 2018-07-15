@@ -1,0 +1,68 @@
+@startuml
+
+package Core {
+    class Game {
+
+    }
+
+    class InputHandler {
+
+    }
+
+    class SceneHandler {
+
+    }
+
+    class Renderer {
+
+    }
+
+    class Texture {
+
+    }
+
+    class Event {
+
+    }
+
+    class KeyboardEvent {
+
+    }
+
+    class Renderable {
+
+    }
+
+    class Entity {
+
+    }
+
+    class Scene {
+
+    }
+
+    abstract class EventHandler {
+
+    }
+
+}
+
+
+Game --> InputHandler
+Game --> SceneHandler
+Game --> Renderer
+
+Renderer --> Renderable
+
+Renderable --> Texture
+
+SceneHandler o-- Scene
+
+EventHandler <|- Scene
+
+EventHandler --> Event
+
+Event <|.. KeyboardEvent
+Scene o-- Entity
+
+@enduml

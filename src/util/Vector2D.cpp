@@ -1,5 +1,4 @@
 #include "Vector2D.h"
-#include <iostream>
 
 namespace Vulture2D {
 

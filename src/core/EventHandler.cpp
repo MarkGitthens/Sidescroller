@@ -12,7 +12,14 @@ namespace Vulture2D {
         return lastID;
     }
 
-    //TODO: Need to be able to propogate the event up the scenegraph eventually.
+    void EventHandler::removeListener(int id) {
+        for (int i = 0; i < listeners.size(); i++) {
+            if (listeners.at(i).id == id) {
+                listeners.erase(listeners.begin() + i);
+            }
+        }
+    }
+
     void EventHandler::dispatchEvent(Event* event) {
         for (Listener l : listeners) {
             if (l.type == event->getType())

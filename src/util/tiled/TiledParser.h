@@ -5,6 +5,7 @@
 #include "../tinyxml2.h"
 #include "Tile.h"
 #include "Tileset.h"
+#include "../../core/Game.h"
 #include "../../core/Entity.h"
 #include "../../core/Scene.h"
 #include "../../entities/TiledMap.h"

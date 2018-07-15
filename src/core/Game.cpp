@@ -37,9 +37,10 @@ namespace Vulture2D {
 
             currentTime = newTime;
             backlog += frameTime;
+            InputHandler::getInstance().handleInput();
+            sendInputEvents();
 
             while (backlog >= deltaTime) {
-                InputHandler::getInstance().handleInput();
                 SceneHandler::getInstance().getCurrentScene()->updateScene();
                 backlog -= deltaTime;
                 updateCounter++;
@@ -58,6 +59,39 @@ namespace Vulture2D {
             if (InputHandler::getInstance().actionHeld("quit_game"))
                 running = false;
         }
+    }
+
+    void Game::sendInputEvents() {
+        vector<int> pressed = InputHandler::getInstance().getPressedKeys();
+        vector<int> held = InputHandler::getInstance().getHeldKeys();
+        vector<int> released = InputHandler::getInstance().getReleasedKeys();
+
+        for (auto p : pressed) {
+            KeyboardEvent event(KeyboardEvent::KeyPress, p);
+            SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&event);
+        }
+
+        for (auto h : held) {
+            KeyboardEvent event(KeyboardEvent::KeyHeld, h);
+            SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&event);
+        }
+
+        for (auto r : released) {
+            KeyboardEvent event(KeyboardEvent::KeyReleased, r);
+            SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&event);
+        }
+
+    }
+    SDL_Renderer* Game::getRenderer() {
+        return Renderer::getInstance().getRenderer();
+    }
+
+    SceneHandler& Game::getSceneHandler() {
+        return SceneHandler::getInstance();
+    }
+
+    InputHandler& Game::getInputHandler() {
+        return InputHandler::getInstance();
     }
 
     void Game::registerInputs() {

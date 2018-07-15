@@ -1,5 +1,3 @@
-#include "core/SceneHandler.h"
-#include "core/Scene.h"
 #include "core/Game.h"
 
 #include "entities/Player.h"
@@ -10,6 +8,7 @@
 #include "util/tiled/TiledParser.h"
 
 using namespace Vulture2D;
+
 //TODO: Should define a consistent unit of measurement instead of just using pixel size
 void initializeEntities();
 
@@ -19,28 +18,22 @@ Camera* camera;
 ResetBox* reset;
 Scene scene;
 
-//Music* music = nullptr;
-
 Game* game = nullptr;
 
 int main(int argc, char* argv[]) {
-    
     game = new Game();
 
     game->init();
-
-    //TODO: the following should be part of a default loaded scene to keep Main simple.
-    initializeEntities();
-
     game->registerInputs();
 
     scene.setName("start");
+    SceneHandler::getInstance().registerScene(&scene);
+    
+    initializeEntities();
+    
     scene.registerEntity(player);
     scene.setCamera(camera);
-    //music->subscribeToEvents();
-    scene.registerEntity(reset);
-
-    SceneHandler::getInstance().registerScene(&scene);
+    scene.registerEntity(reset); 
 
     game->run();
     game->destroy();
@@ -48,12 +41,12 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-void initializeEntities() {
-    //TODO: Should probably make player a unique entity that will only ever have one copy
-    player = new Player(64, 300, 64, 64);
 
+
+void initializeEntities() {
+    player = new Player(64, 300, 64, 64);
     player->setName("Player");
-    player->createFromPath("resources/images/ball.png");
+    player->createFromPath("resources/images/ball.png", game->getRenderer());
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 

@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-
 namespace Vulture2D {
 
     Renderer* Renderer::instance = nullptr;
@@ -52,8 +51,6 @@ namespace Vulture2D {
     void Renderer::drawTexture(Texture* texture, SDL_Rect* src, SDL_Rect* dest) {
         SDL_RenderCopy(mRenderer, texture->getTexture(), src, dest);
     }
-
-
 
     void Renderer::setClearColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
         SDL_SetRenderDrawColor(mRenderer, r, g, b, a);

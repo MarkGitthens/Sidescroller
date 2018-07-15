@@ -8,10 +8,10 @@ using std::string;
 
 class Tileset {
 public:
-    Tileset(string name, string path, int tWidth, int tHeight, int tCount, int columns) :
+    Tileset(string name, string path, SDL_Renderer* renderer, int tWidth, int tHeight, int tCount, int columns) :
         name(name), path(path), tileWidth(tWidth), tileHeight(tHeight), tileCount(tCount), columns(columns)
     {
-        image = new Vulture2D::Texture(path);
+        image = new Vulture2D::Texture(path, renderer);
     }
 
     ~Tileset() {

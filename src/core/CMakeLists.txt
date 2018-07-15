@@ -9,7 +9,8 @@ set(VULTURE2D_CORE_HEADERS
 	src/core/Renderer.h
 	src/core/Scene.h
 	src/core/SceneHandler.h
-	src/core/Texture.h)
+	src/core/Texture.h
+    src/core/KeyboardEvent.h)
 
 set(VULTURE2D_CORE_SRC
 	

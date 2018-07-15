@@ -1,9 +1,13 @@
 #pragma once
-#include "../core/Texture.h"
+#include <string>
+#include "Projectile.h"
+#include "../core/Game.h"
 #include "../core/Entity.h"
 #include "../core/InputHandler.h"
 #include "../core/Renderable.h"
 #include "../physics/AABBCollider.h"
+#include "../core/SceneHandler.h"
+#include "../core/KeyboardEvent.h"
 
 //TODO: Entities shouldn't inherit AABBCollider since a single entity have multiple colliders
 class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {
@@ -11,7 +15,7 @@ public:
     Player() : mVelocity(0, 0) {};
     Player(int, int, int, int);
     virtual void update();
-    void handleInput();
+    void handleInput(Event*);
 
     virtual void handleCollisions();
     virtual void handleTrigger(std::string);
