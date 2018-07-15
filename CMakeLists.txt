@@ -57,7 +57,7 @@ if(UNIX)
 
     if(SDL2_FOUND)
         include_directories(${SDL2_INCLUDE_DIRS})
-        target_link_libraries(sidescroller ${SDL2_LIBRARIES})
+        target_link_libraries(sidescroller ${SDL2_LIBRARY})
     endif()
 
     if(SDL2_IMAGE_FOUND)
