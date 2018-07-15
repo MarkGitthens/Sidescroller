@@ -79,7 +79,14 @@ void Player::render(SDL_Rect* cameraRect) {
     destRect.y = mPos.y - mHalfHeight - cameraRect->y;
     destRect.w = mHalfWidth * 2;
     destRect.h = mHalfHeight * 2;
-    Renderer::getInstance().drawTexture(getTexture(), &destRect);
+
+    SDL_Rect srcRect;
+    srcRect.x = 0;
+    srcRect.y = 0;
+    srcRect.w = 16;
+    srcRect.h = 16;
+
+    Renderer::getInstance().drawTexture(getTexture(), &srcRect, &destRect);
 }
 
 void Player::handleCollisions() {

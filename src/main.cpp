@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 void initializeEntities() {
     player = new Player(64, 300, 64, 64);
     player->setName("Player");
-    player->createFromPath("resources/images/ball.png", game->getRenderer());
+    player->createFromPath("resources/images/MyChar.png", game->getRenderer());
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
