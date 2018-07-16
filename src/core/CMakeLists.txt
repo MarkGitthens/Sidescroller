@@ -11,7 +11,8 @@ set(VULTURE2D_CORE_HEADERS
 	src/core/SceneHandler.h
 	src/core/Texture.h
     src/core/KeyboardEvent.h
-    src/core/AnimatedSprite.h)
+    src/core/AnimatedSprite.h
+    src/core/Animation.h)
 
 set(VULTURE2D_CORE_SRC
 	

@@ -16,21 +16,6 @@ Player::Player(int x, int y, int width, int height) {
 }
 
 void Player::update() {
-    elapsedFrames++;
-
-    if (elapsedFrames % frameDelay == 0) {
-        if (incrementing) {
-            currentFrame++;
-            if (currentFrame == frameCount-1)
-                incrementing = false;
-        }
-        else {
-            currentFrame--;
-            if (currentFrame == 0)
-                incrementing = true;
-        }
-    }
-
     int gravity = 1;
 
     if(mVelocity.y < 30)
@@ -38,6 +23,11 @@ void Player::update() {
 
     mPos.x += mVelocity.x;
     mPos.y += mVelocity.y;
+
+    if (mVelocity.x < 0)
+        setAnimation("walking_left");
+    else if (mVelocity.x > 0)
+        setAnimation("walking_right");
 }
 
 void Player::handleInput(Event* event) {
@@ -71,24 +61,15 @@ void Player::handleInput(Event* event) {
 }
 
 void Player::render(SDL_Rect* cameraRect) {
+    animations[currentAnimation].update();
+
     SDL_Rect destRect;
     destRect.x = mPos.x - mHalfWidth - cameraRect->x;
     destRect.y = mPos.y - mHalfHeight - cameraRect->y;
     destRect.w = mHalfWidth * 2;
     destRect.h = mHalfHeight * 2;
 
-    if (mVelocity.x < 0)
-        currentFramePosition.y = 0;
-    if (mVelocity.x > 0)
-        currentFramePosition.y = 1;
-
-    SDL_Rect srcRect;
-    srcRect.x = currentFramePosition.x + (currentFrame * frameWidth);
-    srcRect.y = currentFramePosition.y * 16;
-    srcRect.w = frameWidth;
-    srcRect.h = frameHeight;
-
-    Game::getRenderer().drawTexture(getTexture(), &srcRect, &destRect);
+    Game::getRenderer().drawTexture(getTexture(), &animations[currentAnimation].getCurrentFrame(), &destRect);
 }
 
 void Player::fireBullet(int val) {
@@ -105,8 +86,6 @@ void Player::setPosition(int x, int y) {
     mHalfHeight = 32;
     mHalfWidth = 32;
 }
-
-
 
 void Player::handleCollisions() {
     if (mColliders.empty()) {

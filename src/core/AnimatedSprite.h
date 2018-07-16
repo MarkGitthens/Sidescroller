@@ -1,4 +1,5 @@
 #pragma once
+#include "Animation.h"
 #include "Renderable.h"
 
 namespace Vulture2D {
@@ -6,34 +7,20 @@ namespace Vulture2D {
     public:
         virtual void render(SDL_Rect*) = 0;
 
-        void setFrameCount(int count) {
-            frameCount = count;
+        void registerAnimation(Animation animation) {
+            animations.insert(std::pair<string, Animation>(animation.getName(), animation));
         }
 
-        void setFrameDelay(int delay) {
-            frameDelay = delay;
+        void setAnimation(string name) {
+            currentAnimation = name;
         }
 
-        void setFrameDimensions(int w, int h) {
-            frameWidth = w;
-            frameHeight = h;
-        }
-        void loops(bool loop) {
-            this->loop = loop;
-        }
-        void isCyclic(bool cyclic) {
-            this->cyclic = cyclic;
+        void removeAnimation(string name) {
+            animations.erase(name);
         }
 
     protected:
-        Vector2D currentFramePosition;
-        bool incrementing = true;
-        int currentFrame=0;
-        int frameCount;
-        int frameDelay;
-        int elapsedFrames = 0;
-        bool cyclic;
-        bool loop;
-        int frameWidth, frameHeight;
+        string currentAnimation;
+        std::unordered_map<string, Animation> animations;
     };
 }
