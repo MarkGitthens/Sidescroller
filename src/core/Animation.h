@@ -15,15 +15,14 @@ namespace Vulture2D{
         ~Animation() {};
         int getFrameCount() { return frameCount; }
         std::string getName() { return title; }
-        SDL_Rect getFrame(int frameNumber) { return frameList[frameNumber]; }
+        SDL_Rect* getFrame(int frameNumber) { return &frameList[frameNumber]; }
 
-        SDL_Rect getCurrentFrame() { return frameList[currentFrame]; }
+        SDL_Rect* getCurrentFrame() { return &frameList[currentFrame]; }
 
         void update() {
             currentTick = SDL_GetTicks();
 
             if(currentTick - startTick >= frameDelay) {
-                std::cout << currentFrame << std::endl;
                 if(cycles) {
                     if(incrementing) {
                         currentFrame++;
@@ -82,7 +81,6 @@ namespace Vulture2D{
                     frameElement = frameElement->NextSiblingElement("frame");
                 }
 
-                std::cout << title << " " << frameCount << std::endl;
                 return true;
             }
 

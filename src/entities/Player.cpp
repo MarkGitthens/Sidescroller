@@ -69,7 +69,7 @@ void Player::render(SDL_Rect* cameraRect) {
     destRect.w = mHalfWidth * 2;
     destRect.h = mHalfHeight * 2;
 
-    Game::getRenderer().drawTexture(getTexture(), &animations[currentAnimation].getCurrentFrame(), &destRect);
+    Game::getRenderer().drawTexture(getTexture(), animations[currentAnimation].getCurrentFrame(), &destRect);
 }
 
 void Player::fireBullet(int val) {
