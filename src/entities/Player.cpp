@@ -53,6 +53,7 @@ void Player::handleInput(Event* event) {
             if (canJump) {
                 canJump = false;
                 mVelocity.y = -28;
+                grounded = false;
             }
         }
 
