@@ -16,6 +16,27 @@ package Core {
         -bool running
     }
 
+    abstract class AABBCollider {
+        +bool colliding((AABBCollider)
+        +AABBCollider*[] getColliders
+        +void addCollider(AABBCollider*)
+        +void clearColliders()
+        +double getInterArea(AABBCollider)
+        +Vector2D getProjectionVector(AABBCollider)
+        +Vector2D* getPos()
+        +bool isTrigger()
+        +void setTrigger(bool)
+        +void handleCollisions()
+        +void handleTrigger(string)
+        +void updateAABB()
+        
+        #AABBCollider*[] colliders
+        #Vector2D position
+        #int halfWidth
+        #int halfHeight
+        #bool trigger
+    }
+
     class InputHandler {
         +static InputHandler& getInstance()
         
@@ -194,6 +215,153 @@ package Core {
     }
 }
 
+package util {
+    class Vector2D {
+        +double dot(Vector2D)
+        +Vector2D normal()
+        +Vector2D normalize()
+        +double magnitude()
+        +Vector2D project(Vector2D)
+        +double x
+        +double y
+    }
+    
+    class Log {
+        +void opeFile(string, fstream)
+        +void closeFile()
+        +void writeMessage(string)
+    
+        -fstream logFile
+        -string fileName
+    }
+    
+    class TiledParser {
+        +static bool parse(string, string, Scene*)
+        -static void parseObjects(XMLElement*, Scene*)
+        -static void createBoundsBlock(TiledMap*, Scene*)
+        -static Tileset* parseTileset(XMLElement*)
+    }
+    
+    class Tile {
+        +int getID()
+        +string getType()
+        +int frameCount()
+        
+        -int id
+        -string type
+        -Property[] properties
+        -Frame[] frames
+    }
+    
+    class Tileset {
+        +void setStartGID(int)
+        +string getName()
+        +string getPath()
+        +Tile getTile(int)
+        +int getTileWidth()
+        +int getTileHeight()
+        +int getTileCount()
+        +int getColumnCount()
+        +Texture* getImage()
+        
+        -int firstGID
+        -string path
+        -string name
+        -int columns
+        -int tileCount
+        -int tileWidth
+        -int tileHeight
+        -int spacing
+        -int margin
+        -map<int, Tile> tiles
+        -Texture* image;
+    }
+}
+
+package Entities {
+    class Camera {
+        +void update()
+        +void setX(int)
+        +void setY(int)
+        +void setWidth(int)
+        +void setHeight(int)
+        +void setSceneWidth(int)
+        +void setSceneHeight(int)
+        +void setCameraRect(SDL_Rect*)
+        +void setParentPos(Vector2D*)
+        +SDL_Rect* getCameraRect()
+        +Vector2D getParentPos()
+    
+        -int sceneWidth
+        -int sceneHeight
+        -Vector2D* parentPos
+        -SDL_Rect* cameraViewport
+    }
+    
+    class Box {
+        +void update()
+        +void handleInput()
+        +void render(SDL_Rect*)
+        +void handleCollisions()
+        +void updateAABB()
+        +bool visibility()
+        +void setVisible(bool)
+
+        -Texture* texture
+        -bool visible
+    }
+    
+    class Player {
+        +void update()
+        +void handleInput(Event*)
+        +void handleCollisions()
+        +void handleTrigger(string)
+        +void render(SDL_Rect*)
+        +void setPosition(int, int)
+        +void fireBullet(int)
+
+        -bool canJump 
+        -bool grounded
+        -Vector2D velocity
+        -bool facingLeft
+    }
+
+    class Projectile {
+        +void udpate()
+        +void handleCollisions()
+        +void render(SDL_Rect*)
+        
+        -Vector2D velocity
+    }
+    
+    class ResetBox {
+        +void update()
+        +void handleInput()
+        +void handleCollisions()
+        +void handleTrigger(string)
+        +void updateAABB()
+    }
+
+    class TiledMap {
+        +int[] getLayer(int index)
+        +int numLayers()
+        +void insertLayer(int)
+        +void drawLayer(int, int, int)
+        +void update()
+        +void render(SDL_Rect*)
+        +void addTileSheet(Tileset*)
+        +int getWidth()
+        +int getHeight()
+
+        -int width
+        -int height
+        -int tileWidth
+        -int tileHeight
+        -int[][] layers
+        -Tileset* tilesets
+    }
+}
+
 Renderable <|-- AnimatedSprite
 AnimatedSprite o-- Animation
 Game --> InputHandler
@@ -212,5 +380,27 @@ EventHandler --> Event
 
 Event <|.. KeyboardEvent
 Scene o-- Entity
+Scene o-- Renderable
+Scene o-- AABBCollider
 
+Tileset o-- Tile
+TiledParser --> Tileset
+
+TiledMap --> TiledParser
+
+Entity <|.. Player
+Entity <|.. Projectile
+Entity <|.. TiledMap
+Entity <|.. Box
+Entity <|.. Camera
+
+AABBCollider <|.. Player
+AABBCollider <|.. Projectile
+AABBCollider <|.. Box
+
+AnimatedSprite <|-- Player
+Renderable <|-- Box
+Renderable <|-- Projectile
+
+AABBCollider --> Vector2D
 @enduml
