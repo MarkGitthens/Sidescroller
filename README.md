@@ -10,11 +10,11 @@ This is a sample project being used to learn more about creating a custom 2d gam
 
 # Generate Build Files
 # Windows
--Extract SDL2 and SDL2_image include and lib directories into dependencies/SDL2
--Navigate to project root
--Create a folder named build/
--Navigate into newly created build/ directory.
--From command prompt run cmake ..
+- Extract SDL2 and SDL2_image include and lib directories into dependencies/SDL2
+- Navigate to project root
+- Create a folder named build/
+- Navigate into newly created build/ directory.
+- From command prompt run cmake ..
 
 # Ubuntu 
 - Navigate to project root
