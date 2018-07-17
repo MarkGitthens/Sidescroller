@@ -107,12 +107,6 @@ void Player::setPosition(int x, int y) {
 }
 
 void Player::handleCollisions() {
-    if (mColliders.empty()) {
-        grounded = false;
-    }
-    else {
-        canJump = true;
-    }
     while (!mColliders.empty()) {
         
         //Determine the collider that provides the greatest impact on this entity
@@ -134,6 +128,7 @@ void Player::handleCollisions() {
         if(mVelocity.y > 0 && mPos.y+mHalfHeight <= mColliders.at(greatestIndex)->getPos()->y - mColliders.at(greatestIndex)->mHalfHeight) {
             grounded = true;
             mVelocity.y = 0;
+            canJump = true;
         } else {
             grounded = false;
         }

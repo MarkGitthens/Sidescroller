@@ -2,31 +2,103 @@
 
 package Core {
     class Game {
+        +void init()
+        +void run()
+        +static SDL_Renderer* getSDLRenderer()
+        +static SceneHandler& getRenderer()
+        +static InputHandler& getInputHandler()
+        +void sendInputEvents()
+        +void registerInputs()
+        +void destroy()
 
+        -SDL_Window* window
+        -SDL_Surface* screenSurface
+        -bool running
     }
 
     class InputHandler {
+        +static InputHandler& getInstance()
+        
+        +void handleInput()
+        +void addKeyAction(int, string)
+        +void removeKeyAction(int)
+        +bool actionTriggered(string)
+        +bool actionHeld(string)
+        +bool keyHeld(int)
+        +bool keyPressed(int)
+        +bool keyReleased(int)
 
+        +int[] getPressedKeys()
+        +int[] getHeldKeys()
+        +int[] getReleasedKeys()
+    
+        -SDL_Event event
+        -static InputHandler* instance
+        -map<int, bool> pressedKeys
+        -map<int, bool> heldKeys
+        -map<int, bool> releasedKeys
+        -map<int, string> keyMap
+        -map<string, int> actionMap
     }
 
     class SceneHandler {
+        static SceneHandler& getInstance()
 
+        +void changeScene(Scene*)
+        +void changeScene(string)
+        +void registerScene(Scene*)
+        +void removeScene(string)
+        +Scene* getCurrentScene()
+
+        -static SceneHandler* instance
+        -Scene* currentScene
+        -map<string, Scene*> registeredScenes
+        
     }
 
     class Renderer {
+        +static Renderer& getInstance()
+        
+        +void init(SDL_Windiw*, int)
+        +void destroy()
+        +void createFromWindow(SDL_Window*, int)
+        +void drawTexture(Texture*, int, int, int, int)
+        +void drawTexture(Texture*, SDL_Rect*)
+        +void drawTexture(Texture*, SDL_Rect*, SDL_Rect*, double, SDL_Point, SDL_RendererFlip)
+        +SDL_Renderer* getRenderer()
 
+        -static Renderer* instance
+        -SDL_Renderer* sdlRenderer
     }
 
     class Texture {
+        +SDL_Texture* getSDLTexture()
+        +int getWidth()
+        +int getHeight()
 
+        -int width
+        -int height
+        -SDL_Texture* sdlTexture
+    }
+
+    class EventHandler {
+        +int addListener(int, Callback)
+        +void removeListner(int)
+        +void dispatchEVent(Event*)
+
+        -int lastID
+        -Listener[] listeners
     }
 
     class Event {
-
+        +int getType()
+        
+        #string action
+        #int type
     }
 
     class KeyboardEvent {
-
+        +int keyID
     }
 
     abstract class Renderable {
@@ -43,29 +115,87 @@ package Core {
         #Texture* image
     }
 
+    class Animation {
+        +int getFrameCount()
+        +string getName()
+        +SDL_Rect* getFrame(int)
+        +SDL_Rect* getCurrentFrame()
+        +void update()
+        +int getFraemDelay()
+        +bool parseFile(string, SDL_Renderer*)
+
+        -bool incrememting
+        -SDL_Rect* frameList
+        -int startTick
+        -int currentTick
+        -int frameDelay
+        -string title
+        -bool loopable
+        -bool cycles
+        -int frameCount
+        -int currentFrame
+    }
     class AnimatedSprite {
         +void render(SDL_Rect*)
-        #SDL_Rect currentFrame
-        #int frameCount
-        #bool cyclic
-        #bool loops
+        +void registerAnimation(Animation)
+        +void setAnimation(string)
+        +void removeAnimation(string)
+
+        -string currentAnimation
+        -map<string, Animation> animations
     }
 
     class Entity {
+        +void update()
+        +void setID(int)
+        +void setName(string)
+        +int getID()
+        +static int getNextValidID()
+        +string getName()
 
+        -int x
+        -int y
+        -int id
+        -string name
+        -static int nextValidID
     }
 
     class Scene {
+        +void registerEntity(Entity*)
+        +void deleteEntity(int)
+        +void udpateScene()
+        +void renderScene()
+        +void checkCollisions()
+        +void checkCollisions(AABBCollider*)
+        +void setName(string)
+        +void setSceneWidth(int)
+        +void setSceneHeight(int)
+        +void setCamera(Camera*)
+        +void setTiledMap(TiledMap*)
+        +Entity* getEntity(int)
+        +string getSceneName()
+        +TiledMap* getTiledMap()
+        +void destroy()
+        +int getSceneWidth()
+        +int getSceneHeight()
 
-    }
-
-    abstract class EventHandler {
-
+        -string sceneName
+        -SDL_Rect worldSpace
+        -Camera* camera
+        -TiledMap* tiledMap
+        -int sceneWidth
+        -int sceneHeight
+        -map<int, Renderable*> renderMap
+        -map<int, Entity*> entityMap
+        -map<int, AABBCollider*> colliders
+        -map<int AABBCollider*> triggers
+        -int[] deletedEntities
+        -void removeEntity(int)
     }
 }
 
 Renderable <|-- AnimatedSprite
-
+AnimatedSprite o-- Animation
 Game --> InputHandler
 Game --> SceneHandler
 Game --> Renderer
