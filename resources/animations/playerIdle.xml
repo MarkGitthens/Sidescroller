@@ -1,0 +1,11 @@
+<animation>
+    <name>player_idle</name>
+    <image>MyChar.png</image>
+    <framecount>1</framecount>
+    <framedelay>1</framedelay>
+    <loopable>true</loopable>
+    <cyclic>false</cyclic>
+    <frames>
+        <frame x="0" y="0" width="16" height="16" />
+    </frames>
+</animation>

@@ -48,8 +48,8 @@ namespace Vulture2D {
         SDL_RenderCopy(mRenderer, texture->getTexture(), NULL, dest);
     }
 
-    void Renderer::drawTexture(Texture* texture, SDL_Rect* src, SDL_Rect* dest) {
-        SDL_RenderCopy(mRenderer, texture->getTexture(), src, dest);
+    void Renderer::drawTexture(Texture* texture, SDL_Rect* src, SDL_Rect* dest, const double angle, const SDL_Point* center, const SDL_RendererFlip flip) {
+        SDL_RenderCopyEx(mRenderer, texture->getTexture(), src, dest, angle, center, flip);
     }
 
     void Renderer::setClearColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {

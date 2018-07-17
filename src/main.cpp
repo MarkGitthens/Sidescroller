@@ -48,9 +48,6 @@ void initializeEntities() {
     player->setName("Player");
     player->createFromPath("resources/images/MyChar.png", game->getSDLRenderer());
     
-    player->registerAnimation(Animation("resources/animations/playerWalkLeft.xml"));
-    player->registerAnimation(Animation("resources/animations/playerWalkRight.xml"));
-
     player->setAnimation("walking_right");
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);

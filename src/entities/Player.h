@@ -27,4 +27,5 @@ private:
     bool canJump = true;
     bool grounded = false;
     Vector2D mVelocity;
+    bool facingLeft = false;
 };

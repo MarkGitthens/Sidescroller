@@ -11,6 +11,9 @@ Player::Player(int x, int y, int width, int height) {
         this->handleInput(e);
     };
 
+    registerAnimation(Animation("resources/animations/playerWalk.xml"));
+    registerAnimation(Animation("resources/animations/playerIdle.xml"));
+    registerAnimation(Animation("resources/animations/playerJump.xml"));
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyPress, input);
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyReleased, input);
 }
@@ -25,9 +28,19 @@ void Player::update() {
     mPos.y += mVelocity.y;
 
     if (mVelocity.x < 0)
-        setAnimation("walking_left");
+            facingLeft = true;
     else if (mVelocity.x > 0)
-        setAnimation("walking_right");
+            facingLeft = false;
+    
+    if(mVelocity.x != 0 && grounded) {
+        setAnimation("walking_left");
+    } else if (mVelocity.x == 0 && grounded) {
+        setAnimation("player_idle");
+    }
+
+    if(!grounded) {
+        setAnimation("player_jump");
+    }
 }
 
 void Player::handleInput(Event* event) {
@@ -69,7 +82,11 @@ void Player::render(SDL_Rect* cameraRect) {
     destRect.w = mHalfWidth * 2;
     destRect.h = mHalfHeight * 2;
 
-    Game::getRenderer().drawTexture(getTexture(), animations[currentAnimation].getCurrentFrame(), &destRect);
+    if(!facingLeft) {
+        Game::getRenderer().drawTexture(getTexture(), animations[currentAnimation].getCurrentFrame(), &destRect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+    } else {
+        Game::getRenderer().drawTexture(getTexture(), animations[currentAnimation].getCurrentFrame(), &destRect, 0, nullptr);
+    }
 }
 
 void Player::fireBullet(int val) {
