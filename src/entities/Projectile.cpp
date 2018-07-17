@@ -13,7 +13,7 @@ void Projectile::render(SDL_Rect* offset) {
 	destRect.y = mPos.y - mHalfHeight - offset->y;
 	destRect.w = mHalfWidth * 2;
 	destRect.h = mHalfHeight * 2;
-	Renderer::getInstance().drawTexture(mImage, &destRect);
+	Renderer::getInstance().drawTexture(image, &destRect);
 }
 void Projectile::handleCollisions() {
     for (auto c : mColliders) {

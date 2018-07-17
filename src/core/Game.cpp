@@ -82,7 +82,12 @@ namespace Vulture2D {
         }
 
     }
-    SDL_Renderer* Game::getRenderer() {
+
+    Renderer& Game::getRenderer() {
+        return Renderer::getInstance();
+    }
+
+    SDL_Renderer* Game::getSDLRenderer() {
         return Renderer::getInstance().getRenderer();
     }
 

@@ -12,7 +12,8 @@ namespace Vulture2D {
         Game() {}
         void init();
         void run();
-        static SDL_Renderer* getRenderer();
+        static SDL_Renderer* getSDLRenderer();
+        static Renderer& getRenderer();
         static SceneHandler& getSceneHandler();
         static InputHandler& getInputHandler();
         void sendInputEvents();

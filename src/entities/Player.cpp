@@ -11,6 +11,11 @@ Player::Player(int x, int y, int width, int height) {
         this->handleInput(e);
     };
 
+    registerAnimation(Animation("resources/animations/playerWalk.xml"));
+    registerAnimation(Animation("resources/animations/playerIdle.xml"));
+    registerAnimation(Animation("resources/animations/playerJump.xml"));
+
+    setAnimation("player_idle");
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyPress, input);
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyReleased, input);
 }
@@ -23,6 +28,21 @@ void Player::update() {
 
     mPos.x += mVelocity.x;
     mPos.y += mVelocity.y;
+
+    if (mVelocity.x < 0)
+            facingLeft = true;
+    else if (mVelocity.x > 0)
+            facingLeft = false;
+    
+    if(mVelocity.x != 0 && grounded) {
+        setAnimation("player_walking");
+    } else if (mVelocity.x == 0 && grounded) {
+        setAnimation("player_idle");
+    }
+
+    if(!grounded) {
+        setAnimation("player_jump");
+    }
 }
 
 void Player::handleInput(Event* event) {
@@ -55,47 +75,38 @@ void Player::handleInput(Event* event) {
     }
 }
 
-void Player::fireBullet(int val) {
-    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
-    bullet->createFromPath("resources/images/block.png", Game::getRenderer());
-	bullet->setName("player_bullet"); 
-	bullet->setTrigger(true);
-	SceneHandler::getInstance().getCurrentScene()->registerEntity(bullet);
-}
-
-void Player::setPosition(int x, int y) {
-    mRect.x = x;
-    mRect.y = y;
-
-    mPos.x = x;
-    mPos.y = y;
-    mHalfHeight = 32;
-    mHalfWidth = 32;
-}
-
 void Player::render(SDL_Rect* cameraRect) {
+    animations[currentAnimation].update();
+
     SDL_Rect destRect;
     destRect.x = mPos.x - mHalfWidth - cameraRect->x;
     destRect.y = mPos.y - mHalfHeight - cameraRect->y;
     destRect.w = mHalfWidth * 2;
     destRect.h = mHalfHeight * 2;
 
-    SDL_Rect srcRect;
-    srcRect.x = 0;
-    srcRect.y = 0;
-    srcRect.w = 16;
-    srcRect.h = 16;
+    if(!facingLeft) {
+        Game::getRenderer().drawTexture(getTexture(), animations[currentAnimation].getCurrentFrame(), &destRect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+    } else {
+        Game::getRenderer().drawTexture(getTexture(), animations[currentAnimation].getCurrentFrame(), &destRect, 0, nullptr);
+    }
+}
 
-    Renderer::getInstance().drawTexture(getTexture(), &srcRect, &destRect);
+void Player::fireBullet(int val) {
+    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
+    bullet->createFromPath("resources/images/block.png", Game::getSDLRenderer());
+	bullet->setName("player_bullet"); 
+	bullet->setTrigger(true);
+	Game::getSceneHandler().getCurrentScene()->registerEntity(bullet);
+}
+
+void Player::setPosition(int x, int y) {
+    mPos.x = x;
+    mPos.y = y;
+    mHalfHeight = 32;
+    mHalfWidth = 32;
 }
 
 void Player::handleCollisions() {
-    if (mColliders.empty()) {
-        grounded = false;
-    }
-    else {
-        canJump = true;
-    }
     while (!mColliders.empty()) {
         
         //Determine the collider that provides the greatest impact on this entity
@@ -117,6 +128,7 @@ void Player::handleCollisions() {
         if(mVelocity.y > 0 && mPos.y+mHalfHeight <= mColliders.at(greatestIndex)->getPos()->y - mColliders.at(greatestIndex)->mHalfHeight) {
             grounded = true;
             mVelocity.y = 0;
+            canJump = true;
         } else {
             grounded = false;
         }
@@ -135,8 +147,3 @@ void Player::handleTrigger(std::string name) {
         mPos.y = 300;
     }
 }
-
-void Player::updateAABB() {
-    mPos.x = mRect.x + mHalfWidth;
-    mPos.y = mRect.y + mHalfHeight;
-}   
