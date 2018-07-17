@@ -14,6 +14,8 @@ Player::Player(int x, int y, int width, int height) {
     registerAnimation(Animation("resources/animations/playerWalk.xml"));
     registerAnimation(Animation("resources/animations/playerIdle.xml"));
     registerAnimation(Animation("resources/animations/playerJump.xml"));
+
+    setAnimation("player_idle");
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyPress, input);
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyReleased, input);
 }
@@ -33,7 +35,7 @@ void Player::update() {
             facingLeft = false;
     
     if(mVelocity.x != 0 && grounded) {
-        setAnimation("walking_left");
+        setAnimation("player_walking");
     } else if (mVelocity.x == 0 && grounded) {
         setAnimation("player_idle");
     }

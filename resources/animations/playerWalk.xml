@@ -1,5 +1,5 @@
 <animation>
-    <name>walking_left</name>
+    <name>player_walking</name>
     <image>MyChar.png</image>
     <framecount>3</framecount>
     <framedelay>68</framedelay>
