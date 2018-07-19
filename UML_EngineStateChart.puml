@@ -1,0 +1,15 @@
+@startuml
+
+state Running {
+    [*] --> HandlingInput
+    HandlingInput --> UpdatingScene
+    UpdatingScene --> RenderingScene
+
+    RenderingScene --> HandlingInput
+}
+[*] --> StartSubSystems
+StartSubSystems --> Running
+
+Running --> [*]
+
+@enduml
