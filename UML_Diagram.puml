@@ -80,7 +80,7 @@ package Core {
     class Renderer {
         +static Renderer& getInstance()
         
-        +void init(SDL_Windiw*, int)
+        +void init(SDL_Window*, int)
         +void destroy()
         +void createFromWindow(SDL_Window*, int)
         +void drawTexture(Texture*, int, int, int, int)
@@ -226,15 +226,6 @@ package util {
         +double y
     }
     
-    class Log {
-        +void opeFile(string, fstream)
-        +void closeFile()
-        +void writeMessage(string)
-    
-        -fstream logFile
-        -string fileName
-    }
-    
     class TiledParser {
         +static bool parse(string, string, Scene*)
         -static void parseObjects(XMLElement*, Scene*)
@@ -333,14 +324,6 @@ package Entities {
         
         -Vector2D velocity
     }
-    
-    class ResetBox {
-        +void update()
-        +void handleInput()
-        +void handleCollisions()
-        +void handleTrigger(string)
-        +void updateAABB()
-    }
 
     class TiledMap {
         +int[] getLayer(int index)
@@ -401,6 +384,7 @@ AABBCollider <|.. Box
 AnimatedSprite <|-- Player
 Renderable <|-- Box
 Renderable <|-- Projectile
+Renderable <|-- TiledMap
 
 AABBCollider --> Vector2D
 @enduml
