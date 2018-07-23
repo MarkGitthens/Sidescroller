@@ -14,7 +14,7 @@ namespace Vulture2D {
             image = nullptr;
         }
 
-        void createFromPath(char* path, SDL_Renderer* renderer) {
+        void createFromPath(const char* path, SDL_Renderer* renderer) {
             image = new Texture(path, renderer);
         }
         void setSprite(Texture* texture) {
