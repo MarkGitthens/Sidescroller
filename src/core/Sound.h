@@ -7,6 +7,9 @@ namespace Vulture2D {
     class Sound {
     public:
         Sound() : soundLength(0), soundData(nullptr) {}
+        Sound(string path) {
+            loadFromFile(path);
+        }
         ~Sound();
 
         const SDL_AudioSpec& getAudioInformation();

@@ -11,6 +11,7 @@ using namespace Vulture2D;
 
 //TODO: Should define a consistent unit of measurement instead of just using pixel size
 void initializeEntities();
+void registerAssets();
 
 Player* player;
 Camera* camera;
@@ -26,6 +27,7 @@ int main(int argc, char* argv[]) {
     game->init();
     game->registerInputs();
 
+    registerAssets();
     scene.setName("start");
     SceneHandler::getInstance().registerScene(&scene);
     
@@ -41,12 +43,19 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+void registerAssets() {
+    AssetPool& pool = Game::getAssetPool();
 
+    pool.createTexture("resources/images/MyChar.png", "player", Game::getSDLRenderer());
+    pool.createTexture("resources/images/block.png", "block", Game::getSDLRenderer());
+    pool.createTexture("resources/images/ball.png", "crab", Game::getSDLRenderer());
+    pool.createTexture("resources/tilesets/tilesheet_complete_2X.png", "tilesheet", Game::getSDLRenderer());
+}
 
 void initializeEntities() {
     player = new Player(64, 300, 64, 64);
     player->setName("Player");
-    player->createFromPath("resources/images/MyChar.png", game->getSDLRenderer());
+    player->setSprite(AssetPool::getInstance().getTexture("player"));
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 

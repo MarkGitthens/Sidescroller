@@ -15,6 +15,10 @@ namespace Vulture2D {
 
         screenSurface = SDL_GetWindowSurface(window);
 
+        InputHandler::getInstance();
+        //AssetPool::getInstance();
+        SceneHandler::getInstance();
+
         running = true;
     }
 
@@ -97,6 +101,10 @@ namespace Vulture2D {
 
     InputHandler& Game::getInputHandler() {
         return InputHandler::getInstance();
+    }
+
+    AssetPool& Game::getAssetPool() {
+        return AssetPool::getInstance();
     }
 
     void Game::registerInputs() {
