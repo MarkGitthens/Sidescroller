@@ -16,7 +16,7 @@ namespace Vulture2D {
         screenSurface = SDL_GetWindowSurface(window);
 
         InputHandler::getInstance();
-        //AssetManager::getInstance();
+        AssetManager::getInstance();
         SceneHandler::getInstance();
 
         running = true;

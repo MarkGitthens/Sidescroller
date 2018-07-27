@@ -5,7 +5,7 @@
 #include "Renderer.h"
 #include "InputHandler.h"
 #include "SceneHandler.h"
-//#include "AssetManager.h"
+#include "AssetManager.h"
 
 namespace Vulture2D {
     class Game {

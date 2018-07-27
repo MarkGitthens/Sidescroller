@@ -10,12 +10,6 @@ namespace Vulture2D {
             textures.erase(i.first);
         }
 
-        for(auto i : sounds) {
-            if(i.second)
-                delete i.second;
-            sounds.erase(i.first);
-        }
-
         if(instance) {
             delete instance;
         }
@@ -39,29 +33,11 @@ namespace Vulture2D {
         return texture;
     }
 
-    Sound* AssetManager::createSound(string path, string name) {
-        Sound* sound = new Sound(path);
-
-        if(sounds.find(name) != sounds.end()) {
-            return sounds.at(name);
-        }
-        sounds.insert(std::pair<string, Sound*>(name, sound));
-        return sound;
-    }
-
     void AssetManager::registerTexture(Texture* texture, string name) {
         textures.insert(std::pair<string, Texture*>(name, texture));
     }
 
-    void AssetManager::registerSound(Sound* sound, string name) {
-        sounds.insert(std::pair<string, Sound*>(name, sound));
-    }
-
     Texture* AssetManager::getTexture(string name) {
         return textures[name];
-    }
-
-    Sound* AssetManager::getSound(string name) {
-        return sounds[name];
     }
 }
