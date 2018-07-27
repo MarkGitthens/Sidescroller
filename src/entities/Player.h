@@ -22,7 +22,8 @@ public:
 
     void setPosition(int x, int y);
 
-	void fireBullet(int);
+	void fireBullet();
+
 private:
     bool canJump = true;
     bool grounded = false;

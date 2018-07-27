@@ -58,17 +58,17 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
 void TiledParser::createBoundsBlock(TiledMap* map, Vulture2D::Scene* scene) {
     Box* left = new Box(-64, map->getHeight()/2, 128, map->getHeight());
     left->setName("level_edge_box");
-    left->createFromPath("resources/images/block.png", Game::getSDLRenderer());
+    left->setSprite(AssetManager::getInstance().getTexture("block"));
     left->setVisible(true);
     
     Box* right = new Box(map->getWidth() + 64, map->getHeight()/2, 128, map->getHeight());
     right->setName("level_edge_box");
-    right->createFromPath("resources/images/block.png", Game::getSDLRenderer());
+    right->setSprite(AssetManager::getInstance().getTexture("block"));
     right->setVisible(true);
 
     Box* top = new Box(map->getWidth()/2, -64, map->getWidth(), 128);
     top->setName("leve_edge_box");
-    top->createFromPath("resources/images/block.png", Game::getSDLRenderer());
+    top->setSprite(AssetManager::getInstance().getTexture("block"));
     top->setVisible(true);
     
     scene->registerEntity(top);
@@ -97,7 +97,7 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
-                    box->createFromPath("resources/images/block.png", Game::getSDLRenderer());
+                    box->setSprite(AssetManager::getInstance().getTexture("box"));
                     box->setVisible(visible);
 
                     XMLElement* properties = object->FirstChildElement("properties");

@@ -57,6 +57,9 @@ void Player::handleInput(Event* event) {
             }
         }
 
+        if(e->keyID == SDLK_e) {
+            fireBullet();
+        }
         if (e->keyID == SDLK_RIGHT) {
             mVelocity.x += speed;
         }
@@ -92,10 +95,10 @@ void Player::render(SDL_Rect* cameraRect) {
     }
 }
 
-void Player::fireBullet(int val) {
-    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
-    bullet->createFromPath("resources/images/block.png", Game::getSDLRenderer());
-	bullet->setName("player_bullet"); 
+void Player::fireBullet() {
+    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(facingLeft ? -15 : 15, 0));
+    bullet->setSprite(AssetManager::getInstance().getTexture("block"));
+    bullet->setName("player_bullet"); 
 	bullet->setTrigger(true);
 	Game::getSceneHandler().getCurrentScene()->registerEntity(bullet);
 }
@@ -108,6 +111,9 @@ void Player::setPosition(int x, int y) {
 }
 
 void Player::handleCollisions() {
+    if(mColliders.empty())
+        grounded = false;
+
     while (!mColliders.empty()) {
         
         //Determine the collider that provides the greatest impact on this entity

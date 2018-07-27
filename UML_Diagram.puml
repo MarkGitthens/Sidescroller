@@ -1,6 +1,38 @@
 @startuml
 
 package Core {
+    class AssetManager {
+        +void createTexture(string, string)
+        +void createSound(string, string)
+
+        +void registerTexture(Texture*, string)
+        +void registerSound(Sound*, string)
+
+        +Texture* getTexture(string)
+        +Sound* getSound(string)
+        
+        map<Texture*, string> textures
+        map<Sound*, string> sounds
+    }
+
+    class Sound {
+        +SDL_AudioSpec* getAudioInformation()
+        +void loadFromFile(string)
+        +Uint32 getLength()
+        +void destroySound()
+        +void play(SDL_AudioDeviceID)
+        +void pause()
+        +void stop() 
+
+        -SDL_AudioSpec soundInformation
+        -Uint32 soundLength
+        -Uint8* soundData
+    }
+
+    class SoundMixer {
+
+    }
+
     class Game {
         +void init()
         +void run()

@@ -4,10 +4,6 @@ namespace Vulture2D {
 
     int Entity::nextValidID = 0;
 
-    Entity::~Entity() {
-        std::cout << "Deleteing Entity " << id << " " << name << std::endl;
-    }
-
     void Entity::setID(int id) {
         this->id = id;
     }

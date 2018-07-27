@@ -12,7 +12,6 @@ namespace Vulture2D {
     public:
         Entity() : id(nextValidID), name("new_entity"), x(0), y(0) { nextValidID++;  };
         Entity(string name) : id(0), name(name), x(0), y(0) {};
-        virtual ~Entity();
 
         virtual void update() = 0;
         

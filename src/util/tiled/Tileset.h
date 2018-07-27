@@ -3,6 +3,7 @@
 #include <map>
 #include "Tile.h"
 #include "../../core/Texture.h"
+#include "../../core/AssetManager.h"
 
 using std::string;
 
@@ -11,12 +12,7 @@ public:
     Tileset(string name, string path, SDL_Renderer* renderer, int tWidth, int tHeight, int tCount, int columns) :
         name(name), path(path), tileWidth(tWidth), tileHeight(tHeight), tileCount(tCount), columns(columns)
     {
-        image = new Vulture2D::Texture(path, renderer);
-    }
-
-    ~Tileset() {
-        delete image;
-        image = nullptr;
+        image = Vulture2D::AssetManager::getInstance().getTexture("tilesheet");
     }
 
     void setStartGID(int gID) {
