@@ -96,9 +96,9 @@ void Player::render(SDL_Rect* cameraRect) {
 }
 
 void Player::fireBullet() {
-    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(facingLeft ? -10 : 10, 0));
-    bullet->createFromPath("resources/images/block.png", Game::getSDLRenderer());
-	bullet->setName("player_bullet"); 
+    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(facingLeft ? -15 : 15, 0));
+    bullet->setSprite(AssetPool::getInstance().getTexture("block"));
+    bullet->setName("player_bullet"); 
 	bullet->setTrigger(true);
 	Game::getSceneHandler().getCurrentScene()->registerEntity(bullet);
 }
