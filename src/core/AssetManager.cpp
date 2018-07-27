@@ -1,9 +1,9 @@
-#include "AssetPool.h"
+#include "AssetManager.h"
 
 namespace Vulture2D {
-    AssetPool* AssetPool::instance = nullptr;
+    AssetManager* AssetManager::instance = nullptr;
 
-    AssetPool::~AssetPool(){
+    AssetManager::~AssetManager(){
         for(auto i : textures) {
             if(i.second)
                 delete i.second;
@@ -22,14 +22,14 @@ namespace Vulture2D {
         instance = nullptr;
     }
 
-    AssetPool& AssetPool::getInstance() {
+    AssetManager& AssetManager::getInstance() {
         if(!instance) {
-            instance = new AssetPool();
+            instance = new AssetManager();
         }
         return *instance;
     }
 
-    Texture* AssetPool::createTexture(string path, string name, SDL_Renderer* renderer) {
+    Texture* AssetManager::createTexture(string path, string name, SDL_Renderer* renderer) {
         Texture* texture = new Texture(path, renderer);
 
         if(textures.find(name) != textures.end()) {
@@ -39,28 +39,29 @@ namespace Vulture2D {
         return texture;
     }
 
-    Sound* AssetPool::createSound(string path, string name) {
+    Sound* AssetManager::createSound(string path, string name) {
         Sound* sound = new Sound(path);
 
         if(sounds.find(name) != sounds.end()) {
             return sounds.at(name);
         }
         sounds.insert(std::pair<string, Sound*>(name, sound));
+        return sound;
     }
 
-    void AssetPool::registerTexture(Texture* texture, string name) {
+    void AssetManager::registerTexture(Texture* texture, string name) {
         textures.insert(std::pair<string, Texture*>(name, texture));
     }
 
-    void AssetPool::registerSound(Sound* sound, string name) {
+    void AssetManager::registerSound(Sound* sound, string name) {
         sounds.insert(std::pair<string, Sound*>(name, sound));
     }
 
-    Texture* AssetPool::getTexture(string name) {
+    Texture* AssetManager::getTexture(string name) {
         return textures[name];
     }
 
-    Sound* AssetPool::getSound(string name) {
+    Sound* AssetManager::getSound(string name) {
         return sounds[name];
     }
 }

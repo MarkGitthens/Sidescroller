@@ -5,10 +5,10 @@
 namespace Vulture2D {
     using std::unordered_map;
 
-    class AssetPool {
+    class AssetManager {
     public:
-        ~AssetPool();
-        static AssetPool& getInstance();
+        ~AssetManager();
+        static AssetManager& getInstance();
 
         Texture* createTexture(string path, string name, SDL_Renderer*);
         Sound* createSound(string path, string name);
@@ -22,10 +22,10 @@ namespace Vulture2D {
         unordered_map<string, Texture*> textures;
         unordered_map<string, Sound*> sounds;
 
-        static AssetPool* instance;
+        static AssetManager* instance;
 
-        AssetPool() {};
-        AssetPool(AssetPool const&) {}
-        AssetPool& operator=(AssetPool const& e) {};
+        AssetManager() {};
+        AssetManager(AssetManager const&) {}
+        AssetManager& operator=(AssetManager const& e) {};
     };
 }

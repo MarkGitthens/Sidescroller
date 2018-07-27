@@ -1,7 +1,7 @@
 @startuml
 
 package Core {
-    class AssetPool {
+    class AssetManager {
         +void createTexture(string, string)
         +void createSound(string, string)
 

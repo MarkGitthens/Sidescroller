@@ -15,13 +15,13 @@ set(VULTURE2D_CORE_HEADERS
     src/core/Animation.h
     src/core/Sound.h
     src/core/SoundMixer.h
-    src/core/AssetPool.h)
+    src/core/AssetManager.h)
 
 set(VULTURE2D_CORE_SRC
 	
     src/core/SoundMixer.cpp
     src/core/Sound.cpp
-    src/core/AssetPool.cpp
+    src/core/AssetManager.cpp
     src/core/Entity.cpp
 	src/core/EventHandler.cpp
 	src/core/Game.cpp

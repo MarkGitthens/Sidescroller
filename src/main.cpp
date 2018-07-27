@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 }
 
 void registerAssets() {
-    AssetPool& pool = Game::getAssetPool();
+    AssetManager& pool = Game::getAssetManager();
 
     pool.createTexture("resources/images/MyChar.png", "player", Game::getSDLRenderer());
     pool.createTexture("resources/images/block.png", "block", Game::getSDLRenderer());
@@ -55,7 +55,7 @@ void registerAssets() {
 void initializeEntities() {
     player = new Player(64, 300, 64, 64);
     player->setName("Player");
-    player->setSprite(AssetPool::getInstance().getTexture("player"));
+    player->setSprite(AssetManager::getInstance().getTexture("player"));
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
