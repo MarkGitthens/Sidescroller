@@ -1,8 +1,12 @@
 #include "Sound.h"
 
 namespace Vulture2D {
-    const SDL_AudioSpec& Sound::getAudioInformation() {
-        return soundInformation;
+
+    Sound::~Sound() {
+        destroySound();
+    }
+    SDL_AudioSpec* Sound::getAudioInformation() {
+        return &soundInformation;
     }
 
     bool Sound::loadFromFile(string path) {
@@ -15,23 +19,23 @@ namespace Vulture2D {
         return  loaded;
     }
 
+    Uint8* Sound::getSoundData() {
+        return soundData;
+    }
+    
     Uint32 Sound::getLength() {
         return soundLength;
     }
 
+    void Sound::setLoops(bool loop) {
+        this->loop = loop;
+    }
+
+    bool Sound::loops() {
+        return loop;
+    }
+
     void Sound::destroySound() {
         SDL_FreeWAV(soundData);
-    }
-
-    void Sound::play(SDL_AudioDeviceID deviceID) {
-
-    }
-
-    void Sound::pause() {
-
-    }
-
-    void Sound::stop() {
-
     }
 }

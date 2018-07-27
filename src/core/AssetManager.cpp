@@ -39,9 +39,9 @@ namespace Vulture2D {
         return texture;
     }
 
-    Sound* AssetManager::createSound(string path, string name) {
+    Sound* AssetManager::createSound(string path, string name, bool loops) {
         Sound* sound = new Sound(path);
-
+        sound->setLoops(loops);
         if(sounds.find(name) != sounds.end()) {
             return sounds.at(name);
         }

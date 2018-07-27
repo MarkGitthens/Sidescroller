@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL.h>
 #include <string>
 #include <iostream>
@@ -10,16 +11,19 @@ namespace Vulture2D {
         Sound(string path) {
             loadFromFile(path);
         }
+        ~Sound();
 
-        const SDL_AudioSpec& getAudioInformation();
+        SDL_AudioSpec* getAudioInformation();
         bool loadFromFile(string path);
         Uint32 getLength();
         void destroySound();
-        void play(SDL_AudioDeviceID deviceID);
-        void pause();
-        void stop();
+
+        Uint8* getSoundData();
+        void setLoops(bool);
+        bool loops();
 
     private:
+        bool loop;
         SDL_AudioSpec soundInformation;
         Uint32 soundLength;
         Uint8* soundData;

@@ -5,7 +5,8 @@
 #include "Renderer.h"
 #include "InputHandler.h"
 #include "SceneHandler.h"
-//#include "AssetManager.h"
+#include "AssetManager.h"
+#include "SoundMixer.h"
 
 namespace Vulture2D {
     class Game {
@@ -18,6 +19,7 @@ namespace Vulture2D {
         static SceneHandler& getSceneHandler();
         static InputHandler& getInputHandler();
         static AssetManager& getAssetManager();
+        static SoundMixer& getAudioMixer();
         void sendInputEvents();
         void registerInputs();
         void destroy();

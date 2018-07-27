@@ -16,7 +16,8 @@ namespace Vulture2D {
         screenSurface = SDL_GetWindowSurface(window);
 
         InputHandler::getInstance();
-        //AssetManager::getInstance();
+        SoundMixer::getInstance();
+        AssetManager::getInstance();
         SceneHandler::getInstance();
 
         running = true;
@@ -38,6 +39,8 @@ namespace Vulture2D {
         while (running) {
             double newTime = SDL_GetTicks();
             double frameTime = newTime - currentTime;
+
+            SoundMixer::getInstance().updateAudio();
 
             currentTime = newTime;
             backlog += frameTime;
@@ -107,6 +110,9 @@ namespace Vulture2D {
         return AssetManager::getInstance();
     }
 
+    SoundMixer& Game::getAudioMixer() {
+        return SoundMixer::getInstance();
+    }
     void Game::registerInputs() {
         InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
         InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
