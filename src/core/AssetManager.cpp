@@ -33,11 +33,23 @@ namespace Vulture2D {
         return texture;
     }
 
+    Sound* createSound(string path, string name) {
+        return nullptr;
+    }
+
     void AssetManager::registerTexture(Texture* texture, string name) {
         textures.insert(std::pair<string, Texture*>(name, texture));
     }
 
+    void registerSound(Mix_Chunk* sound, string name) {
+
+    }
+
     Texture* AssetManager::getTexture(string name) {
         return textures[name];
+    }
+
+    Mix_Chunk* getSound(string name) {
+        return nullptr;
     }
 }
