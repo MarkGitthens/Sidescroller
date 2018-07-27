@@ -13,14 +13,10 @@ set(VULTURE2D_CORE_HEADERS
     src/core/KeyboardEvent.h
     src/core/AnimatedSprite.h
     src/core/Animation.h
-    src/core/Sound.h
-    src/core/SoundMixer.h
     src/core/AssetManager.h)
 
 set(VULTURE2D_CORE_SRC
 	
-    src/core/SoundMixer.cpp
-    src/core/Sound.cpp
     src/core/AssetManager.cpp
     src/core/Entity.cpp
 	src/core/EventHandler.cpp
