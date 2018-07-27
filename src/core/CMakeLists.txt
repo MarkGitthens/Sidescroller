@@ -13,7 +13,8 @@ set(VULTURE2D_CORE_HEADERS
     src/core/KeyboardEvent.h
     src/core/AnimatedSprite.h
     src/core/Animation.h
-    src/core/AssetManager.h)
+    src/core/AssetManager.h
+    src/core/Sound.h)
 
 set(VULTURE2D_CORE_SRC
 	
