@@ -1,6 +1,6 @@
 #pragma once
 #include <unordered_map>
-#include <SDL_Mixer.h>
+#include <SDL_mixer.h>
 #include "Texture.h"
 #include "Sound.h"
 
