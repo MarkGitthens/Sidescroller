@@ -1,11 +1,5 @@
 #include "Box.h"
 
-Box::~Box() {
-    if (mTexture) {
-        delete mTexture;
-    }
-    mTexture = nullptr;
-}
 void Box::update() {
 
 }

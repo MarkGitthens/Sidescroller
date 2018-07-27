@@ -57,6 +57,9 @@ void Player::handleInput(Event* event) {
             }
         }
 
+        if(e->keyID == SDLK_e) {
+            fireBullet();
+        }
         if (e->keyID == SDLK_RIGHT) {
             mVelocity.x += speed;
         }
@@ -92,8 +95,8 @@ void Player::render(SDL_Rect* cameraRect) {
     }
 }
 
-void Player::fireBullet(int val) {
-    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(10, 0));
+void Player::fireBullet() {
+    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(facingLeft ? -10 : 10, 0));
     bullet->createFromPath("resources/images/block.png", Game::getSDLRenderer());
 	bullet->setName("player_bullet"); 
 	bullet->setTrigger(true);

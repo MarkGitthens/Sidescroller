@@ -10,7 +10,6 @@ namespace Vulture2D {
         Sound(string path) {
             loadFromFile(path);
         }
-        ~Sound();
 
         const SDL_AudioSpec& getAudioInformation();
         bool loadFromFile(string path);

@@ -7,12 +7,7 @@ namespace Vulture2D {
     class Renderable {
     public:
         Renderable() : image(nullptr) {};
-        virtual ~Renderable() {
-            std::cout << "Destroying renderable" << std::endl;
-            if (image)
-                delete image;
-            image = nullptr;
-        }
+        virtual ~Renderable() {}
 
         void createFromPath(const char* path, SDL_Renderer* renderer) {
             image = new Texture(path, renderer);

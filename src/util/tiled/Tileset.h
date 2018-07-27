@@ -15,11 +15,6 @@ public:
         image = Vulture2D::AssetPool::getInstance().getTexture("tilesheet");
     }
 
-    ~Tileset() {
-        delete image;
-        image = nullptr;
-    }
-
     void setStartGID(int gID) {
         firstGID = gID;
     }

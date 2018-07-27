@@ -15,7 +15,6 @@ public:
         mHalfWidth = w/2;
     }
     Box(Texture* texture) : mTexture(texture) {};
-    virtual ~Box();
     
     void update();
     void handleInput();

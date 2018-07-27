@@ -1,7 +1,5 @@
 #include "Projectile.h"
 
-Projectile::~Projectile() {
-}
 void Projectile::update() {
     handleCollisions();
 	mPos = mPos + mVelocity;

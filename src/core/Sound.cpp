@@ -1,10 +1,6 @@
 #include "Sound.h"
 
 namespace Vulture2D {
-    Sound::~Sound() {
-        destroySound();
-    }
-
     const SDL_AudioSpec& Sound::getAudioInformation() {
         return soundInformation;
     }
