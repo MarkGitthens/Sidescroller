@@ -111,6 +111,9 @@ void Player::setPosition(int x, int y) {
 }
 
 void Player::handleCollisions() {
+    if(mColliders.empty())
+        grounded = false;
+
     while (!mColliders.empty()) {
         
         //Determine the collider that provides the greatest impact on this entity

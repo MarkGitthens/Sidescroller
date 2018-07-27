@@ -3,6 +3,25 @@
 namespace Vulture2D {
     AssetPool* AssetPool::instance = nullptr;
 
+    AssetPool::~AssetPool(){
+        for(auto i : textures) {
+            if(i.second)
+                delete i.second;
+            textures.erase(i.first);
+        }
+
+        for(auto i : sounds) {
+            if(i.second)
+                delete i.second;
+            sounds.erase(i.first);
+        }
+
+        if(instance) {
+            delete instance;
+        }
+        instance = nullptr;
+    }
+
     AssetPool& AssetPool::getInstance() {
         if(!instance) {
             instance = new AssetPool();

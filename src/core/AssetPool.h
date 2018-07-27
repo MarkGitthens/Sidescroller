@@ -7,7 +7,7 @@ namespace Vulture2D {
 
     class AssetPool {
     public:
-        
+        ~AssetPool();
         static AssetPool& getInstance();
 
         Texture* createTexture(string path, string name, SDL_Renderer*);
@@ -24,12 +24,6 @@ namespace Vulture2D {
 
         static AssetPool* instance;
 
-        ~AssetPool() {
-            if(instance) {
-                delete instance;
-            }
-            instance = nullptr;
-        }
         AssetPool() {};
         AssetPool(AssetPool const&) {}
         AssetPool& operator=(AssetPool const& e) {};
