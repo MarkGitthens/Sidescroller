@@ -26,8 +26,6 @@ namespace Vulture2D {
     private:
         static Renderer* instance;
 
-        Renderer(Renderer const&) {}
-        Renderer& operator=(Renderer const& e) {}
         ~Renderer() {
             if (instance) {
                 delete instance;

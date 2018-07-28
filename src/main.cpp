@@ -16,7 +16,7 @@ void registerAssets();
 Player* player;
 Camera* camera;
 
-ResetBox* reset;
+Box* reset;
 Scene scene;
 
 Game* game = nullptr;
@@ -60,7 +60,9 @@ void initializeEntities() {
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
-    reset = new ResetBox(-1000, 1500, 10000, 128);
+    reset = new Box(-1000, 1500, 10000, 128);
+    reset->setSprite(Game::getAssetManager().getTexture("box"));
+    reset->setVisible(false);
     reset->setName("reset_box");
     reset->setTrigger(true);
 

@@ -11,6 +11,10 @@ public:
         mPos.y = y;
         mHalfWidth= w / 2;
         mHalfHeight = h / 2;
+        std::cout << "Creating Reset Box" << std::endl;
+    }
+    virtual ~ResetBox() {
+        std::cout << "Destroying reset box" << std::endl;
     }
     virtual void update() {};
     void handleInput() {};

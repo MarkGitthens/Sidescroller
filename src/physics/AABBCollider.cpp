@@ -10,12 +10,11 @@ AABBCollider::AABBCollider(double x, double y, int w, int h) {
 
 AABBCollider::~AABBCollider() {
 	mColliders.clear();
-    //std::cout << "destroying aabb" << std::endl;
 }
 Vector2D* AABBCollider::getPos() noexcept{
     return &mPos;
 }
-bool AABBCollider::colliding(AABBCollider col) noexcept {
+bool AABBCollider::colliding(const AABBCollider& col) noexcept {
     if (mPos.x + mHalfWidth > col.mPos.x - col.mHalfWidth && mPos.x - mHalfWidth < col.mPos.x + col.mHalfWidth
         && mPos.y + mHalfHeight > col.mPos.y - col.mHalfHeight && mPos.y -mHalfHeight < col.mPos.y + col.mHalfHeight) {
         return true;
@@ -31,13 +30,13 @@ void AABBCollider::clearColliders() noexcept {
     mColliders.clear();
 }
 
-double AABBCollider::getInterArea(AABBCollider col) {
+double AABBCollider::getInterArea(const AABBCollider& col) {
     const double vecX = mHalfWidth + col.mHalfWidth - abs(mPos.x - col.mPos.x);
     const double vecY = mHalfHeight + col.mHalfHeight - abs(mPos.y - col.mPos.y);
 
     return (Vector2D(vecX, vecY).magnitude());
 }
-Vector2D AABBCollider::getProjectionVector(AABBCollider col) {
+Vector2D AABBCollider::getProjectionVector(const AABBCollider& col) {
     const double vecX = mHalfWidth + col.mHalfWidth - abs(mPos.x - col.mPos.x);
     const double vecY = mHalfHeight + col.mHalfHeight - abs(mPos.y - col.mPos.y);
 

@@ -135,7 +135,8 @@ void Player::handleCollisions() {
         mPos = mPos + getProjectionVector(*mColliders.at(greatestIndex));
         
         //hit top of object
-        if(mVelocity.y > 0 && mPos.y+mHalfHeight <= mColliders.at(greatestIndex)->getPos()->y - mColliders.at(greatestIndex)->mHalfHeight) {
+        AABBCollider* greatestCollider = mColliders.at(greatestIndex);
+        if(mVelocity.y > 0 && mPos.y+mHalfHeight <= greatestCollider->getPos()->y - greatestCollider->mHalfHeight) {
             grounded = true;
             mVelocity.y = 0;
             canJump = true;
@@ -144,14 +145,14 @@ void Player::handleCollisions() {
         }
 
         //hit bottom of object
-        if(mVelocity.y < 0 && mPos.y- mHalfHeight >= mColliders.at(greatestIndex)->getPos()->y + mColliders.at(greatestIndex)->mHalfHeight) {
+        if(mVelocity.y < 0 && mPos.y- mHalfHeight >= greatestCollider->getPos()->y + greatestCollider->mHalfHeight) {
             mVelocity.y = 0;
         } 
         mColliders.erase(mColliders.begin() + greatestIndex);
     }
 }
 
-void Player::handleTrigger(std::string name) {
+void Player::handleTrigger(const std::string& name) {
     if (name == "reset_box") {
         mPos.x = 64;
         mPos.y = 300;

@@ -14,8 +14,8 @@ namespace Vulture2D {
         void handleInput();
         void addKeyAction(int key, std::string tag);
         void removeKeyAction(int key);
-        bool actionTriggered(std::string action);
-        bool actionHeld(std::string action);
+        bool actionTriggered(const std::string& action);
+        bool actionHeld(const std::string& action);
 
         bool keyHeld(int key);
         bool keyPressed(int key);
@@ -28,8 +28,6 @@ namespace Vulture2D {
     private:
         ~InputHandler() { if (instance) { delete instance; } instance = nullptr; }
         InputHandler() {}
-        InputHandler(InputHandler const&) {}
-        InputHandler& operator=(InputHandler const& e) {}
 
         SDL_Event mEvent;
         static InputHandler* instance;

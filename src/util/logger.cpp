@@ -4,8 +4,7 @@ namespace Vulture2D {
 
     Log::Log() {}
 
-    Log::Log(std::string file) {
-        fileName = file;
+    Log::Log(std::string file) : fileName(file) {
         openFile(fileName);
     }
     Log::~Log() {
@@ -13,12 +12,9 @@ namespace Vulture2D {
         //    std::cout << "closing log" << std::endl;
     }
 
-    Log::Log(const Log& log) {
-    }
-
     void Log::openFile(std::string file, std::ios_base::openmode mode) {
         if (!logFile.is_open()) {
-            fileName = file;
+            fileName.swap(file);
             std::cout << "Loading log file: " << fileName << std::endl;
 
             logFile.open(fileName, mode);
@@ -43,7 +39,7 @@ namespace Vulture2D {
         }
     }
 
-    void Log::writeMessage(std::string msg) {
+    void Log::writeMessage(const std::string& msg) {
         logFile.write(msg.c_str(), msg.size() - 1);
         logFile << std::endl;
         logFile.flush();

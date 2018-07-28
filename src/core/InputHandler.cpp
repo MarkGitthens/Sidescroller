@@ -18,7 +18,6 @@ namespace Vulture2D {
         while (SDL_PollEvent(&mEvent) != 0) {
             if (mEvent.type == SDL_KEYDOWN || mEvent.type == SDL_KEYUP) {
                 int key = mEvent.key.keysym.sym;
-                std::string actionName = mKeyMap[key];
 
                 if (mEvent.type == SDL_QUIT) {
                     mHeldKeys[mActionMap["quit_game"]] = true;
@@ -38,11 +37,11 @@ namespace Vulture2D {
         }
     }
 
-    bool InputHandler::actionTriggered(std::string action) {
+    bool InputHandler::actionTriggered(const std::string& action) {
         return mPressedKeys[mActionMap[action]];
     }
 
-    bool InputHandler::actionHeld(std::string action) {
+    bool InputHandler::actionHeld(const std::string& action) {
         return mHeldKeys[mActionMap[action]];
     }
 

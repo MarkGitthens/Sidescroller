@@ -8,7 +8,7 @@ namespace Vulture2D {
 
     class AssetManager {
     public:
-        ~AssetManager();
+        
         static AssetManager& getInstance();
 
         Texture* createTexture(string path, string name, SDL_Renderer*);
@@ -24,9 +24,7 @@ namespace Vulture2D {
         unordered_map<string, Mix_Chunk*> sounds;
 
         static AssetManager* instance;
-
         AssetManager() {};
-        AssetManager(AssetManager const&) {}
-        AssetManager& operator=(AssetManager const& e) {};
+        ~AssetManager();
     };
 }
