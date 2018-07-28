@@ -121,7 +121,7 @@ namespace Vulture2D {
             return false;
         }
 
-        void setName(std::string name) {
+        void setName(const std::string& name) {
             mSceneName = name;
         }
 

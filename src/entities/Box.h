@@ -7,7 +7,7 @@
 class Box : public Vulture2D::Entity, public AABBCollider, public Vulture2D::Renderable {
 public:
     Box(): mTexture(nullptr) {};
-    Box(int x, int y, int w, int h) {
+    Box(int x, int y, int w, int h) : mTexture(nullptr) {
         mPos.x = x;
         mPos.y = y;
 

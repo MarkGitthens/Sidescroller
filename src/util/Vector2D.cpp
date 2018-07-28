@@ -34,11 +34,11 @@ namespace Vulture2D {
     double Vector2D::magnitude() {
         return sqrt(x*x + y * y);
     }
-    double Vector2D::dot(Vector2D rhs) {
+    double Vector2D::dot(const Vector2D& rhs) {
         return (x*rhs.x) + (y*rhs.y);
     }
 
-    Vector2D Vector2D::project(Vector2D axis) {
+    Vector2D Vector2D::project(const Vector2D& axis) {
         Vector2D projection;
         double dotP = dot(axis);
 
@@ -54,8 +54,8 @@ namespace Vulture2D {
     }
 
     Vector2D Vector2D::operator-(const Vector2D& right) {
-        this->x += right.x;
-        this->y += right.y;
+        this->x -= right.x;
+        this->y -= right.y;
         return *this;
     }
 

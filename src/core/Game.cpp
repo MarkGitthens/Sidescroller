@@ -74,19 +74,20 @@ namespace Vulture2D {
         vector<int> held = InputHandler::getInstance().getHeldKeys();
         vector<int> released = InputHandler::getInstance().getReleasedKeys();
 
+        Scene* currentScene = SceneHandler::getInstance().getCurrentScene();
         for (auto p : pressed) {
             KeyboardEvent event(KeyboardEvent::KeyPress, p);
-            SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&event);
+            currentScene->dispatchEvent(&event);
         }
 
         for (auto h : held) {
             KeyboardEvent event(KeyboardEvent::KeyHeld, h);
-            SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&event);
+            currentScene->dispatchEvent(&event);
         }
 
         for (auto r : released) {
             KeyboardEvent event(KeyboardEvent::KeyReleased, r);
-            SceneHandler::getInstance().getCurrentScene()->dispatchEvent(&event);
+            currentScene->dispatchEvent(&event);
         }
 
     }

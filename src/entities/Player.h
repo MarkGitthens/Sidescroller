@@ -17,7 +17,7 @@ public:
     void handleInput(Event*);
 
     virtual void handleCollisions();
-    virtual void handleTrigger(std::string);
+    virtual void handleTrigger(const std::string&);
 
     virtual void render(SDL_Rect*);
 
