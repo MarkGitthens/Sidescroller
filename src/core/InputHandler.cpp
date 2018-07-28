@@ -19,7 +19,7 @@ namespace Vulture2D {
             if (mEvent.type == SDL_KEYDOWN || mEvent.type == SDL_KEYUP) {
                 int key = mEvent.key.keysym.sym;
 
-                if (mEvent.type == SDL_QUIT) {
+                if (mEvent.type == SDL_QUIT) { //-V547
                     mHeldKeys[mActionMap["quit_game"]] = true;
                 }
                 if (mEvent.type == SDL_KEYDOWN) {

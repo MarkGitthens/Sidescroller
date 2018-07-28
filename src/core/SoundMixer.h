@@ -29,8 +29,7 @@ namespace Vulture2D {
         static SoundMixer* instance;
         void channel_finished(int channel);
         ~SoundMixer() {
-            if(instance)
-                delete instance;
+            delete instance;
             instance = nullptr;
 
             Mix_Quit();

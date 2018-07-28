@@ -1,17 +1,11 @@
 #include "Texture.h"
 
 namespace Vulture2D {
-    Texture::Texture() {
-        mTexture = nullptr;
-        mWidth = mHeight = 0;
-    }
+    Texture::Texture(): mTexture(nullptr), mWidth(0), mHeight(0) {}
     Texture::~Texture() {
         if (mTexture) {
             SDL_DestroyTexture(mTexture);
         }
-    }
-    Texture::Texture(SDL_Texture* texture) {
-        mTexture = texture;
     }
     Texture::Texture(string path, SDL_Renderer* renderer) {
         SDL_Surface* temp;

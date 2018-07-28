@@ -2,13 +2,10 @@
 
 using namespace Vulture2D;
 
-Camera::Camera() {
-    mCameraViewport = nullptr;
-}
+Camera::Camera(): sceneWidth(0), sceneHeight(0), mParentPos(nullptr), mCameraViewport(nullptr) {}
 
 Camera::~Camera() {
-    if (mCameraViewport)
-        delete mCameraViewport;
+    delete mCameraViewport;
     mCameraViewport = nullptr;
 }
 

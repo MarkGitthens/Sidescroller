@@ -17,10 +17,9 @@ using std::unordered_map;
 namespace Vulture2D {
     class Scene : public EventHandler{
     public:
-        Scene() : mSceneName("default") {};
-        Scene(const string name) : mSceneName(name) {};
-        Scene(const string name, SDL_Rect world) : mSceneName(name), mWorldSpace(world) {};
-        Scene(const Scene& old) : mSceneName(old.mSceneName), mWorldSpace(old.mWorldSpace), mEntityMap(old.mEntityMap) {};
+        Scene() : mSceneName("default"), mWorldSpace(), sceneWidth(0), sceneHeight(0) {};
+        Scene(const string name) : mSceneName(name), mWorldSpace(), sceneWidth(0), sceneHeight(0) {};
+        Scene(const string name, SDL_Rect world) : mSceneName(name), mWorldSpace(world), sceneWidth(0), sceneHeight(0) {};
         ~Scene() {};
 
         void registerEntity(Entity* entity) {
@@ -170,9 +169,9 @@ namespace Vulture2D {
     private:
         string mSceneName;
         SDL_Rect mWorldSpace;
-        Camera* mCamera;
+        Camera* mCamera = nullptr;
 
-        TiledMap* mTiledMap;
+        TiledMap* mTiledMap = nullptr;
 
         int sceneWidth;
         int sceneHeight;

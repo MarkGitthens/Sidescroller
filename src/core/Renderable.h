@@ -13,8 +13,7 @@ namespace Vulture2D {
             image = new Texture(path, renderer);
         }
         void setSprite(Texture* texture) {
-            if (image)
-                delete image;
+            delete image;
             image = texture;
         }
 

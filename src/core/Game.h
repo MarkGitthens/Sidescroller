@@ -25,8 +25,8 @@ namespace Vulture2D {
         void destroy();
         
     private:
-        SDL_Window * window;
-        SDL_Surface* screenSurface;
+        SDL_Window * window = nullptr;
+        SDL_Surface* screenSurface = nullptr;
         bool running = false;
     };
 }

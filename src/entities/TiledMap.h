@@ -18,13 +18,14 @@ using std::stringstream;
 
 class TiledMap : public Vulture2D::Entity, public Vulture2D::Renderable{
 public:
-    TiledMap() {};
+    TiledMap(): width(0), height(0), tileWidth(128), tileHeight(128) {};
     TiledMap(int width, int height, int tilew, int tileh) : width(width), height(height), tileWidth(tilew), tileHeight(tileh) {}
 
-    int* getLayer(int index) {
+    int* getLayer(size_t index) {
         return layers.at(index);
     }
-    int numLayers() {
+
+    size_t numLayers() {
         return layers.size();
     }
 
@@ -32,7 +33,7 @@ public:
         layers.emplace_back(layer);
     }
 
-    void drawLayer(int layer, int xOffset, int yOffset) {
+    void drawLayer(size_t layer, int xOffset, int yOffset) {
         SDL_Rect src;
         SDL_Rect dest;
         int tilesetColumns = tilesets.at(0)->getColumnCount();
@@ -59,7 +60,7 @@ public:
     }
 
     virtual void render(SDL_Rect* cameraRect) {
-        for (unsigned int i = 0; i < layers.size(); i++) {
+        for (size_t i = 0; i < layers.size(); i++) {
             drawLayer(i, cameraRect->x, cameraRect->y);
         }
     }

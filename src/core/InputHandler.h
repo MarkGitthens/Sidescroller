@@ -26,7 +26,10 @@ namespace Vulture2D {
         vector<int> getReleasedKeys();
 
     private:
-        ~InputHandler() { if (instance) { delete instance; } instance = nullptr; }
+        ~InputHandler() {
+            delete instance;
+            instance = nullptr;
+        }
         InputHandler() {}
 
         SDL_Event mEvent;
