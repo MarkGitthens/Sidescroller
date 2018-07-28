@@ -11,6 +11,7 @@ namespace Vulture2D {
 
     class Event {
     public:
+        Event() : type(0), action() {};
         EventType getType() { return type; }
 
     protected:

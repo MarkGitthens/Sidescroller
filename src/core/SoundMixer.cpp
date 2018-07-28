@@ -26,7 +26,7 @@ namespace Vulture2D {
 
     //Updates all channels based from a reference entity
     void SoundMixer::updateSound() {
-        for(int i = 0; i < playingSounds.size(); i++) {
+        for(size_t i = 0; i < playingSounds.size(); i++) {
             if(playingSounds.at(i)) {
                 //Sound on that channel;
             }
@@ -34,8 +34,8 @@ namespace Vulture2D {
     }
 
     int SoundMixer::playSound(Sound* sound, int channel) {
-        int loadedChannel = Mix_PlayChannel(channel, sound->getChunkData(), sound->loops() ? sound->loopCount() : 0);
-        if(loadedChannel < 0) {
+        size_t loadedChannel = Mix_PlayChannel(channel, sound->getChunkData(), sound->loops() ? sound->loopCount() : 0);
+        if(loadedChannel < 0) { //-V547
             std::cout << "Can't play sound: " << Mix_GetError() << std::endl;
         }
 

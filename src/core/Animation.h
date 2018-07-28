@@ -7,15 +7,15 @@
 namespace Vulture2D{
     class Animation {
     public:
-        Animation() { startTick = SDL_GetTicks(); };
-        Animation(string path) {
+        Animation() : currentTick(0), frameList(), loopable(false), cycles(false), frameCount(0) { startTick = SDL_GetTicks(); };
+        Animation(string path): currentTick(0), frameList(), loopable(false), cycles(false), frameCount(0) {
             startTick = SDL_GetTicks();
             parseFile(path, Game::getSDLRenderer());
         }
         ~Animation() {};
         int getFrameCount() { return frameCount; }
         std::string getName() { return title; }
-        SDL_Rect* getFrame(int frameNumber) { return &frameList[frameNumber]; }
+        SDL_Rect* getFrame(size_t frameNumber) { return &frameList[frameNumber]; }
 
         SDL_Rect* getCurrentFrame() { return &frameList[currentFrame]; }
 

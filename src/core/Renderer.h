@@ -27,9 +27,7 @@ namespace Vulture2D {
         static Renderer* instance;
 
         ~Renderer() {
-            if (instance) {
-                delete instance;
-            }
+            delete instance;
             instance = nullptr;
         }
         SDL_Renderer* mRenderer;

@@ -14,8 +14,8 @@ void Projectile::render(SDL_Rect* offset) {
 	Renderer::getInstance().drawTexture(image, &destRect);
 }
 void Projectile::handleCollisions() {
-    for (auto c : mColliders) {
-        if (dynamic_cast<Entity*>(c)->getName() == "Box") {
+    for(auto c : mColliders) {
+        if(dynamic_cast<Entity*>(c)->getName() != "Player") {
             SceneHandler::getInstance().getCurrentScene()->deleteEntity(getID());
         }
     }

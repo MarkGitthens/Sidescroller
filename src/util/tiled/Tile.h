@@ -41,7 +41,7 @@ public:
         return type;
     }
 
-    int frameCount() {
+    size_t frameCount() {
         return frames.size();
     }
 };

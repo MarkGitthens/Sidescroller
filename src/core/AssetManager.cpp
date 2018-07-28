@@ -5,8 +5,7 @@ namespace Vulture2D {
 
     AssetManager::~AssetManager(){
         for(auto i : textures) {
-            if(i.second)
-                delete i.second;
+            delete i.second;
             textures.erase(i.first);
         }
 
@@ -16,9 +15,7 @@ namespace Vulture2D {
             sounds.erase(chunk.first);
         }
 
-        if(instance) {
-            delete instance;
-        }
+        delete instance;
         instance = nullptr;
     }
 

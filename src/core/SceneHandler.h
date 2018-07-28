@@ -26,9 +26,8 @@ namespace Vulture2D {
                 delete deleteMap->second;
                 deleteMap = mRegisteredScenes.erase(deleteMap);
             }
-            if (instance) {
-                delete instance;
-            }
+
+            delete instance;
             instance = nullptr;
         }
         SceneHandler() {};

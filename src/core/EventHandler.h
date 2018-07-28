@@ -9,6 +9,7 @@ namespace Vulture2D {
 
     class EventHandler {
     public:
+        EventHandler() : listeners() {};
         int addListener(EventType type, Callback);
         void removeListener(int id);
         void dispatchEvent(Event*);

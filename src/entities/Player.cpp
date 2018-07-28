@@ -37,11 +37,14 @@ void Player::update() {
     else if (mVelocity.x > 0)
             facingLeft = false;
     
-    if(mVelocity.x != 0 && grounded) {
-        setAnimation("player_walking");
-    } else if (mVelocity.x == 0 && grounded) {
-        setAnimation("player_idle");
+    if(grounded) {
+        if(fabs(mVelocity.x) >= 0.1) {
+            setAnimation("player_walking");
+        } else {
+            setAnimation("player_idle");
+        }
     }
+
 
     if(!grounded) {
         setAnimation("player_jump");
@@ -109,8 +112,6 @@ void Player::fireBullet() {
 void Player::setPosition(int x, int y) {
     mPos.x = x;
     mPos.y = y;
-    mHalfHeight = 32;
-    mHalfWidth = 32;
 }
 
 void Player::handleCollisions() {
@@ -121,8 +122,8 @@ void Player::handleCollisions() {
         
         //Determine the collider that provides the greatest impact on this entity
         double greatest = 0;
-        int greatestIndex = 0;
-        for (unsigned int i = 0; i < mColliders.size(); i++) {
+        size_t greatestIndex = 0;
+        for (size_t i = 0; i < mColliders.size(); i++) {
             double temp = getInterArea(*mColliders.at(i));
             if (i == 0) {
                 greatest = temp;
