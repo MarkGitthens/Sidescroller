@@ -13,7 +13,7 @@ namespace Vulture2D {
     }
 
     void SoundMixer::init() {
-        int flags = MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MOD;
+        int flags = 0;
         int result = Mix_Init(flags);
         if(flags != result) {
             std::cout << "Couldn't load mixer: " << Mix_GetError() << std::endl;
