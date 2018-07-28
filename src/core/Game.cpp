@@ -111,6 +111,10 @@ namespace Vulture2D {
         return AssetManager::getInstance();
     }
 
+    SoundMixer& Game::getSoundMixer() {
+        return SoundMixer::getInstance();
+    }
+
     void Game::registerInputs() {
         InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
         InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");

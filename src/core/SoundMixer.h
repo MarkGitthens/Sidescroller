@@ -7,12 +7,11 @@ namespace Vulture2D {
     using std::vector;
     class SoundMixer {
     public:
-        SoundMixer() {
+        SoundMixer() : maxChannels(16), playingSounds(maxChannels){
             init();
-            maxChannels = 16;
             Mix_AllocateChannels(maxChannels);
         }
-        SoundMixer(int numChannels): maxChannels(numChannels) {
+        SoundMixer(int numChannels): maxChannels(numChannels), playingSounds(maxChannels) {
             init();
             Mix_AllocateChannels(numChannels);
         }
