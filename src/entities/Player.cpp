@@ -18,6 +18,9 @@ Player::Player(int x, int y, int width, int height) {
     setAnimation("player_idle");
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyPress, input);
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyReleased, input);
+
+    Sound* sound = new Sound(Game::getAssetManager().getSound("bgMusic"), true);
+    Game::getSoundMixer().playSound(sound);
 }
 
 void Player::update() {
