@@ -8,14 +8,14 @@ This is a sample project being used to learn more about creating a custom 2d gam
 - SDL2_mixer
 
 # Generate Build Files
-# Windows
+## Windows
 - Extract and copy the include and lib directories from SDL2 and it's extension libraries into dependencies/SDL2
 - Navigate to project root
 - Create a folder named build/
 - Navigate into newly created build/ directory.
 - From command prompt run cmake ..
 
-# Ubuntu 
+## Ubuntu 
 - Navigate to project root
 - install cmake version 3.5.0+
 
