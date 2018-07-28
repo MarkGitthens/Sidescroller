@@ -38,6 +38,7 @@ namespace Vulture2D {
 
         int maxChannels;
         //Sound* backgroundMusic;
+        //vector since theoretically you can allocate more channels at any time
         vector<Sound*> playingSounds;
     };
 }

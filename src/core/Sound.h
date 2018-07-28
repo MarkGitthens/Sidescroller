@@ -5,7 +5,7 @@
 namespace Vulture2D {
     class Sound {
     public:
-        Sound(Mix_Chunk* chunk, bool loops = false, int numLoops = 0, Vector2D* parent = nullptr) : chunk(chunk), doesLoop(loops), numLoops(numLoops), parentPosition(parent), channel(-1) {};
+        Sound(Mix_Chunk* chunk, bool loops = false, int numLoops = -1, Vector2D* parent = nullptr) : chunk(chunk), doesLoop(loops), numLoops(numLoops), parentPosition(parent), channel(-1) {};
 
         bool loops();
         int loopCount();

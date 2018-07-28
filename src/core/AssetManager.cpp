@@ -10,6 +10,12 @@ namespace Vulture2D {
             textures.erase(i.first);
         }
 
+        for(auto chunk : sounds) {
+            if(chunk.second)
+                Mix_FreeChunk(chunk.second);
+            sounds.erase(chunk.first);
+        }
+
         if(instance) {
             delete instance;
         }
