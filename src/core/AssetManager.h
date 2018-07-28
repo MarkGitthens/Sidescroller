@@ -2,7 +2,6 @@
 #include <unordered_map>
 #include <SDL_mixer.h>
 #include "Texture.h"
-#include "Sound.h"
 
 namespace Vulture2D {
     using std::unordered_map;
@@ -13,7 +12,7 @@ namespace Vulture2D {
         static AssetManager& getInstance();
 
         Texture* createTexture(string path, string name, SDL_Renderer*);
-        Mix_Chunk* createSound(string path, string name, bool loops);
+        Mix_Chunk* createSound(string path, string name);
         void registerTexture(Texture* texture, string name);
         void registerSound(Mix_Chunk* sound, string name);
         Texture* getTexture(string name);

@@ -16,8 +16,11 @@ namespace Vulture2D {
         screenSurface = SDL_GetWindowSurface(window);
 
         InputHandler::getInstance();
+        SoundMixer::getInstance();
+
         AssetManager::getInstance();
         SceneHandler::getInstance();
+
 
         running = true;
     }
@@ -42,6 +45,7 @@ namespace Vulture2D {
             currentTime = newTime;
             backlog += frameTime;
             InputHandler::getInstance().handleInput();
+            SoundMixer::getInstance().updateSound();
             sendInputEvents();
 
             while (backlog >= deltaTime) {

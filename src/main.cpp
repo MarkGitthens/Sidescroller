@@ -7,8 +7,6 @@
 
 #include "util/tiled/TiledParser.h"
 
-#include <SDL_mixer.h>
-
 using namespace Vulture2D;
 
 //TODO: Should define a consistent unit of measurement instead of just using pixel size
@@ -22,15 +20,9 @@ ResetBox* reset;
 Scene scene;
 
 Game* game = nullptr;
-Mix_Chunk* testSound = nullptr;
 
 int main(int argc, char* argv[]) {
     game = new Game();
-
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-        std::cout << "Can't start mixer: " << Mix_GetError() << std::endl;
-    }
-
     
     game->init();
     game->registerInputs();
@@ -44,12 +36,8 @@ int main(int argc, char* argv[]) {
     scene.registerEntity(player);
     scene.setCamera(camera);
     scene.registerEntity(reset); 
-    Mix_PlayChannel(-1, testSound, -1);
     game->run();
     game->destroy();
-
-    Mix_FreeChunk(testSound);
-    Mix_Quit();
     return 0;
 }
 
@@ -60,11 +48,7 @@ void registerAssets() {
     pool.createTexture("resources/images/block.png", "block", Game::getSDLRenderer());
     pool.createTexture("resources/images/ball.png", "crab", Game::getSDLRenderer());
     pool.createTexture("resources/tilesets/tilesheet_complete_2X.png", "tilesheet", Game::getSDLRenderer());
-
-    testSound = Mix_LoadWAV("resources/audio/Off_Limits.wav");
-    if(!testSound) {
-        std::cout << "Couldn't load sound: " << Mix_GetError() << std::endl;
-    }
+    pool.createSound("resources/audio/Off_Limits.wav", "bgMusic");
 
 }
 
