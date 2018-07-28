@@ -5,6 +5,7 @@
 #include "../physics/AABBCollider.h"
 #include "../core/Sound.h"
 #include "../core/Game.h"
+#include <iostream>
 
 class Projectile : public Vulture2D::Entity, public Vulture2D::Renderable, public AABBCollider {
 public:
@@ -12,6 +13,10 @@ public:
         sound = new Sound(Game::getAssetManager().getSound("bullet"));
         Game::getSoundMixer().playSound(sound);
     };
+    virtual ~Projectile() {
+        std::cout << "Deleting Projectile" << std::endl;
+        delete sound;
+    }
 	void update();
 	virtual void handleCollisions();
 	void render(SDL_Rect*);
