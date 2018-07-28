@@ -33,23 +33,26 @@ namespace Vulture2D {
         return texture;
     }
 
-    Sound* createSound(string path, string name) {
-        return nullptr;
+    Mix_Chunk* AssetManager::createSound(string path, string name) {
+        Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
+
+        sounds.insert(std::pair<string, Mix_Chunk*>(name, chunk));
+        return chunk;
     }
 
     void AssetManager::registerTexture(Texture* texture, string name) {
         textures.insert(std::pair<string, Texture*>(name, texture));
     }
 
-    void registerSound(Mix_Chunk* sound, string name) {
-
+    void AssetManager::registerSound(Mix_Chunk* sound, string name) {
+        sounds.insert(std::pair<string, Mix_Chunk*>(name, sound));
     }
 
     Texture* AssetManager::getTexture(string name) {
         return textures[name];
     }
 
-    Mix_Chunk* getSound(string name) {
-        return nullptr;
+    Mix_Chunk* AssetManager::getSound(string name) {
+        return sounds.find(name) == sounds.end() ? nullptr : sounds.at(name);
     }
 }
