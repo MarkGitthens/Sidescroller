@@ -16,12 +16,13 @@ namespace Vulture2D {
         mReleasedKeys.clear();
 
         while (SDL_PollEvent(&mEvent) != 0) {
+            if(mEvent.type == SDL_QUIT) {
+                mHeldKeys[mActionMap["quit_game"]] = true;
+            }
+
             if (mEvent.type == SDL_KEYDOWN || mEvent.type == SDL_KEYUP) {
                 int key = mEvent.key.keysym.sym;
 
-                if (mEvent.type == SDL_QUIT) { //-V547
-                    mHeldKeys[mActionMap["quit_game"]] = true;
-                }
                 if (mEvent.type == SDL_KEYDOWN) {
                     if (!mHeldKeys[key]) {
                         mPressedKeys[key] = true;
