@@ -30,7 +30,11 @@ namespace Vulture2D {
             delete instance;
             instance = nullptr;
         }
+
         InputHandler() {}
+
+        InputHandler(const InputHandler&);
+        InputHandler& operator=(const InputHandler&);
 
         SDL_Event mEvent;
         static InputHandler* instance;
