@@ -2,35 +2,51 @@
 
 package Core {
     class AssetManager {
-        +void createTexture(string, string)
-        +void createSound(string, string)
+        +static AssetManager& getInstance()
 
-        +void registerTexture(Texture*, string)
-        +void registerSound(Sound*, string)
-
-        +Texture* getTexture(string)
-        +Sound* getSound(string)
+        +Texture* createTexture(string path, string name, SDL_Renderer*)
+        +Mix_Chunk* createSound(string path, string name)
+        +void registerTexture(Texture* texture, string name)
+        +void registerSound(Mix_Chunk* sound, string name)
+        +Texture* getTexture(string name)
+        +Mix_Chunk* getSound(string name)
         
-        map<Texture*, string> textures
-        map<Sound*, string> sounds
+        -unordered_map<string, Texture*> textures
+        -unordered_map<string, Mix_Chunk*> sounds
+
+        -static AssetManager* instance
     }
 
     class Sound {
-        +SDL_AudioSpec* getAudioInformation()
-        +void loadFromFile(string)
-        +Uint32 getLength()
-        +void destroySound()
-        +void play(SDL_AudioDeviceID)
-        +void pause()
-        +void stop() 
+        +bool loops()
+        +int loopCount()
+        +Mix_Chunk* getChunkData()
+        +const Vector2D getPosition()
+        +void setChannel(int)
+        +int getChannel()
 
-        -SDL_AudioSpec soundInformation
-        -Uint32 soundLength
-        -Uint8* soundData
+
+        -int channel
+        -Vector2D* parentPosition
+        -bool doesLoop
+        -int numLoops
+        -Mix_Chunk* chunk
     }
 
     class SoundMixer {
+        +void init()
+        +static SoundMixer& getInstance()
+        +void updateSound()
+        +int playSound(Sound* sound, int channel)
+        +void pauseChannel(int channel)
+        +void pauseAllChannels()
+        +void resumeChannel(int channel)
+        +void resumeAllChannels()
 
+        -static SoundMixer* instance
+        -void channel_finished(int channel)
+        -int maxChannels
+        -vector<Sound*> playingSounds
     }
 
     class Game {
@@ -39,6 +55,8 @@ package Core {
         +static SDL_Renderer* getSDLRenderer()
         +static SceneHandler& getRenderer()
         +static InputHandler& getInputHandler()
+        +static AssetManager& getAssetManager()
+        +static SoundMixer& getSoundMixer()
         +void sendInputEvents()
         +void registerInputs()
         +void destroy()
@@ -50,7 +68,7 @@ package Core {
 
     abstract class AABBCollider {
         +bool colliding((AABBCollider)
-        +AABBCollider*[] getColliders
+        +vector<AABBCollider*> getColliders
         +void addCollider(AABBCollider*)
         +void clearColliders()
         +double getInterArea(AABBCollider)
@@ -62,7 +80,7 @@ package Core {
         +void handleTrigger(string)
         +void updateAABB()
         
-        #AABBCollider*[] colliders
+        #vector<AABBCollider*> colliders
         #Vector2D position
         #int halfWidth
         #int halfHeight
@@ -81,9 +99,9 @@ package Core {
         +bool keyPressed(int)
         +bool keyReleased(int)
 
-        +int[] getPressedKeys()
-        +int[] getHeldKeys()
-        +int[] getReleasedKeys()
+        +vector<int> getPressedKeys()
+        +vector<int> getHeldKeys()
+        +vector<int> getReleasedKeys()
     
         -SDL_Event event
         -static InputHandler* instance
@@ -140,7 +158,7 @@ package Core {
         +void dispatchEVent(Event*)
 
         -int lastID
-        -Listener[] listeners
+        -vector<Listener> listeners
     }
 
     class Event {
@@ -242,7 +260,7 @@ package Core {
         -map<int, Entity*> entityMap
         -map<int, AABBCollider*> colliders
         -map<int AABBCollider*> triggers
-        -int[] deletedEntities
+        -vector<int> deletedEntities
         -void removeEntity(int)
     }
 }
@@ -272,8 +290,8 @@ package util {
         
         -int id
         -string type
-        -Property[] properties
-        -Frame[] frames
+        -vector<Property> properties
+        -vector<Frame> frames
     }
     
     class Tileset {
@@ -297,7 +315,7 @@ package util {
         -int spacing
         -int margin
         -map<int, Tile> tiles
-        -Texture* image;
+        -Texture* image
     }
 }
 
@@ -379,9 +397,12 @@ package Entities {
 
 Renderable <|-- AnimatedSprite
 AnimatedSprite o-- Animation
-Game --> InputHandler
-Game --> SceneHandler
-Game --> Renderer
+
+InputHandler "1" <--  Game
+Game --> "1" SceneHandler
+Renderer "1" <- Game
+SoundMixer "1" <--Game
+Game -> "1" AssetManager
 
 Renderer --> Renderable
 
@@ -403,15 +424,15 @@ TiledParser --> Tileset
 
 TiledMap --> TiledParser
 
-Entity <|.. Player
-Entity <|.. Projectile
-Entity <|.. TiledMap
-Entity <|.. Box
-Entity <|.. Camera
+Entity <|-- Player
+Entity <|-- Projectile
+Entity <|-- TiledMap
+Entity <|-- Box
+Entity <|-- Camera
 
-AABBCollider <|.. Player
-AABBCollider <|.. Projectile
-AABBCollider <|.. Box
+AABBCollider <|-- Player
+AABBCollider <|-- Projectile
+AABBCollider <|-- Box
 
 AnimatedSprite <|-- Player
 Renderable <|-- Box
@@ -419,4 +440,11 @@ Renderable <|-- Projectile
 Renderable <|-- TiledMap
 
 AABBCollider --> Vector2D
+
+AssetManager o-- Texture
+Mix_Chunk -o AssetManager
+
+Sound -> Mix_Chunk
+SoundMixer o-- Sound
+
 @enduml
