@@ -34,8 +34,8 @@ namespace Vulture2D {
     }
 
     int SoundMixer::playSound(Sound* sound, int channel) {
-        size_t loadedChannel = Mix_PlayChannel(channel, sound->getChunkData(), sound->loops() ? sound->loopCount() : 0);
-        if(loadedChannel < 0) { //-V547
+        int loadedChannel = Mix_PlayChannel(channel, sound->getChunkData(), sound->loops() ? sound->loopCount() : 0);
+        if(loadedChannel < 0) {
             std::cout << "Can't play sound: " << Mix_GetError() << std::endl;
         }
 
