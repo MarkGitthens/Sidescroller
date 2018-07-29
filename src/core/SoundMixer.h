@@ -28,6 +28,8 @@ namespace Vulture2D {
     private:
         static SoundMixer* instance;
         void channel_finished(int channel);
+        SoundMixer(const SoundMixer&);
+        SoundMixer& operator=(const SoundMixer&);
         ~SoundMixer() {
             delete instance;
             instance = nullptr;

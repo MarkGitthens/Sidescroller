@@ -24,6 +24,9 @@ namespace Vulture2D {
         unordered_map<string, Mix_Chunk*> sounds;
 
         static AssetManager* instance;
+
+        AssetManager(const AssetManager&);
+        AssetManager& operator=(const AssetManager&);
 #pragma warning(suppress: 26439)
         AssetManager() {};
         ~AssetManager();
