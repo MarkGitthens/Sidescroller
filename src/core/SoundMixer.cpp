@@ -1,4 +1,3 @@
-#pragma once
 #include "SoundMixer.h"
 
 namespace Vulture2D {

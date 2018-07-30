@@ -17,7 +17,6 @@ public:
         startPosition.y = y;
     };
     virtual ~Projectile() {
-        std::cout << "Deleting Projectile" << std::endl;
         delete sound;
     }
 
