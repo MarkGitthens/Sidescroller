@@ -10,6 +10,7 @@
 #include "../../core/Scene.h"
 #include "../../entities/TiledMap.h"
 #include "../../entities/Box.h"
+#include "../../entities/BreakableBox.h"
 
 
 

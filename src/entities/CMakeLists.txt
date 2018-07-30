@@ -3,10 +3,12 @@ set(VULTURE2D_ENTITIES_HEADERS
     src/entities/Camera.h
     src/entities/Player.h
     src/entities/Projectile.h
-    src/entities/TiledMap.h)
+    src/entities/TiledMap.h
+    src/entities/BreakableBox.h)
 
 set(VULTURE2D_ENTITIES_SRC 
     src/entities/Box.cpp
+    src/entities/BreakableBox.cpp
     src/entities/Camera.cpp
     src/entities/Player.cpp
     src/entities/Projectile.cpp)

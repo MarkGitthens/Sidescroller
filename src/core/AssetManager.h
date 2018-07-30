@@ -27,7 +27,6 @@ namespace Vulture2D {
 
         AssetManager(const AssetManager&);
         AssetManager& operator=(const AssetManager&);
-#pragma warning(suppress: 26439)
         AssetManager() {};
         ~AssetManager();
     };
