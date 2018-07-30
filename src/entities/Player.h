@@ -5,12 +5,12 @@
 #include "../core/Entity.h"
 #include "../core/AnimatedSprite.h"
 #include "../physics/AABBCollider.h"
-#include "../core/KeyboardEvent.h"
+#include "../core/events/KeyboardEvent.h"
 
 //TODO: Entities shouldn't inherit AABBCollider since a single entity have multiple colliders
 class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::AnimatedSprite {
 public:
-    Player() : mVelocity(0, 0) {};
+    Player(){};
     Player(int, int, int, int);
     virtual ~Player() {}
     virtual void update();
@@ -28,6 +28,5 @@ public:
 private:
     bool canJump = true;
     bool grounded = false;
-    Vector2D mVelocity;
     bool facingLeft = false;
 };

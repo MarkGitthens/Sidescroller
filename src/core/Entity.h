@@ -10,8 +10,8 @@ using std::vector;
 namespace Vulture2D {
     class Entity{
     public:
-        Entity() : id(nextValidID), name("new_entity"), x(0), y(0) { nextValidID++;  };
-        Entity(string name) : id(0), name(name), x(0), y(0) {};
+        Entity() : id(nextValidID), name("new_entity"), x(0), y(0), velocity(0, 0) { nextValidID++;  };
+        Entity(string name) : id(0), name(name), x(0), y(0), velocity(0, 0) {};
         virtual ~Entity() {};
         virtual void update() = 0;
         
@@ -22,8 +22,11 @@ namespace Vulture2D {
         static int getNextValidID();
         string getName();
 
-    private:
+        const Vector2D& getVelocity();
+
+    protected:
 	    int x, y;
+        Vector2D velocity;
         int id;
         string name;
         static int nextValidID;

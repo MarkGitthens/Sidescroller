@@ -2,9 +2,16 @@
 
 void Projectile::update() {
     handleCollisions();
-	mPos = mPos + mVelocity;
+	mPos = mPos + velocity;
+
+    if(fabs(startPosition.x - mPos.x) >= 600) {
+        destroy();
+    }
 }
 
+void Projectile::destroy() {
+    SceneHandler::getInstance().getCurrentScene()->deleteEntity(getID());
+}
 void Projectile::render(SDL_Rect* offset) {
 	SDL_Rect destRect;
 	destRect.x = mPos.x - mHalfWidth - offset->x;
@@ -15,8 +22,8 @@ void Projectile::render(SDL_Rect* offset) {
 }
 void Projectile::handleCollisions() {
     for(auto c : mColliders) {
-        if(dynamic_cast<Entity*>(c)->getName() != "Player") {
-            SceneHandler::getInstance().getCurrentScene()->deleteEntity(getID());
+        if(dynamic_cast<Entity*>(c)->getName() != "player") {
+            destroy();
         }
     }
 }

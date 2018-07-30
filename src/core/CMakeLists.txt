@@ -1,6 +1,5 @@
 set(VULTURE2D_CORE_HEADERS
 	
-    src/core/Event.h
 	src/core/Entity.h
 	src/core/EventHandler.h
 	src/core/Game.h
@@ -10,7 +9,6 @@ set(VULTURE2D_CORE_HEADERS
 	src/core/Scene.h
 	src/core/SceneHandler.h
 	src/core/Texture.h
-    src/core/KeyboardEvent.h
     src/core/AnimatedSprite.h
     src/core/Animation.h
     src/core/AssetManager.h

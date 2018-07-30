@@ -23,4 +23,8 @@ namespace Vulture2D {
     string Entity::getName() {
         return name;
     }
+
+    const Vector2D& Entity::getVelocity() {
+        return velocity;
+    }
 }

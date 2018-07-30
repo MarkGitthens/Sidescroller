@@ -23,7 +23,11 @@ private:
         sheetPosition.y = 9 * 128;
         sheetPosition.w = 128;
         sheetPosition.h = 128;
+
+        sound = new Sound(Game::getAssetManager().getSound("break_block"));
     }
+
+    Sound* sound;
     Entity* contains = nullptr;
     SDL_Rect sheetPosition;
 };

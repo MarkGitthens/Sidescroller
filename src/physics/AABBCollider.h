@@ -10,12 +10,23 @@ using namespace Vulture2D;
 
 class AABBCollider {
 public:
+    enum CollidedPosition {
+        no_collision,
+        top_right,
+        top_left,
+        bottom_right,
+        bottom_left,
+    };
+
+public:
     int mHalfHeight;
     AABBCollider() : mHalfWidth(0), mHalfHeight(0) {}
     AABBCollider(double, double, int, int);
 	virtual ~AABBCollider();
     bool colliding(const AABBCollider&) noexcept;
 
+    //returns where the collision occurs with respect to the caller
+    CollidedPosition getCollidedPosition(const AABBCollider&);
     vector<AABBCollider*> getColliders();
 
     void addCollider(AABBCollider*);

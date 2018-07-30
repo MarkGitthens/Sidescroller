@@ -22,6 +22,32 @@ bool AABBCollider::colliding(const AABBCollider& col) noexcept {
     return false;
 }
 
+vector<AABBCollider*> AABBCollider::getColliders() {
+    return mColliders;
+}
+
+AABBCollider::CollidedPosition AABBCollider::getCollidedPosition(const AABBCollider& col) {
+    CollidedPosition pos = no_collision;
+    //top
+    if(mPos.y <= col.mPos.y - col.mHalfHeight) {
+        //left
+        if(mPos.x <= col.mPos.x) {
+            pos = top_left;
+        } else {
+            pos = top_right;
+        }
+    } else {
+        //left
+        if(mPos.x <= col.mPos.x) {
+            pos = bottom_left;
+        } else {
+            pos = bottom_right;
+        }
+    }
+
+    return pos;
+}
+
 void AABBCollider::addCollider(AABBCollider* collider) {
     mColliders.push_back(collider);
 }

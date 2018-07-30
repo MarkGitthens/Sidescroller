@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
 #include <vector>
-#include "Event.h"
+#include "events/Event.h"
 
 namespace Vulture2D {
 

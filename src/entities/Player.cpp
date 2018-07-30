@@ -26,19 +26,19 @@ Player::Player(int x, int y, int width, int height) {
 void Player::update() {
     int gravity = 1;
 
-    if(mVelocity.y < 30)
-        mVelocity.y += gravity;
+    if(velocity.y < 30)
+        velocity.y += gravity;
 
-    mPos.x += mVelocity.x;
-    mPos.y += mVelocity.y;
+    mPos.x += velocity.x;
+    mPos.y += velocity.y;
 
-    if (mVelocity.x < 0)
+    if (velocity.x < 0)
             facingLeft = true;
-    else if (mVelocity.x > 0)
+    else if (velocity.x > 0)
             facingLeft = false;
     
     if(grounded) {
-        if(fabs(mVelocity.x) >= 0.1) {
+        if(fabs(velocity.x) >= 0.1) {
             setAnimation("player_walking");
         } else {
             setAnimation("player_idle");
@@ -58,7 +58,7 @@ void Player::handleInput(Event* event) {
         if (e->keyID == SDLK_SPACE) {
             if (canJump) {
                 canJump = false;
-                mVelocity.y = -28;
+                velocity.y = -30;
                 grounded = false;
             }
         }
@@ -67,20 +67,20 @@ void Player::handleInput(Event* event) {
             fireBullet();
         }
         if (e->keyID == SDLK_RIGHT) {
-            mVelocity.x += speed;
+            velocity.x += speed;
         }
         else if (e->keyID == SDLK_LEFT) {
-            mVelocity.x += -speed;
+            velocity.x += -speed;
         }
     }
 
     if (event->getType() == KeyboardEvent::KeyReleased) {
         if (e->keyID == SDLK_RIGHT) {
-            mVelocity.x -= speed;
+            velocity.x -= speed;
         }
 
         if (e->keyID == SDLK_LEFT) {
-            mVelocity.x -= -speed;
+            velocity.x -= -speed;
         }
     }
 }
@@ -114,6 +114,7 @@ void Player::setPosition(int x, int y) {
     mPos.y = y;
 }
 
+//TODO: I really need to find a better way to resolve collisions. As it is now my method doesn't work as intended.
 void Player::handleCollisions() {
     if(mColliders.empty())
         grounded = false;
@@ -137,18 +138,19 @@ void Player::handleCollisions() {
         
         //hit top of object
         AABBCollider* greatestCollider = mColliders.at(greatestIndex);
-        if(mVelocity.y > 0 && mPos.y+mHalfHeight <= greatestCollider->getPos()->y - greatestCollider->mHalfHeight) {
+        if(velocity.y > 0 && (getCollidedPosition(*greatestCollider) == top_left || getCollidedPosition(*greatestCollider) == top_right)) {
             grounded = true;
-            mVelocity.y = 0;
+            velocity.y = 0;
             canJump = true;
         } else {
             grounded = false;
         }
 
         //hit bottom of object
-        if(mVelocity.y < 0 && mPos.y- mHalfHeight >= greatestCollider->getPos()->y + greatestCollider->mHalfHeight) {
-            mVelocity.y = 0;
-        } 
+        if(velocity.y < 0 && mPos.y- mHalfHeight >= greatestCollider->getPos()->y + greatestCollider->mHalfHeight) {
+            velocity.y = 0;
+        }
+
         mColliders.erase(mColliders.begin() + greatestIndex);
     }
 }

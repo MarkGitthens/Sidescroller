@@ -4,7 +4,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "EventHandler.h"
-#include "KeyboardEvent.h"
+#include "events/KeyboardEvent.h"
 
 namespace Vulture2D {
     class InputHandler {
