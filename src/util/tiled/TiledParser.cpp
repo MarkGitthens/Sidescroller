@@ -97,7 +97,7 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
-                    box->setSprite(AssetManager::getInstance().getTexture("box"));
+                    box->setSprite(Game::getAssetManager().getTexture("block"));
                     box->setVisible(visible);
 
                     XMLElement* properties = object->FirstChildElement("properties");
@@ -113,6 +113,14 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                     }
 
                     scene->registerEntity(box);
+                }
+
+                if(type == "BreakableBox") {
+                    BreakableBox* box = new BreakableBox(x + (width / 2), y + (height / 2), width, height);
+                    box->setName(name);
+
+                    scene->registerEntity(box);
+                    
                 }
                 object = object->NextSiblingElement();
             }

@@ -3,7 +3,6 @@
 #include "entities/Player.h"
 #include "entities/Box.h"
 #include "entities/Camera.h"
-#include "entities/ResetBox.h"
 
 #include "util/tiled/TiledParser.h"
 
@@ -35,7 +34,7 @@ int main(int argc, char* argv[]) {
     
     scene.registerEntity(player);
     scene.setCamera(camera);
-    scene.registerEntity(reset); 
+   // scene.registerEntity(reset); 
     game->run();
     game->destroy();
     return 0;
