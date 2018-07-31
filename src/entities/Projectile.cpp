@@ -1,7 +1,7 @@
 #include "Projectile.h"
 
 void Projectile::update() {
-    handleCollisions();
+    //handleCollisions(AABBCollider*);
 	mPos = mPos + velocity;
 
     if(fabs(startPosition.x - mPos.x) >= 600) {
@@ -20,7 +20,7 @@ void Projectile::render(SDL_Rect* offset) {
 	destRect.h = mHalfHeight * 2;
 	Renderer::getInstance().drawTexture(image, &destRect);
 }
-void Projectile::handleCollisions() {
+void Projectile::handleCollisions(AABBCollider*) {
     for(auto c : mColliders) {
         if(dynamic_cast<Entity*>(c)->getName() != "player") {
             destroy();

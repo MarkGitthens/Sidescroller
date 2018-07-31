@@ -58,13 +58,9 @@ namespace Vulture2D {
         }
 
         void updateScene() {
-
-
             for (std::pair<int, Entity*> e : mEntityMap) {
                 e.second->update();
             }
-
-            checkCollisions();
 
             auto deleteIterator = mDeletedEntities.begin();
             while (deleteIterator != mDeletedEntities.end()) {
@@ -90,26 +86,26 @@ namespace Vulture2D {
         }
 
         //Checks for "physical" collisions, then collisions against triggers.
-        void checkCollisions() {
-            for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
-                for (auto j = start; j != mColliders.end(); ++j) {
-                    if (start != j) {
-                        if ((*start).second->colliding(*(*j).second)) {
-                            (*start).second->addCollider((*j).second);
-                            (*j).second->addCollider((*start).second);
-                        }
-                    }
-                }
-                (*start).second->handleCollisions();
+        //void checkCollisions() {
+        //    for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
+        //        for (auto j = start; j != mColliders.end(); ++j) {
+        //            if (start != j) {
+        //                if ((*start).second->colliding(*(*j).second)) {
+        //                    (*start).second->addCollider((*j).second);
+        //                    (*j).second->addCollider((*start).second);
+        //                }
+        //            }
+        //        }
+        //        (*start).second->handleCollisions();
 
-                for (auto j = mTriggers.begin(); j != mTriggers.end(); j++) {
-                    if ((*start).second->colliding(*(*j).second)) {
-                        (*start).second->handleTrigger(dynamic_cast<Entity*>((*j).second)->getName());
-                        (*j).second->addCollider((*start).second);
-                    }
-                }
-            }
-        }
+        //        for (auto j = mTriggers.begin(); j != mTriggers.end(); j++) {
+        //            if ((*start).second->colliding(*(*j).second)) {
+        //                (*start).second->handleTrigger(dynamic_cast<Entity*>((*j).second)->getName());
+        //                (*j).second->addCollider((*start).second);
+        //            }
+        //        }
+        //    }
+        //}
 
         bool checkCollisions(AABBCollider* collider) {
             for (auto check = mColliders.begin(); check != mColliders.end(); check++) {
@@ -118,6 +114,19 @@ namespace Vulture2D {
                 }
             }
             return false;
+        }
+
+        vector<AABBCollider*> checkCollision(AABBCollider* collider) {
+            vector<AABBCollider*> colliders;
+            for(auto check = mColliders.begin(); check != mColliders.end(); check++) {
+                if(collider == (check)->second)
+                    continue;
+                if(collider->colliding(*(*check).second)) {
+                    colliders.push_back(check->second);
+                }
+            }
+
+            return colliders;
         }
 
         void setName(const std::string& name) {

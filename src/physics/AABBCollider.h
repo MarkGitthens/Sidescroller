@@ -44,7 +44,7 @@ public:
 
     void setTrigger(bool);
 
-    virtual void handleCollisions() {};
+    virtual void handleCollisions(AABBCollider*) {};
     virtual void handleTrigger(const string&) {};
     virtual void updateAABB() {};
 protected:

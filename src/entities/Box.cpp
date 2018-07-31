@@ -19,7 +19,7 @@ void Box::render(SDL_Rect* camera) {
     }
 }
 
-void Box::handleCollisions() {
+void Box::handleCollisions(AABBCollider*) {
 
 }
 

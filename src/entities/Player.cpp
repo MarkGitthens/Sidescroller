@@ -19,8 +19,8 @@ Player::Player(int x, int y, int width, int height) {
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyPress, input);
     SceneHandler::getInstance().getCurrentScene()->addListener(KeyboardEvent::KeyReleased, input);
 
-    Sound* sound = new Sound(Game::getAssetManager().getSound("bgMusic"), true);
-    Game::getSoundMixer().playSound(sound);
+    Sound sound(Game::getAssetManager().getSound("bgMusic"), true);
+    Game::getSoundMixer().playSound(&sound);
 }
 
 void Player::update() {
@@ -30,7 +30,10 @@ void Player::update() {
         velocity.y += gravity;
 
     mPos.x += velocity.x;
+    handleXCollisions(Game::getSceneHandler().getCurrentScene()->checkCollision(this));
+
     mPos.y += velocity.y;
+    handleYCollisions(Game::getSceneHandler().getCurrentScene()->checkCollision(this));
 
     if (velocity.x < 0)
             facingLeft = true;
@@ -114,45 +117,65 @@ void Player::setPosition(int x, int y) {
     mPos.y = y;
 }
 
-//TODO: I really need to find a better way to resolve collisions. As it is now my method doesn't work as intended.
-void Player::handleCollisions() {
-    if(mColliders.empty())
-        grounded = false;
+void Player::handleXCollisions(const vector<AABBCollider*>& colliders) {
+    if(colliders.empty())
+        return;
+    size_t greatestIndex = 0;
 
-    while (!mColliders.empty()) {
-        
-        //Determine the collider that provides the greatest impact on this entity
+    for(int i = 0; i < colliders.size(); i++) {
         double greatest = 0;
-        size_t greatestIndex = 0;
-        for (size_t i = 0; i < mColliders.size(); i++) {
-            double temp = getInterArea(*mColliders.at(i));
-            if (i == 0) {
-                greatest = temp;
-            } else if (temp > greatest) {
-                greatestIndex = i;
-                greatest = temp;
-            }
-        }
-        
-        mPos = mPos + getProjectionVector(*mColliders.at(greatestIndex));
-        
-        //hit top of object
-        AABBCollider* greatestCollider = mColliders.at(greatestIndex);
-        if(velocity.y > 0 && (getCollidedPosition(*greatestCollider) == top_left || getCollidedPosition(*greatestCollider) == top_right)) {
-            grounded = true;
-            velocity.y = 0;
-            canJump = true;
-        } else {
-            grounded = false;
+
+        double temp = getInterArea(*colliders.at(i));
+        if(temp > greatest) {
+            greatestIndex = i;
+            greatest = temp;
         }
 
-        //hit bottom of object
-        if(velocity.y < 0 && mPos.y- mHalfHeight >= greatestCollider->getPos()->y + greatestCollider->mHalfHeight) {
-            velocity.y = 0;
-        }
-
-        mColliders.erase(mColliders.begin() + greatestIndex);
+        colliders.at(i)->handleCollisions(this);
     }
+
+    mPos.x = mPos.x + getProjectionVector(*colliders.at(greatestIndex)).x;
+}
+
+void Player::handleYCollisions(const vector<AABBCollider*>& colliders) {
+    size_t greatestIndex = 0;
+    if(colliders.empty()) {
+        grounded = false;
+        return;
+    }
+
+    for(int i = 0; i < colliders.size(); i++) {
+        double greatest = 0;
+
+        double temp = getInterArea(*colliders.at(i));
+        if(temp > greatest) {
+            greatestIndex = i;
+            greatest = temp;
+        }
+
+        colliders.at(i)->handleCollisions(this);
+    }
+
+    AABBCollider* greatestCollider = colliders.at(greatestIndex);
+    int collidedPosition = getCollidedPosition(*greatestCollider);
+    if(velocity.y > 0 && (collidedPosition == top_left || collidedPosition == top_right)) {
+        grounded = true;
+        velocity.y = 0;
+        canJump = true;
+    } else {
+        grounded = false;
+    }
+
+    //hit bottom of object
+    if(velocity.y < 0 && (getCollidedPosition(*greatestCollider) == bottom_left || getCollidedPosition(*greatestCollider) == bottom_right)) {
+        velocity.y = 0;
+    }
+
+   
+    mPos.y = mPos.y + getProjectionVector(*colliders.at(greatestIndex)).y;
+}
+
+void Player::handleCollisions(AABBCollider*) {
 }
 
 void Player::handleTrigger(const std::string& name) {

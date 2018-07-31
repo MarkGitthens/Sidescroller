@@ -18,7 +18,7 @@ using std::stringstream;
 
 class TiledMap : public Vulture2D::Entity, public Vulture2D::Renderable{
 public:
-    TiledMap(): width(0), height(0), tileWidth(128), tileHeight(128) {};
+    TiledMap(): width(1), height(1), tileWidth(128), tileHeight(128) {};
     TiledMap(int width, int height, int tilew, int tileh) : width(width), height(height), tileWidth(tilew), tileHeight(tileh) {}
 
     int* getLayer(size_t index) {

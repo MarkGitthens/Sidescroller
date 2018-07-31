@@ -19,7 +19,7 @@ public:
     void update();
     void handleInput();
     virtual void render(SDL_Rect*);
-    virtual void handleCollisions();
+    virtual void handleCollisions(AABBCollider*);
     virtual void updateAABB();
     bool visibility();
     void setVisible(bool);

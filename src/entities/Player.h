@@ -16,7 +16,9 @@ public:
     virtual void update();
     void handleInput(Event*);
 
-    virtual void handleCollisions();
+    void handleXCollisions(const vector<AABBCollider*>&);
+    void handleYCollisions(const vector<AABBCollider*>&);
+    virtual void handleCollisions(AABBCollider*);
     virtual void handleTrigger(const std::string&);
 
     virtual void render(SDL_Rect*);

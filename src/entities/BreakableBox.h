@@ -11,7 +11,7 @@ public:
     BreakableBox(int, int, int, int);
 
     virtual void update() {};
-    virtual void handleCollisions();
+    virtual void handleCollisions(AABBCollider*);
     virtual void render(SDL_Rect*);
 
     void setContains(Entity*);
