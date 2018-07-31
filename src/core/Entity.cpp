@@ -27,4 +27,9 @@ namespace Vulture2D {
     const Vector2D& Entity::getVelocity() {
         return velocity;
     }
+    
+    void Entity::setVelocity(int x, int y) {
+        velocity.x = x;
+        velocity.y = y;
+    }
 }

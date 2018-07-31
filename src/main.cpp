@@ -13,7 +13,6 @@ using namespace Vulture2D;
 void initializeEntities();
 void registerAssets();
 
-//Player* player;
 PlayerSpawner* spawner;
 Camera* camera;
 
@@ -35,8 +34,7 @@ int main(int argc, char* argv[]) {
     initializeEntities();
     
     scene.registerEntity(spawner);
-    scene.setCamera(camera);
-   // scene.registerEntity(reset); 
+
     game->run();
     game->destroy();
     return 0;
@@ -56,17 +54,7 @@ void registerAssets() {
 }
 
 void initializeEntities() {
-    //player = new Player(64, 300, 64, 64);
-    //player->setName("player");
-    //player->setSprite(AssetManager::getInstance().getTexture("player"));
-
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
-
-    reset = new Box(-1000, 1500, 10000, 128);
-    reset->setSprite(Game::getAssetManager().getTexture("box"));
-    reset->setVisible(false);
-    reset->setName("reset_box");
-    reset->setTrigger(true);
 
     SDL_Rect* cameraRect = new SDL_Rect();
     cameraRect->x = 0;
@@ -80,5 +68,4 @@ void initializeEntities() {
     camera->setCameraRect(cameraRect);
 
     spawner = new PlayerSpawner(camera, 64, 1000);
-
 }
