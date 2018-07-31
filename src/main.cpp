@@ -1,10 +1,4 @@
 #include "core/Game.h"
-
-#include "entities/Player.h"
-#include "entities/PlayerSpawner.h"
-#include "entities/Box.h"
-#include "entities/Camera.h"
-
 #include "util/tiled/TiledParser.h"
 
 using namespace Vulture2D;
@@ -13,12 +7,7 @@ using namespace Vulture2D;
 void initializeEntities();
 void registerAssets();
 
-PlayerSpawner* spawner;
-Camera* camera;
-
-Box* reset;
 Scene scene;
-
 Game* game = nullptr;
 
 int main(int argc, char* argv[]) {
@@ -32,8 +21,6 @@ int main(int argc, char* argv[]) {
     SceneHandler::getInstance().registerScene(&scene);
     
     initializeEntities();
-    
-    scene.registerEntity(spawner);
 
     game->run();
     game->destroy();
@@ -55,17 +42,4 @@ void registerAssets() {
 
 void initializeEntities() {
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
-
-    SDL_Rect* cameraRect = new SDL_Rect();
-    cameraRect->x = 0;
-    cameraRect->y = 0;
-    cameraRect->w = 1280;
-    cameraRect->h = 720;
-
-    camera = new Camera();
-    camera->setSceneWidth(scene.getSceneWidth());
-    camera->setSceneHeight(scene.getSceneHeight());
-    camera->setCameraRect(cameraRect);
-
-    spawner = new PlayerSpawner(camera, 64, 1000);
 }

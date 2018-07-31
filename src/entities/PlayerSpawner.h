@@ -8,16 +8,7 @@
 using namespace Vulture2D;
 class PlayerSpawner: public Entity {
 public:
-    PlayerSpawner(Camera* camera, int x = 0, int y = 0) : camera(camera) {
-        this->x = x;
-        this->y = y;
-
-        Callback spawn = [this](Event* e) {
-            this->spawnPlayer(e);
-        };
-
-        Game::getSceneHandler().getCurrentScene()->addListener(KeyboardEvent::KeyPress, spawn);
-    }
+    PlayerSpawner(int, int);
 
     virtual void update() {};
     void spawnPlayer(Event*);
