@@ -49,7 +49,7 @@ void registerAssets() {
     pool.createTexture("resources/tilesets/tilesheet_complete_2X.png", "tilesheet", Game::getSDLRenderer());
     pool.createSound("resources/audio/Off_Limits.wav", "bgMusic");
     pool.createSound("resources/audio/low.wav", "bullet");
-    pool.createSound("resources/audio/break_block.wav", "break_block");
+    pool.createSound("resources/audio/block_break.wav", "break_block");
 
 }
 
