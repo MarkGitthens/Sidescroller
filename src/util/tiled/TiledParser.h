@@ -11,8 +11,7 @@
 #include "../../entities/TiledMap.h"
 #include "../../entities/Box.h"
 #include "../../entities/BreakableBox.h"
-
-
+#include "../../entities/PlayerSpawner.h"
 
 using std::string;
 using namespace tinyxml2;

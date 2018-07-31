@@ -122,6 +122,12 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                     scene->registerEntity(box);
                     
                 }
+
+                if(type == "PlayerSpawner") {
+                    PlayerSpawner* spawner = new PlayerSpawner(x, y);
+                    scene->registerEntity(spawner);
+                }
+
                 object = object->NextSiblingElement();
             }
         }
