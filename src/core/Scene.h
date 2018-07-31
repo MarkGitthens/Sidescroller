@@ -85,40 +85,17 @@ namespace Vulture2D {
             SDL_RenderPresent(Renderer::getInstance().getRenderer());
         }
 
-        //Checks for "physical" collisions, then collisions against triggers.
-        //void checkCollisions() {
-        //    for (auto start = mColliders.begin(); start != mColliders.end(); start++) {
-        //        for (auto j = start; j != mColliders.end(); ++j) {
-        //            if (start != j) {
-        //                if ((*start).second->colliding(*(*j).second)) {
-        //                    (*start).second->addCollider((*j).second);
-        //                    (*j).second->addCollider((*start).second);
-        //                }
-        //            }
-        //        }
-        //        (*start).second->handleCollisions();
-
-        //        for (auto j = mTriggers.begin(); j != mTriggers.end(); j++) {
-        //            if ((*start).second->colliding(*(*j).second)) {
-        //                (*start).second->handleTrigger(dynamic_cast<Entity*>((*j).second)->getName());
-        //                (*j).second->addCollider((*start).second);
-        //            }
-        //        }
-        //    }
-        //}
-
-        bool checkCollisions(AABBCollider* collider) {
-            for (auto check = mColliders.begin(); check != mColliders.end(); check++) {
-                if (collider->colliding(*(*check).second)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        vector<AABBCollider*> checkCollision(AABBCollider* collider) {
+        vector<AABBCollider*> checkCollisions(AABBCollider* collider) {
             vector<AABBCollider*> colliders;
             for(auto check = mColliders.begin(); check != mColliders.end(); check++) {
+                if(collider == (check)->second)
+                    continue;
+                if(collider->colliding(*(*check).second)) {
+                    colliders.push_back(check->second);
+                }
+            }
+
+            for(auto check = mTriggers.begin(); check != mTriggers.end(); check++) {
                 if(collider == (check)->second)
                     continue;
                 if(collider->colliding(*(*check).second)) {

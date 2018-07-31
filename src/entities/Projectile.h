@@ -9,15 +9,15 @@
 
 class Projectile : public Vulture2D::Entity, public Vulture2D::Renderable, public AABBCollider {
 public:
-	Projectile(double x, double y, int w, int h, Vector2D velocity) : AABBCollider(x,y,w,h) {
+	Projectile(double x, double y, int w, int h, Vector2D velocity) : AABBCollider(x,y,w,h), sound(Game::getAssetManager().getSound("bullet")) {
         std::swap(this->velocity, velocity);
-        sound = new Sound(Game::getAssetManager().getSound("bullet"));
-        Game::getSoundMixer().playSound(sound);
+        Game::getSoundMixer().playSound(&sound);
         startPosition.x = x;
         startPosition.y = y;
+        trigger = true;
     };
+
     virtual ~Projectile() {
-        delete sound;
     }
 
     void destroy();
@@ -26,8 +26,7 @@ public:
 	void render(SDL_Rect*);
 
 private:
-
     Vector2D startPosition;
-    Sound* sound;
+    Sound sound;
 
 };

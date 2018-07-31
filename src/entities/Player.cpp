@@ -30,10 +30,10 @@ void Player::update() {
         velocity.y += gravity;
 
     mPos.x += velocity.x;
-    handleXCollisions(Game::getSceneHandler().getCurrentScene()->checkCollision(this));
+    handleXCollisions(Game::getSceneHandler().getCurrentScene()->checkCollisions(this));
 
     mPos.y += velocity.y;
-    handleYCollisions(Game::getSceneHandler().getCurrentScene()->checkCollision(this));
+    handleYCollisions(Game::getSceneHandler().getCurrentScene()->checkCollisions(this));
 
     if (velocity.x < 0)
             facingLeft = true;
@@ -108,7 +108,6 @@ void Player::fireBullet() {
     Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(facingLeft ? -15 : 15, 0));
     bullet->setSprite(AssetManager::getInstance().getTexture("block"));
     bullet->setName("player_bullet"); 
-	bullet->setTrigger(true);
 	Game::getSceneHandler().getCurrentScene()->registerEntity(bullet);
 }
 
@@ -120,59 +119,67 @@ void Player::setPosition(int x, int y) {
 void Player::handleXCollisions(const vector<AABBCollider*>& colliders) {
     if(colliders.empty())
         return;
-    size_t greatestIndex = 0;
+
+    int greatestIndex = -1;
 
     for(int i = 0; i < colliders.size(); i++) {
-        double greatest = 0;
+        if(!colliders.at(i)->isTrigger()) {
+            double greatest = 0;
 
-        double temp = getInterArea(*colliders.at(i));
-        if(temp > greatest) {
-            greatestIndex = i;
-            greatest = temp;
+            double temp = getInterArea(*colliders.at(i));
+            if(temp > greatest) {
+                greatestIndex = i;
+                greatest = temp;
+            }
+
+            colliders.at(i)->handleCollisions(this);
         }
-
-        colliders.at(i)->handleCollisions(this);
     }
 
-    mPos.x = mPos.x + getProjectionVector(*colliders.at(greatestIndex)).x;
+    if(greatestIndex >= 0)
+        mPos.x = mPos.x + getProjectionVector(*colliders.at(greatestIndex)).x;
 }
 
 void Player::handleYCollisions(const vector<AABBCollider*>& colliders) {
-    size_t greatestIndex = 0;
+    int greatestIndex = -1;
     if(colliders.empty()) {
         grounded = false;
         return;
     }
 
     for(int i = 0; i < colliders.size(); i++) {
-        double greatest = 0;
+        if(!colliders.at(i)->isTrigger()) {
+            double greatest = 0;
 
-        double temp = getInterArea(*colliders.at(i));
-        if(temp > greatest) {
-            greatestIndex = i;
-            greatest = temp;
+            double temp = getInterArea(*colliders.at(i));
+            if(temp > greatest) {
+                greatestIndex = i;
+                greatest = temp;
+            }
+
+            colliders.at(i)->handleCollisions(this);
+        }
+    }
+
+    if(greatestIndex >= 0) {
+        AABBCollider* greatestCollider = colliders.at(greatestIndex);
+        int collidedPosition = getCollidedPosition(*greatestCollider);
+        if(velocity.y > 0 && (collidedPosition == top_left || collidedPosition == top_right)) {
+            grounded = true;
+            velocity.y = 0;
+            canJump = true;
+        } else {
+            grounded = false;
         }
 
-        colliders.at(i)->handleCollisions(this);
-    }
+        //hit bottom of object
+        if(velocity.y < 0 && (getCollidedPosition(*greatestCollider) == bottom_left || getCollidedPosition(*greatestCollider) == bottom_right)) {
+            velocity.y = 0;
+        }
 
-    AABBCollider* greatestCollider = colliders.at(greatestIndex);
-    int collidedPosition = getCollidedPosition(*greatestCollider);
-    if(velocity.y > 0 && (collidedPosition == top_left || collidedPosition == top_right)) {
-        grounded = true;
-        velocity.y = 0;
-        canJump = true;
-    } else {
-        grounded = false;
-    }
 
-    //hit bottom of object
-    if(velocity.y < 0 && (getCollidedPosition(*greatestCollider) == bottom_left || getCollidedPosition(*greatestCollider) == bottom_right)) {
-        velocity.y = 0;
+        mPos.y = mPos.y + getProjectionVector(*colliders.at(greatestIndex)).y;
     }
-
-   
-    mPos.y = mPos.y + getProjectionVector(*colliders.at(greatestIndex)).y;
 }
 
 void Player::handleCollisions(AABBCollider*) {
