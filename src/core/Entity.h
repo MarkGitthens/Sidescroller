@@ -23,6 +23,7 @@ namespace Vulture2D {
         string getName();
 
         const Vector2D& getVelocity();
+        void setVelocity(int, int);
 
     protected:
 	    int x, y;

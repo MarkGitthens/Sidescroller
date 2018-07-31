@@ -68,18 +68,38 @@ namespace Vulture2D {
                 deleteIterator = mDeletedEntities.erase(deleteIterator);
             }
 
-            mCamera->update();
+            if(mCamera)
+                mCamera->update();
         }
 
         void renderScene() {
             SDL_RenderClear(Renderer::getInstance().getRenderer());
 
-            mTiledMap->render(mCamera->getCameraRect());
+            if(mCamera) {
+                mTiledMap->render(mCamera->getCameraRect());
+            } else {
+                SDL_Rect rect;
+                rect.x = 0;
+                rect.y = 0;
+                rect.w = 1280;
+                rect.h = 720;
+                mTiledMap->render(&rect);
+            }
+            
 
             for (std::pair<int, Renderable*> r : mRenderMap) {
                 if (r.second == nullptr)
                     continue;
-                r.second->render(mCamera->getCameraRect());
+                if(mCamera) {
+                    r.second->render(mCamera->getCameraRect());
+                } else {
+                    SDL_Rect rect;
+                    rect.x = 0;
+                    rect.y = 0;
+                    rect.w = 1280;
+                    rect.h = 720;
+                    r.second->render(&rect);
+                }
             }
 
             SDL_RenderPresent(Renderer::getInstance().getRenderer());
@@ -118,6 +138,7 @@ namespace Vulture2D {
             sceneHeight = height;
         }
         void setCamera(Camera* camera) {
+            delete mCamera;
             mCamera = camera;
         }
 

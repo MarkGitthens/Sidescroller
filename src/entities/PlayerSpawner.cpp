@@ -10,10 +10,12 @@ void PlayerSpawner::spawnPlayer(Event* e) {
             player->setName("player");
             player->setSprite(Game::getAssetManager().getTexture("player"));
 
-            Game::getSceneHandler().getCurrentScene()->registerEntity(player);
-
+            scene->registerEntity(player);
             camera->setParentPos(player->getPos());
+            scene->setCamera(camera);
+
         } else {
+            player->setVelocity(0, 0);
             player->setPosition(x, y);
         }
     }
