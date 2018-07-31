@@ -2,7 +2,9 @@
 
 using namespace Vulture2D;
 
-Camera::Camera(): sceneWidth(0), sceneHeight(0), mParentPos(nullptr), mCameraViewport(nullptr) {}
+Camera::Camera(): sceneWidth(0), sceneHeight(0), mCameraViewport(nullptr) {
+    mParentPos = new Vector2D(0, 0);
+}
 
 Camera::~Camera() {
     delete mCameraViewport;
@@ -51,6 +53,8 @@ void Camera::setCameraRect(SDL_Rect* rect) {
     mCameraViewport = rect;
 }
 void Camera::setParentPos(Vector2D* parent) {
+    delete mParentPos;
+
     mParentPos = parent;
 }
 

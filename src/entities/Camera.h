@@ -6,7 +6,7 @@
 
 class Camera : public Vulture2D::Entity {
 public:
-    Camera();
+    Camera();    
     virtual ~Camera();
 
     void update();

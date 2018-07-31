@@ -1,6 +1,7 @@
 #include "core/Game.h"
 
 #include "entities/Player.h"
+#include "entities/PlayerSpawner.h"
 #include "entities/Box.h"
 #include "entities/Camera.h"
 
@@ -12,7 +13,8 @@ using namespace Vulture2D;
 void initializeEntities();
 void registerAssets();
 
-Player* player;
+//Player* player;
+PlayerSpawner* spawner;
 Camera* camera;
 
 Box* reset;
@@ -32,7 +34,7 @@ int main(int argc, char* argv[]) {
     
     initializeEntities();
     
-    scene.registerEntity(player);
+    scene.registerEntity(spawner);
     scene.setCamera(camera);
    // scene.registerEntity(reset); 
     game->run();
@@ -54,9 +56,9 @@ void registerAssets() {
 }
 
 void initializeEntities() {
-    player = new Player(64, 300, 64, 64);
-    player->setName("player");
-    player->setSprite(AssetManager::getInstance().getTexture("player"));
+    //player = new Player(64, 300, 64, 64);
+    //player->setName("player");
+    //player->setSprite(AssetManager::getInstance().getTexture("player"));
 
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
 
@@ -76,5 +78,7 @@ void initializeEntities() {
     camera->setSceneWidth(scene.getSceneWidth());
     camera->setSceneHeight(scene.getSceneHeight());
     camera->setCameraRect(cameraRect);
-    camera->setParentPos(player->getPos());
+
+    spawner = new PlayerSpawner(camera, 64, 1000);
+
 }
