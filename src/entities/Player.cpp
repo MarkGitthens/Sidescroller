@@ -105,7 +105,7 @@ void Player::render(SDL_Rect* cameraRect) {
 }
 
 void Player::fireBullet() {
-    Projectile* bullet = new Projectile(mPos.x, mPos.y, 10, 10, Vector2D(facingLeft ? -15 : 15, 0));
+    Projectile* bullet = new Projectile(mPos.x, mPos.y, 8, 8, Vector2D(facingLeft ? -15 : 15, 0));
     bullet->setSprite(AssetManager::getInstance().getTexture("block"));
     bullet->setName("player_bullet"); 
 	Game::getSceneHandler().getCurrentScene()->registerEntity(bullet);
@@ -156,9 +156,9 @@ void Player::handleYCollisions(const vector<AABBCollider*>& colliders) {
                 greatestIndex = i;
                 greatest = temp;
             }
-
-            colliders.at(i)->handleCollisions(this);
         }
+        colliders.at(i)->handleCollisions(this);
+        handleCollisions(colliders.at(i));
     }
 
     if(greatestIndex >= 0) {
@@ -177,17 +177,10 @@ void Player::handleYCollisions(const vector<AABBCollider*>& colliders) {
             velocity.y = 0;
         }
 
-
         mPos.y = mPos.y + getProjectionVector(*colliders.at(greatestIndex)).y;
     }
 }
 
-void Player::handleCollisions(AABBCollider*) {
-}
+void Player::handleCollisions(AABBCollider* collider) {}
 
-void Player::handleTrigger(const std::string& name) {
-    if (name == "reset_box") {
-        mPos.x = 64;
-        mPos.y = 300;
-    }
-}
+void Player::handleTrigger(const std::string& name) {}

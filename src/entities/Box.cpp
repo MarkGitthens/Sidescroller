@@ -1,13 +1,5 @@
 #include "Box.h"
 
-void Box::update() {
-
-}
-
-void Box::handleInput() {
-
-}
-
 void Box::render(SDL_Rect* camera) {
     if (visible) {
         SDL_Rect destRect;
@@ -17,19 +9,4 @@ void Box::render(SDL_Rect* camera) {
         destRect.h = mHalfHeight * 2;
         Renderer::getInstance().drawTexture(getTexture(), &destRect);
     }
-}
-
-void Box::handleCollisions(AABBCollider*) {
-
-}
-
-void Box::updateAABB() {
-
-}
-
-bool Box::visibility() {
-    return visible;
-}
-void Box::setVisible(bool visible) {
-    this->visible = visible;
 }

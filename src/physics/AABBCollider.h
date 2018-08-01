@@ -19,19 +19,11 @@ public:
     };
 
 public:
-    int mHalfHeight;
-    AABBCollider() : mHalfWidth(0), mHalfHeight(0) {}
-    AABBCollider(double, double, int, int);
-	virtual ~AABBCollider();
+    AABBCollider(int x = 0, int y = 0, int w = 1, int h = 1);
     bool colliding(const AABBCollider&) noexcept;
 
     //returns where the collision occurs with respect to the caller
     CollidedPosition getCollidedPosition(const AABBCollider&);
-    vector<AABBCollider*> getColliders();
-
-    void addCollider(AABBCollider*);
-
-    void clearColliders() noexcept;
 
     //Get the affected area of the colliding objects.
     double getInterArea(const AABBCollider&);
@@ -48,9 +40,9 @@ public:
     virtual void handleTrigger(const string&) {};
     virtual void updateAABB() {};
 protected:
-    vector<AABBCollider*> mColliders;
     Vector2D mPos;
     int mHalfWidth;
+    int mHalfHeight;
 
     bool trigger = false;
 };
