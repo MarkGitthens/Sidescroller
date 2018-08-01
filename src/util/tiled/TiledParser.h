@@ -12,6 +12,7 @@
 #include "../../entities/Box.h"
 #include "../../entities/BreakableBox.h"
 #include "../../entities/PlayerSpawner.h"
+#include "../../entities/Coin.h"
 
 using std::string;
 using namespace tinyxml2;
