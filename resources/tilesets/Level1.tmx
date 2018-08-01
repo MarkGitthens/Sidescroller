@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="128" tileheight="128" infinite="0" nextobjectid="104">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="20" tilewidth="128" tileheight="128" infinite="0" nextobjectid="105">
  <tileset firstgid="1" name="tilesheet_complete_2X" tilewidth="128" tileheight="128" tilecount="264" columns="22">
   <grid orientation="orthogonal" width="64" height="64"/>
   <image source="tilesheet_complete_2X.png" width="2816" height="1536"/>
@@ -138,5 +138,6 @@
   <object id="101" name="BreakBox1" type="Coin" x="6380.12" y="543.758" width="32" height="32"/>
   <object id="102" name="BreakBox1" type="Coin" x="6449.82" y="528.606" width="32" height="32"/>
   <object id="103" name="BreakBox1" type="Coin" x="6522.55" y="546.788" width="32" height="32"/>
+  <object id="104" name="BreakBox1" type="Patroller" x="1887.03" y="1968.85" width="64" height="64"/>
  </objectgroup>
 </map>
