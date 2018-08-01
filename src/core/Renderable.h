@@ -6,7 +6,7 @@
 namespace Vulture2D {
     class Renderable {
     public:
-        Renderable() : image(nullptr) {};
+        Renderable() : image(nullptr), visible(true), renderId(0) {};
         virtual ~Renderable() {}
 
         void createFromPath(const char* path, SDL_Renderer* renderer) {
@@ -25,8 +25,16 @@ namespace Vulture2D {
 
         virtual void render(SDL_Rect*) = 0;
 
+        bool visibile() {
+            return visible;
+        }
+        void setVisible(bool visible) {
+            this->visible = visible;
+        };
+
     protected:
-        int renderId = 0;
+        bool visible;
+        int renderId;
         Texture* image;
     };
 }

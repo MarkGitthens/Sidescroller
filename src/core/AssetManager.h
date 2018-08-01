@@ -25,8 +25,8 @@ namespace Vulture2D {
 
         static AssetManager* instance;
 
-        AssetManager(const AssetManager&);
-        AssetManager& operator=(const AssetManager&);
+        AssetManager(const AssetManager&) = delete;
+        AssetManager& operator=(const AssetManager&) = delete;
         AssetManager() {};
         ~AssetManager();
     };

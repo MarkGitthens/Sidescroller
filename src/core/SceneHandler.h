@@ -31,8 +31,8 @@ namespace Vulture2D {
             instance = nullptr;
         }
         SceneHandler() {};
-        SceneHandler(const SceneHandler&);
-        SceneHandler& operator=(const SceneHandler&);
+        SceneHandler(const SceneHandler&) = delete;
+        SceneHandler& operator=(const SceneHandler&) = delete;
         static SceneHandler* instance;
 
         Scene* mCurrentScene = nullptr;
