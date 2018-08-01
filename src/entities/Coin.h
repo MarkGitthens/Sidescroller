@@ -7,12 +7,12 @@
 
 class Coin: public Entity, public Renderable, public AABBCollider {
 public:
-    Coin();
+    Coin(int x, int y, int w, int h);
     virtual void handleCollisions(AABBCollider*);
     virtual void update() {};
     virtual void render(SDL_Rect*);
 
 
 private:
-    Sound sound;
+    //Sound sound;
 };
