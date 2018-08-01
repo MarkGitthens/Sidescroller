@@ -10,6 +10,7 @@ void Projectile::update() {
     vector<AABBCollider*> colliders = Game::getSceneHandler().getCurrentScene()->checkCollisions(this);
 
     for(auto c : colliders) {
+        c->handleCollisions(this);
         if(dynamic_cast<Entity*>(c)->getName() != "player") {
             destroy();
         }

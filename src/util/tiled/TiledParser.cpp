@@ -123,6 +123,13 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                     scene->registerEntity(coin);
                 }
 
+                if(type == "Patroller") {
+                    Patroller* patroller = new Patroller(x + (width / 2), y + (height / 2), width, height);
+                    patroller->setName(name);
+                    patroller->setSprite(Game::getAssetManager().getTexture("block"));
+                    scene->registerEntity(patroller);
+                }
+
                 if(type == "BreakableBox") {
                     BreakableBox* box = new BreakableBox(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
