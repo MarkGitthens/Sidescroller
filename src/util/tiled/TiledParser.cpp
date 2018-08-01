@@ -134,6 +134,12 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                     BreakableBox* box = new BreakableBox(x + (width / 2), y + (height / 2), width, height);
                     box->setName(name);
 
+                    Coin* coin = new Coin(x + (width / 2), y + (height / 2), width/2, height/2);
+                    coin->setName(name);
+                    coin->setSprite(Game::getAssetManager().getTexture("coin"));
+                    coin->setTrigger(true);
+
+                    box->setContains(coin);
                     scene->registerEntity(box);
                     
                 }
