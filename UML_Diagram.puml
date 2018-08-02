@@ -320,6 +320,40 @@ package util {
 }
 
 package Entities {
+
+    class Patroller {
+        +void handleXCollisions(const vector<AABBCollider*>&)
+        +void handleYCollisions(const vector<AABBCollider*>&)
+        +void handleCollisions(AABBCollider*)
+        +void update()
+        +void render(SDL_Rect*)
+
+        -Vector2D startPosition
+    }
+
+    class PlayerSpawner {
+        +void update()
+        +void spawnPlayer(Event*)
+        -Player* player
+        -Camera* camera
+    }
+
+    class Coin {
+        +void update()
+        +void render(SDL_Rect*)
+        +void handleColliions(AABBCollider*)
+    }
+
+    class BreakableBox {
+        +void update()
+        +void handleColliions(AABBCollider*)
+        +void Render(SDL_Rect*)
+        +void setContains(Entity*)
+
+        -Sound* sound
+        -Entity* contains
+    }
+
     class Camera {
         +void update()
         +void setX(int)
@@ -429,15 +463,25 @@ Entity <|-- Projectile
 Entity <|-- TiledMap
 Entity <|-- Box
 Entity <|-- Camera
+Entity <|-- BreakableBox
+Entity <|-- PlayerSpawner
+Entity <|-- Coin
+Entity <|-- Patroller
 
+AABBCollider <|-- Patroller
+AABBCollider <|-- Coin
 AABBCollider <|-- Player
 AABBCollider <|-- Projectile
 AABBCollider <|-- Box
+AABBCollider <|-- BreakableBox
 
 AnimatedSprite <|-- Player
 Renderable <|-- Box
 Renderable <|-- Projectile
 Renderable <|-- TiledMap
+Renderable <|-- BreakableBox
+Renderable <|-- Coin
+Renderable <|-- Patroller
 
 AABBCollider --> Vector2D
 
