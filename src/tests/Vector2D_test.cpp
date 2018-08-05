@@ -57,9 +57,6 @@ bool Vector2D_test::testSimpleArithmetic() {
     a.x = 1;
     a.y = 1;
 
-    b.x = 1;
-    b.y = 1;
-
     a = a - b;
     std::cout << a.x << ", " << a.y << std::endl;
     if(a.x != 0 || a.y != 0)

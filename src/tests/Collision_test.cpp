@@ -57,29 +57,35 @@ bool Collision_test::testInterArea() {
 }
 bool Collision_test::testProjectionVector() {
     bool passed = true;
-    AABBCollider a(0, 0, 40, 40);
 
+    AABBCollider a(0, 0, 40, 40);
     AABBCollider b(-1000, 0, 40, 40);
 
-    std::cout << a.getProjectionVector(b).x << ", " << a.getProjectionVector(b).y << std::endl;
-    if(a.getProjectionVector(b) != Vector2D(0,0))
+    Vector2D projection = a.getProjectionVector(b);
+    
+    std::cout << projection.x << ", " << projection.y << std::endl;
+    if(projection != Vector2D(0,0))
         passed = false;
 
     b.setPos(-20, 0);
-    std::cout << a.getProjectionVector(b).x << ", " << a.getProjectionVector(b).y << std::endl;
-    if(a.getProjectionVector(b) != Vector2D(20, 0))
+    projection = a.getProjectionVector(b);
+
+    std::cout << projection.x << ", " << projection.y << std::endl;
+    if(projection != Vector2D(20, 0))
         passed = false;
 
     b.setPos(0, 0);
+    projection = a.getProjectionVector(b);
 
-    std::cout << a.getProjectionVector(b).x << ", " << a.getProjectionVector(b).y << std::endl;
-    if(a.getProjectionVector(b) != Vector2D(40, 0))
+    std::cout << projection.x << ", " << projection.y << std::endl;
+    if(projection != Vector2D(40, 0))
         passed = false;
 
     b.setPos(0, 20);
+    projection = a.getProjectionVector(b);
 
-    std::cout << a.getProjectionVector(b).x << ", " << a.getProjectionVector(b).y << std::endl;
-    if(a.getProjectionVector(b) != Vector2D(0, -20))
+    std::cout << projection.x << ", " << projection.y << std::endl;
+    if(projection != Vector2D(0, -20))
         passed = false;
     
     return passed;
