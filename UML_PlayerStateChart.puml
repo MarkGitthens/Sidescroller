@@ -1,0 +1,16 @@
+@startuml
+
+state Alive {
+    [*] --> Idle
+    Idle --> Running : Velocity.x != 0
+    Idle --> Falling : Velocity.y != 0
+
+    Running  --> Idle : Velocity.x = 0
+    Falling  --> Idle : Velocity.y = 0
+    
+    Running  --> Falling : Velocity.y != 0
+}
+[*] --> Alive : RegisterEntity()
+Alive --> [*] : Destroy
+
+@enduml
