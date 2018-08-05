@@ -17,7 +17,7 @@ void PlayerSpawner::spawnPlayer(Event* e) {
     if(k->keyID == SDLK_r) {
         Scene* scene = Game::getSceneHandler().getCurrentScene();
         if(!player) {
-            player = new Player(x, y, 64, 64);
+            player = new Player(x, y + 64, 64, 64);
             player->setName("player");
             player->setSprite(Game::getAssetManager().getTexture("player"));
 
@@ -37,8 +37,8 @@ void PlayerSpawner::spawnPlayer(Event* e) {
             scene->setCamera(camera);
 
         } else {
-            player->setVelocity(0, 0);
-            player->setPosition(x, y);
+            player->setVelocity(player->getVelocity().x, 0);
+            player->setPosition(x, y + 64);
         }
     }
 }

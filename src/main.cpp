@@ -1,6 +1,9 @@
 #include "core/Game.h"
 #include "util/tiled/TiledParser.h"
 
+#include "tests/Collision_test.h"
+#include "tests/Vector2D_test.h"
+
 using namespace Vulture2D;
 
 //TODO: Should define a consistent unit of measurement instead of just using pixel size
@@ -11,6 +14,14 @@ Scene scene;
 Game* game = nullptr;
 
 int main(int argc, char* argv[]) {
+
+    Collision_test collisionsTest;
+    Vector2D_test vectorTest;
+
+    if(!vectorTest.run() || !collisionsTest.run()) {
+        return -1;
+    }
+
     game = new Game();
     
     game->init();

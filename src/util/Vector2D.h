@@ -17,7 +17,10 @@ namespace Vulture2D {
         Vector2D project(const Vector2D& line);
         Vector2D operator+(const Vector2D& right);
         Vector2D operator-(const Vector2D& right);
-        Vector2D operator*(int scalar);
+        Vector2D operator*(double scalar);
         Vector2D& operator=(const Vector2D& right);
+        bool operator==(const Vector2D& right);
+        bool operator!=(const Vector2D& right);
+
     };
 }
