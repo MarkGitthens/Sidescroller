@@ -30,6 +30,7 @@ public:
 
     Vector2D getProjectionVector(const AABBCollider&);
 
+    void setPos(double, double);
     Vector2D* getPos() noexcept;
 
     bool isTrigger();

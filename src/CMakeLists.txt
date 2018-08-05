@@ -4,6 +4,7 @@ include(src/entities/CMakeLists.txt)
 include(src/util/CMakeLists.txt)
 include(src/util/tiled/CMakeLists.txt)
 include(src/core/events/CMakeLists.txt)
+include(src/tests/CMakeLists.txt)
 
 set(VULTURE2D_HEADERS
 	${VULTURE2D_CORE_HEADERS}
@@ -11,6 +12,7 @@ set(VULTURE2D_HEADERS
 	${VULTURE2D_PHYSICS_HEADERS}
 	${VULTURE2D_ENTITIES_HEADERS}
 	${VULTURE2D_UTIL_HEADERS}
+	${VULTURE2D_TESTS_HEADERS}
 	${VULTURE2D_TILED_HEADERS})
 
 set(VULTURE2D_SRC src/main.cpp
@@ -19,6 +21,7 @@ set(VULTURE2D_SRC src/main.cpp
 	${VULTURE2D_PHYSICS_SRC}
 	${VULTURE2D_ENTITIES_SRC}
 	${VULTURE2D_UTIL_SRC}
+	${VULTURE2D_TESTS_SRC}
 	${VULTURE2D_TILED_SRC})
 
 list(APPEND VULTURE2D_SRC ${VULTURE2D_HEADERS})

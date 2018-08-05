@@ -18,13 +18,13 @@ namespace Vulture2D {
 
     //RHS normal of a vector
     Vector2D Vector2D::normal() {
-        return Vector2D(-y, x);
+        return Vector2D(y, -x);
     }
 
     Vector2D Vector2D::normalize() {
         Vector2D temp(x, y);
 
-        double vectorLength = sqrt(temp.x * temp.x + temp.y * temp.y);
+        double vectorLength = magnitude();
         temp.x /= vectorLength;
         temp.y /= vectorLength;
 
@@ -34,6 +34,7 @@ namespace Vulture2D {
     double Vector2D::magnitude() {
         return sqrt(x*x + y * y);
     }
+
     double Vector2D::dot(const Vector2D& rhs) {
         return (x*rhs.x) + (y*rhs.y);
     }
@@ -47,6 +48,7 @@ namespace Vulture2D {
 
         return projection;
     }
+
     Vector2D Vector2D::operator+(const Vector2D& right) {
         this->x += right.x;
         this->y += right.y;
@@ -59,7 +61,7 @@ namespace Vulture2D {
         return *this;
     }
 
-    Vector2D Vector2D::operator*(int scalar) {
+    Vector2D Vector2D::operator*(double scalar) {
         this->x *= scalar;
         this->y *= scalar;
         return *this;
@@ -69,5 +71,13 @@ namespace Vulture2D {
         this->x = right.x;
         this->y = right.y;
         return *this;
+    }
+
+    bool Vector2D::operator==(const Vector2D& right) {
+        return (this->x == right.x && this->y == right.y);
+    }
+
+    bool Vector2D::operator!=(const Vector2D& right) {
+        return this->x != right.x || this->y != right.y;
     }
 }

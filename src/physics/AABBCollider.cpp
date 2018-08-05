@@ -5,6 +5,11 @@ AABBCollider::AABBCollider(int x, int y, int w, int h): mHalfWidth(w/2), mHalfHe
     mPos.y = y;
 }
 
+
+void AABBCollider::setPos(double x, double y) {
+    mPos.x = x;
+    mPos.y = y;
+}
 Vector2D* AABBCollider::getPos() noexcept{
     return &mPos;
 }
@@ -40,6 +45,9 @@ AABBCollider::CollidedPosition AABBCollider::getCollidedPosition(const AABBColli
 }
 
 double AABBCollider::getInterArea(const AABBCollider& col) {
+    if(!colliding(col))
+        return 0;
+
     const double vecX = mHalfWidth + col.mHalfWidth - abs(mPos.x - col.mPos.x);
     const double vecY = mHalfHeight + col.mHalfHeight - abs(mPos.y - col.mPos.y);
 
@@ -47,6 +55,9 @@ double AABBCollider::getInterArea(const AABBCollider& col) {
 }
 
 Vector2D AABBCollider::getProjectionVector(const AABBCollider& col) {
+    if(!colliding(col))
+        return Vector2D(0, 0);
+
     const double vecX = mHalfWidth + col.mHalfWidth - abs(mPos.x - col.mPos.x);
     const double vecY = mHalfHeight + col.mHalfHeight - abs(mPos.y - col.mPos.y);
 
