@@ -22,7 +22,7 @@ public:
     TiledMap(int width, int height, int tilew, int tileh) : width(width), height(height), tileWidth(tilew), tileHeight(tileh) {}
 
     int* getLayer(size_t index) {
-        return layers.at(index);
+        return layers[index];
     }
 
     size_t numLayers() {
@@ -36,13 +36,18 @@ public:
     void drawLayer(size_t layer, int xOffset, int yOffset) {
         SDL_Rect src;
         SDL_Rect dest;
-        int tilesetColumns = tilesets.at(0)->getColumnCount();
+        int tilesetColumns = tilesets[0]->getColumnCount();
+        int* currentLayer = layers[layer];
+        
+        Vulture2D::Texture* tileTex = tilesets[0]->getImage();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (layers.at(layer)[j * width + i] == 0)
+                int currentTile = currentLayer[j*width+i];
+
+                if (currentTile == 0)
                     continue;
-                src.x = ((layers.at(layer)[j * width + i] % tilesetColumns)-1) * tileWidth;
-                src.y = ((layers.at(layer)[j * width + i] / tilesetColumns)) * tileHeight;
+                src.x = ((currentTile % tilesetColumns)-1) * tileWidth;
+                src.y = ((currentTile / tilesetColumns)) * tileHeight;
                 src.w = tileWidth;  
                 src.h = tileHeight;
 
@@ -50,7 +55,8 @@ public:
                 dest.y = j * tileHeight - yOffset;
                 dest.w = tileWidth;
                 dest.h = tileHeight;
-                Vulture2D::Renderer::getInstance().drawTexture(tilesets.at(0)->getImage(), &src, &dest);
+                
+                Vulture2D::Renderer::getInstance().drawTexture(tileTex, &src, &dest);
             }
         }
     }

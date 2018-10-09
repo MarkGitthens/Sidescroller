@@ -107,7 +107,8 @@ namespace Vulture2D {
 
         vector<AABBCollider*> checkCollisions(AABBCollider* collider) {
             vector<AABBCollider*> colliders;
-            for(auto check = mColliders.begin(); check != mColliders.end(); check++) {
+
+            for(auto check = mColliders.begin(); check != mColliders.end(); ++check) {
                 if(collider == (check)->second)
                     continue;
                 if(collider->colliding(*(*check).second)) {
@@ -115,12 +116,12 @@ namespace Vulture2D {
                 }
             }
 
-            for(auto check = mTriggers.begin(); check != mTriggers.end(); check++) {
+            for(auto check = mTriggers.begin(); check != mTriggers.end(); ++check) {
                 if(collider == (check)->second)
-                    continue;
+                   continue;
                 if(collider->colliding(*(*check).second)) {
                     colliders.push_back(check->second);
-                }
+               }
             }
 
             return colliders;
