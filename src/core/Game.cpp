@@ -11,7 +11,7 @@ namespace Vulture2D {
 
         window = SDL_CreateWindow("Sidescroller", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
-        Renderer::getInstance().init(window, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        Renderer::getInstance().init(window, SDL_RENDERER_ACCELERATED);
 
         screenSurface = SDL_GetWindowSurface(window);
 

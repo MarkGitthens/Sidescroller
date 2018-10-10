@@ -38,25 +38,32 @@ public:
         SDL_Rect dest;
         int tilesetColumns = tilesets[0]->getColumnCount();
         int* currentLayer = layers[layer];
-        
-        Vulture2D::Texture* tileTex = tilesets[0]->getImage();
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                int currentTile = currentLayer[j*width+i];
 
-                if (currentTile == 0)
+        Vulture2D::Texture* tileTex = tilesets[0]->getImage();
+        Vulture2D::Renderer& renderer = Vulture2D::Renderer::getInstance();
+    
+        int currentRow = 0;
+        int currentTile = currentLayer[currentRow];
+
+        for(int j = 0; j < height; j++, currentRow += width) {
+            
+            for(int i = 0; i < width; i++) {
+
+                currentTile = currentLayer[currentRow + i];
+
+                if(currentTile == 0)
                     continue;
-                src.x = ((currentTile % tilesetColumns)-1) * tileWidth;
+                src.x = ((currentTile % tilesetColumns) - 1) * tileWidth;
                 src.y = ((currentTile / tilesetColumns)) * tileHeight;
-                src.w = tileWidth;  
+                src.w = tileWidth;
                 src.h = tileHeight;
 
                 dest.x = i * tileWidth - xOffset;
                 dest.y = j * tileHeight - yOffset;
                 dest.w = tileWidth;
                 dest.h = tileHeight;
-                
-                Vulture2D::Renderer::getInstance().drawTexture(tileTex, &src, &dest);
+
+                renderer.drawTexture(tileTex, &src, &dest);
             }
         }
     }
