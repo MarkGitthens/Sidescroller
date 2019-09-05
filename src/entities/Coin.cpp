@@ -16,7 +16,6 @@ void Coin::handleCollisions(AABBCollider* collider) {
     if(player) {
         Game::getSceneHandler().getCurrentScene()->deleteEntity(getID());
     }
-        //Game::getSoundMixer().playSound(&sound);
 }
 
 void Coin::render(SDL_Rect* camera) {

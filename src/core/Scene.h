@@ -20,7 +20,7 @@ namespace Vulture2D {
         Scene() : mSceneName("default"), mWorldSpace(), sceneWidth(0), sceneHeight(0) {};
         Scene(const string name) : mSceneName(name), mWorldSpace(), sceneWidth(0), sceneHeight(0) {};
         Scene(const string name, SDL_Rect world) : mSceneName(name), mWorldSpace(world), sceneWidth(0), sceneHeight(0) {};
-        ~Scene() {};
+        ~Scene() = default;
 
         void registerEntity(Entity* entity) {
             if (entity == nullptr) {
@@ -162,6 +162,14 @@ namespace Vulture2D {
         }
 
         void destroy() {
+            for(auto entity: mEntityMap) {
+                delete entity.second;
+            }
+
+            for(auto entity: mOffScreenEntityMap) {
+                delete entity.second;
+            }
+
             delete mCamera;
             delete mTiledMap;
         }
@@ -193,7 +201,6 @@ namespace Vulture2D {
 
         unordered_map<int, Entity*> mOffScreenEntityMap;
 
-        //TODO: we aren't properly freeing up memory here. Need to rethink how I remove entities.
         void removeEntity(int id) {
             if (mTriggers.find(id) != mTriggers.end()) {
                 mTriggers.erase(id);

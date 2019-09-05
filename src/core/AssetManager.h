@@ -10,7 +10,8 @@ namespace Vulture2D {
     public:
         
         static AssetManager& getInstance();
-
+        static void destroy();
+        
         Texture* createTexture(string path, string name, SDL_Renderer*);
         Mix_Chunk* createSound(string path, string name);
         void registerTexture(Texture* texture, string name);

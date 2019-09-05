@@ -29,6 +29,10 @@ public:
         loadSheetPosition();
     }
 
+    virtual ~BreakableBox() {
+        delete contains;
+    }
+
     virtual void update() {};
     virtual void handleCollisions(AABBCollider*);
     virtual void render(SDL_Rect*);

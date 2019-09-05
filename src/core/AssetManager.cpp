@@ -5,18 +5,16 @@ namespace Vulture2D {
 
     AssetManager::~AssetManager(){
         for(auto i : textures) {
-            delete i.second;
-            textures.erase(i.first);
+            if(i.second)
+                delete i.second;
         }
-
+        textures.clear();
+        
         for(auto chunk : sounds) {
             if(chunk.second)
                 Mix_FreeChunk(chunk.second);
-            sounds.erase(chunk.first);
         }
-
-        delete instance;
-        instance = nullptr;
+        sounds.clear();
     }
 
     AssetManager& AssetManager::getInstance() {
@@ -24,6 +22,10 @@ namespace Vulture2D {
             instance = new AssetManager();
         }
         return *instance;
+    }
+
+    void AssetManager::destroy() {
+        delete instance;
     }
 
     Texture* AssetManager::createTexture(string path, string name, SDL_Renderer* renderer) {

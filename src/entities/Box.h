@@ -16,6 +16,7 @@ public:
         mHalfHeight = h/2;
         mHalfWidth = w/2;
     }
+    ~Box() {};
     void update() {};
     virtual void render(SDL_Rect*);
 };

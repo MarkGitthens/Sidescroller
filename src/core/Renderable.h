@@ -7,13 +7,10 @@ namespace Vulture2D {
     class Renderable {
     public:
         Renderable() : image(nullptr), visible(true), renderId(0) {};
-        virtual ~Renderable() {}
 
-        void createFromPath(const char* path, SDL_Renderer* renderer) {
-            image = new Texture(path, renderer);
-        }
+        virtual ~Renderable() = default;
+
         void setSprite(Texture* texture) {
-            delete image;
             image = texture;
         }
 

@@ -2,11 +2,6 @@
 
 namespace Vulture2D {
     Texture::Texture(): mTexture(nullptr), mWidth(0), mHeight(0) {}
-    Texture::~Texture() {
-        if (mTexture) {
-            SDL_DestroyTexture(mTexture);
-        }
-    }
     Texture::Texture(string path, SDL_Renderer* renderer) {
         SDL_Surface* temp;
         temp = IMG_Load(path.c_str());
@@ -20,7 +15,12 @@ namespace Vulture2D {
             mTexture = SDL_CreateTextureFromSurface(renderer, temp);
             SDL_FreeSurface(temp);
         }
+    }
 
+    Texture::~Texture() {
+        if (mTexture) {
+            SDL_DestroyTexture(mTexture);
+        }
     }
 
     const unsigned int Texture::getWidth() {

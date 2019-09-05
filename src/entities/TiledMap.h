@@ -20,7 +20,16 @@ class TiledMap : public Vulture2D::Entity, public Vulture2D::Renderable{
 public:
     TiledMap(): width(1), height(1), tileWidth(128), tileHeight(128) {};
     TiledMap(int width, int height, int tilew, int tileh) : width(width), height(height), tileWidth(tilew), tileHeight(tileh) {}
+    ~TiledMap() {
+        for(auto set: tilesets) {
+            delete set;
+        }
 
+        for(auto layer: layers) {
+            delete[] layer;
+        }
+    }
+    
     int* getLayer(size_t index) {
         return layers[index];
     }

@@ -7,12 +7,12 @@
 namespace Vulture2D{
     class Animation {
     public:
-        Animation() : currentTick(0), frameList(), loopable(false), cycles(false), frameCount(0) { startTick = SDL_GetTicks(); };
+        Animation() : currentTick(0), loopable(false), cycles(false), frameCount(0) { startTick = SDL_GetTicks(); };
         Animation(string path): currentTick(0), frameList(), loopable(false), cycles(false), frameCount(0) {
             startTick = SDL_GetTicks();
             parseFile(path, Game::getSDLRenderer());
         }
-        ~Animation() {};
+        ~Animation() = default;
         int getFrameCount() { return frameCount; }
         std::string getName() { return title; }
         SDL_Rect* getFrame(size_t frameNumber) { return &frameList[frameNumber]; }
@@ -71,7 +71,7 @@ namespace Vulture2D{
                 tinyxml2::XMLElement* frameNode = animStart->FirstChildElement("frames");
 
                 tinyxml2::XMLElement* frameElement = frameNode->FirstChildElement("frame");
-                frameList = new SDL_Rect[frameCount];
+
                 for (int i = 0; i < frameCount; i++) {
                     frameList[i].x = frameElement->IntAttribute("x");
                     frameList[i].y = frameElement->IntAttribute("y");
@@ -87,7 +87,7 @@ namespace Vulture2D{
         }
     private:
         bool incrementing = true;
-        SDL_Rect *frameList;
+        SDL_Rect frameList[64]; //Can have upto 128 frames
         int startTick;
         int currentTick;
         int frameDelay = 66;

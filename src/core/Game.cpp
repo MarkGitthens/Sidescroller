@@ -126,6 +126,7 @@ namespace Vulture2D {
 
     void Game::destroy() {
         SceneHandler::getInstance().getCurrentScene()->destroy();
+        AssetManager::destroy();
 
         SDL_FreeSurface(screenSurface);
         screenSurface = nullptr;

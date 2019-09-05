@@ -12,7 +12,7 @@ class Player : public Vulture2D::Entity, public AABBCollider, public Vulture2D::
 public:
     Player(){};
     Player(int, int, int, int);
-    virtual ~Player() {}
+    virtual ~Player() {};
     virtual void update();
     void handleInput(Event*);
 
