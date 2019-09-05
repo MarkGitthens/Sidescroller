@@ -193,6 +193,7 @@ namespace Vulture2D {
 
         unordered_map<int, Entity*> mOffScreenEntityMap;
 
+        //TODO: we aren't properly freeing up memory here. Need to rethink how I remove entities.
         void removeEntity(int id) {
             if (mTriggers.find(id) != mTriggers.end()) {
                 mTriggers.erase(id);

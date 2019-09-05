@@ -255,3 +255,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 *.dll
+.vscode/settings.json

@@ -6,9 +6,28 @@
 
 class BreakableBox: public Entity, public Renderable, public AABBCollider {
 public:
-    BreakableBox();
-    BreakableBox(SDL_Rect dimensions);
-    BreakableBox(int, int, int, int);
+    BreakableBox(): sound(Game::getAssetManager().getSound("break_block")){
+        loadSheetPosition();
+    }
+
+    BreakableBox(SDL_Rect dimensions): sound(Game::getAssetManager().getSound("break_block")) {
+        mPos.x = dimensions.x;
+        mPos.y = dimensions.y;
+        mHalfWidth = dimensions.w / 2;
+        mHalfHeight = dimensions.h / 2;
+
+        loadSheetPosition();
+    }
+
+    BreakableBox(int x, int y, int w, int h): sound(Game::getAssetManager().getSound("break_block")) {
+        mPos.x = x;
+        mPos.y = y;
+
+        mHalfHeight = h / 2;
+        mHalfWidth = w / 2;
+
+        loadSheetPosition();
+    }
 
     virtual void update() {};
     virtual void handleCollisions(AABBCollider*);
@@ -23,11 +42,9 @@ private:
         sheetPosition.y = 9 * 128;
         sheetPosition.w = 128;
         sheetPosition.h = 128;
-
-        sound = new Sound(Game::getAssetManager().getSound("break_block"));
     }
 
-    Sound* sound;
+    Sound sound;
     Entity* contains = nullptr;
     SDL_Rect sheetPosition;
 };
