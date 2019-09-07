@@ -6,6 +6,7 @@ void BreakableBox::handleCollisions(AABBCollider* c) {
         Player* player = dynamic_cast<Player*>(c);
         if(player) {
             if(player->getName() == "player" && player->getVelocity().y < 0) {
+                destroyed = true;
                 Game::getSceneHandler().getCurrentScene()->registerEntity(contains);
                 Game::getSceneHandler().getCurrentScene()->deleteEntity(getID());
                 Game::getSoundMixer().playSound(&sound);

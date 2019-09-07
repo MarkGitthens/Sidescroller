@@ -29,8 +29,9 @@ public:
         loadSheetPosition();
     }
 
-    virtual ~BreakableBox() {
-        delete contains;
+    ~BreakableBox() {
+        if(!destroyed)
+            delete contains;
     }
 
     virtual void update() {};
@@ -48,6 +49,7 @@ private:
         sheetPosition.h = 128;
     }
 
+    bool destroyed = false;
     Sound sound;
     Entity* contains = nullptr;
     SDL_Rect sheetPosition;
