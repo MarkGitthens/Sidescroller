@@ -11,7 +11,6 @@
 #include "../entities/Camera.h"
 #include "../physics/AABBCollider.h"
 
-#include "coz.h"
 using std::string;
 using std::unordered_map;
 
@@ -104,7 +103,6 @@ namespace Vulture2D {
             }
 
             SDL_RenderPresent(Renderer::getInstance().getRenderer());
-	    COZ_PROGRESS;
         }
 	
         vector<AABBCollider*> checkCollisions(AABBCollider* collider) {
@@ -125,7 +123,6 @@ namespace Vulture2D {
                     colliders.push_back(check->second);
                }
             }
-	    COZ_PROGRESS;
             return colliders;
         }
 
