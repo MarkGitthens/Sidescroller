@@ -1,9 +1,12 @@
 #pragma once
 #include <SDL.h>
 #include <string>
-#include "../util/tinyxml2.h"
+#include "../util/rapidxml/rapidxml.hpp"
+#include "../util/rapidxml/rapidxml_utils.hpp"
+#include "../util/rapidxml/rapidxml_print.hpp"
 #include "Texture.h"
-
+#include <fstream>
+using namespace rapidxml;
 namespace Vulture2D{
     class Animation {
     public:
@@ -51,34 +54,31 @@ namespace Vulture2D{
         int  getFrameDelay() { return frameDelay; }
 
         bool parseFile(string path, SDL_Renderer* renderer) {
-            tinyxml2::XMLDocument doc;
-            doc.LoadFile(path.c_str());
+            file<> xmlFile(path.c_str());
+            
+            xml_document<> doc;
+            doc.parse<0>(xmlFile.data());
 
-            if (doc.Error()) {
-                std::cerr << "Can't load animation file: " << path << std::endl;
-                doc.PrintError();
-                return false;
-            }
-            else {
-                tinyxml2::XMLElement* animStart = doc.FirstChildElement("animation");
-                title = animStart->FirstChildElement("name")->GetText();
+            //TODO: Need to update error handling for when the file doesn't exist
+            {
+                xml_node<>* animStart = doc.first_node("animation");
+                title = animStart->first_node("name")->value();
 
-                animStart->FirstChildElement("framecount")->QueryIntText(&frameCount);
-                animStart->FirstChildElement("framedelay")->QueryIntText(&frameDelay);
-                animStart->FirstChildElement("loopable")->QueryBoolText(&loopable);
-                animStart->FirstChildElement("cyclic")->QueryBoolText(&cycles);
+                frameCount = atoi(animStart->first_node("framecount")->value());
+                frameDelay = atoi(animStart->first_node("framedelay")->value());
+                loopable = (animStart->first_node("loopable")->value() == "true");
+                cycles = (animStart->first_node("cyclic")->value() == "true");
 
-                tinyxml2::XMLElement* frameNode = animStart->FirstChildElement("frames");
-
-                tinyxml2::XMLElement* frameElement = frameNode->FirstChildElement("frame");
+                xml_node<>* frameNode = animStart->first_node("frames");
+                xml_node<>* frameElement = frameNode->first_node("frame");
 
                 for (int i = 0; i < frameCount; i++) {
-                    frameList[i].x = frameElement->IntAttribute("x");
-                    frameList[i].y = frameElement->IntAttribute("y");
-                    frameList[i].w = frameElement->IntAttribute("width");
-                    frameList[i].h = frameElement->IntAttribute("height");
+                    frameList[i].x = atoi(frameElement->first_attribute("x")->value());
+                    frameList[i].y = atoi(frameElement->first_attribute("y")->value());
+                    frameList[i].w = atoi(frameElement->first_attribute("width")->value());
+                    frameList[i].h = atoi(frameElement->first_attribute("height")->value());
 
-                    frameElement = frameElement->NextSiblingElement("frame");
+                    frameElement = frameElement->next_sibling("frame");
                 }
 
                 return true;

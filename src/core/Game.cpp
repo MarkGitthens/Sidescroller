@@ -2,7 +2,7 @@
 
 namespace Vulture2D {
     void Game::init() {
-        if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+        if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             std::cerr << "SDL could not initialize!\n" << SDL_GetError() << std::endl;
         }
         if (IMG_Init(IMG_INIT_PNG) < 0) {
@@ -21,12 +21,11 @@ namespace Vulture2D {
         AssetManager::getInstance();
         SceneHandler::getInstance();
 
-
         running = true;
     }
 
     void Game::run() {
-        //TODO: Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks 
+        //TODO: Should probably create a timer class to keep track of time instead of just always using SDL_GetTicks() and doing the checks
         double deltaTime = 16.667;
 
         double currentTime = SDL_GetTicks();
@@ -36,7 +35,6 @@ namespace Vulture2D {
         int updateCounter = 0;
 
         double fpsTimerStart = SDL_GetTicks();
-        double updateTimerStart = SDL_GetTicks();
 
         while (running) {
             double newTime = SDL_GetTicks();
@@ -58,7 +56,6 @@ namespace Vulture2D {
                 fpsCounter = 0;
                 updateCounter = 0;
                 fpsTimerStart = currentTime;
-                updateTimerStart = currentTime;
             }
 
             SceneHandler::getInstance().getCurrentScene()->renderScene();
@@ -122,6 +119,10 @@ namespace Vulture2D {
         InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
         InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
         InputHandler::getInstance().addKeyAction(SDLK_SPACE, "jump");
+    }
+
+    void testFalseFunction() {
+
     }
 
     void Game::destroy() {

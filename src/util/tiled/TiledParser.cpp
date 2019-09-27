@@ -8,33 +8,40 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
     string fullPath = path;
     fullPath.append(filename);
 
-    tinyxml2::XMLDocument file;
-    file.LoadFile(fullPath.c_str());
+    file<> xmlFile(fullPath.c_str());
+   // std::ifstream xmlFile(fullPath);
+  //  vector<char> buffer((std::istreambuf_iterator<char>(xmlFile)), std::istreambuf_iterator<char>());
+   // buffer.push_back('\0');
 
-    if (file.Error()) {
-        std::cerr << "Can't load tilemap";
-        return false;
-    }
-    else {
-        XMLElement* map = file.FirstChildElement("map");
+    xml_document<> file;
+    file.parse<0>(xmlFile.data());
 
-        int mapWidth = map->IntAttribute("width");
-        int mapHeight = map->IntAttribute("height");
-        int tileWidth = map->IntAttribute("tilewidth");
-        int tileHeight = map->IntAttribute("tileheight");
+
+    //if (file.Error()) {
+    //    std::cerr << "Can't load tilemap";
+     //   return false;
+    //}
+    //else 
+    {
+        xml_node<>* map = file.first_node("map");
+
+        int mapWidth = atoi(map->first_attribute("width")->value());
+        int mapHeight = atoi(map->first_attribute("height")->value());
+        int tileWidth = atoi(map->first_attribute("tilewidth")->value());
+        int tileHeight = atoi(map->first_attribute("tileheight")->value());
 
         TiledMap* tiledMap = new TiledMap(mapWidth, mapHeight, tileWidth, tileHeight);
 
-        Tileset* tileset = parseTileset(map->FirstChildElement("tileset"));
+        Tileset* tileset = parseTileset(map->first_node("tileset"));
         tiledMap->addTileSheet(tileset);
 
-        XMLElement* layer = map->FirstChildElement("layer");
+        xml_node<>* layer = map->first_node("layer");
         while (layer) {
             int *tileList = new int[mapWidth * mapHeight];
 
-            tinyxml2::XMLElement* data = layer->FirstChildElement("data");
+            xml_node<>* data = layer->first_node("data");
 
-            stringstream ss(data->GetText());
+            stringstream ss(data->value());
             int count = 0;
             string num;
 
@@ -44,11 +51,11 @@ bool TiledParser::parse(string filename, string path, Scene* scene) {
             }
 
             tiledMap->insertLayer(tileList);
-            layer = layer->NextSiblingElement("layer");
+            layer = layer->next_sibling("layer");
         }
         scene->setTiledMap(tiledMap);
 
-        parseObjects(map->FirstChildElement("objectgroup"), scene);
+        parseObjects(map->first_node("objectgroup"), scene);
         
         createBoundsBlock(tiledMap, scene);
         return true;
@@ -76,23 +83,27 @@ void TiledParser::createBoundsBlock(TiledMap* map, Vulture2D::Scene* scene) {
     scene->registerEntity(right);
 }
 
-void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene) {
+void TiledParser::parseObjects(xml_node<>* objectGroup, Vulture2D::Scene* scene) {
     if (objectGroup) {
-        XMLElement* object = objectGroup->FirstChildElement("object");
+        xml_node<>* object = objectGroup->first_node("object");
 
         //TODO: Valid objects should be defined somewhere else that can also generate the object given the parameters
         if (object) {
             while (object) {
-                string name = object->Attribute("name");
-                string type = object->Attribute("type");
-                int x = object->IntAttribute("x");
-                int y = object->IntAttribute("y");
+                string name = object->first_attribute("name")->value();
+                string type = object->first_attribute("type")->value();
+                int x = atoi(object->first_attribute("x")->value());
+                int y = atoi(object->first_attribute("y")->value());
 
-                int width = object->IntAttribute("width");
-                int height = object->IntAttribute("height");
+                int width = atoi(object->first_attribute("width")->value());
+                int height = atoi(object->first_attribute("height")->value());
 
+                xml_attribute<> *visibility = object->first_attribute("visible");
                 int visible = 1;
-                object->QueryIntAttribute("visible", &visible);
+                if(visibility)
+                    visible = atoi(visibility->value());
+                
+                
 
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
@@ -100,12 +111,13 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                     box->setSprite(Game::getAssetManager().getTexture("block"));
                     box->setVisible(visible);
 
-                    XMLElement* properties = object->FirstChildElement("properties");
+                    xml_node<>* properties = object->first_node("properties");
                     if (properties) {
-                        XMLElement* prop = properties->FirstChildElement("property");
-                        string propertyName = prop->Attribute("name");
+                        xml_node<>* prop = properties->first_node("property");
+                        string propertyName = prop->first_attribute("name")->value();
                         if (propertyName == "Trigger") {
-                            box->setTrigger(prop->BoolAttribute("value"));
+                            string triggerValue(prop->first_attribute("value")->value());
+                            box->setTrigger(triggerValue == "true");
                         }
                     }
                     else {
@@ -149,26 +161,26 @@ void TiledParser::parseObjects(XMLElement* objectGroup, Vulture2D::Scene* scene)
                     scene->registerEntity(spawner);
                 }
 
-                object = object->NextSiblingElement();
+                object = object->next_sibling();
             }
         }
     }
 }
 //TODO: parse individual tile information.
-Tileset* TiledParser::parseTileset(XMLElement* tilesetNode)  {
+Tileset* TiledParser::parseTileset(xml_node<>* tilesetNode)  {
     if (tilesetNode == NULL) {
         return nullptr;
     } else {
-        int firstGID = tilesetNode->IntAttribute("firstgid");
-        string tilesetName = tilesetNode->Attribute("name");
-        int tileCount = tilesetNode->IntAttribute("tilecount");
-        int tileWidth = tilesetNode->IntAttribute("tilewidth");
-        int tileHeight = tilesetNode->IntAttribute("tileheight");
+        int firstGID = atoi(tilesetNode->first_attribute("firstgid")->value());
+        string tilesetName = tilesetNode->first_attribute("name")->value();
+        int tileCount = atoi(tilesetNode->first_attribute("tilecount")->value());
+        int tileWidth = atoi(tilesetNode->first_attribute("tilewidth")->value());
+        int tileHeight = atoi(tilesetNode->first_attribute("tileheight")->value());
 
-        int columns = tilesetNode->IntAttribute("columns");
-        XMLElement* image = tilesetNode->FirstChildElement("image");
+        int columns = atoi(tilesetNode->first_attribute("columns")->value());
+        xml_node<>* image = tilesetNode->first_node("image");
         string pathToTileset = "resources/tilesets/";
-        pathToTileset+=image->Attribute("source");
+        pathToTileset+=image->first_attribute("source")->value();
 
         Tileset* tileset = new Tileset(tilesetName, pathToTileset, Game::getSDLRenderer(), tileWidth, tileHeight, tileCount, columns);
         tileset->setStartGID(firstGID);

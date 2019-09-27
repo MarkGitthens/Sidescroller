@@ -5,7 +5,6 @@
 #include <map>
 #include <iostream>
 #include <SDL.h>
-#include "../util/tinyxml2.h"
 #include "../util/tiled/Tileset.h"
 #include "../core/Texture.h"
 #include "../core/Entity.h"

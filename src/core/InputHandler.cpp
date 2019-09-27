@@ -93,7 +93,7 @@ namespace Vulture2D {
 
         for (auto k : mReleasedKeys) {
             if (k.second)
-                temp.push_back(k.first);
+                temp.emplace_back(k.first);
         }
         return temp;
     }

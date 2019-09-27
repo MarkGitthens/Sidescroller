@@ -5,7 +5,7 @@ include(src/CMakeLists.txt)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 set(CMAKE_CXX_STANDARD 11)
-
+set(CMAKE_BUILD_TYPE Debug)
 add_executable(sidescroller ${VULTURE2D_SRC})
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT sidescroller)
@@ -29,6 +29,7 @@ if(MSVC)
             ${SDL2_LIB}/x86/SDL2_image.lib
             ${SDL2_LIB}/x86/SDL2_mixer.lib)
 
+    target_link_libraries(sidescroller ${CMAKE_DL_LIBS})
     #TODO: check to see if we are creating a 32 or 64 bit msvc project
     #if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64") 
         #target_link_libraries(sidescroller ${SDL2_LIB}/x64/*)        
@@ -67,6 +68,7 @@ if(UNIX)
     find_package (SDL2 REQUIRED)
     find_package (SDL2_image REQUIRED)
     find_package (SDL2_mixer REQUIRED)
+    target_link_libraries(sidescroller ${CMAKE_DL_LIBS})
 
     if(SDL2_FOUND)
         include_directories(${SDL2_INCLUDE_DIRS})
