@@ -2,7 +2,6 @@
 #include "../core/events/Event.h"
 
 class Player;
-class PlayerJump;
 
 using Vulture2D::Event;
 class PlayerState {

@@ -2,7 +2,6 @@
 
 #include "PlayerState.h"
 
-
 class PlayerWalk : public PlayerState {
  public:
   PlayerWalk(Player* player);

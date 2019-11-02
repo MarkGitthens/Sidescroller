@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "PlayerJump.h"
 #include "PlayerWalk.h"
+
 PlayerIdle::PlayerIdle(Player *player) { player->setAnimation("player_idle"); }
 void PlayerIdle::enter(Player *player) {}
 
