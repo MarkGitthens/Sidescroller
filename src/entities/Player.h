@@ -9,6 +9,9 @@
 #include "Projectile.h"
 
 class PlayerState;
+class PlayerIdle;
+class PlayerWalk;
+class PlayerJump;
 
 const int speed = 8;
 
@@ -43,6 +46,11 @@ class Player : public Vulture2D::Entity,
   friend class PlayerIdle;
   friend class PlayerWalk;
   friend class PlayerJump;
+
+  PlayerIdle* _PlayerIdleState;
+  PlayerWalk* _PlayerWalkState;
+  PlayerJump* _PlayerJumpState;
+
   bool canJump = true;
   bool grounded = false;
   bool facingLeft = false;

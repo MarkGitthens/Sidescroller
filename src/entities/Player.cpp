@@ -1,7 +1,9 @@
 #include "Player.h"
 
 #include "PlayerIdle.h"
+#include "PlayerJump.h"
 #include "PlayerState.h"
+#include "PlayerWalk.h"
 
 Player::Player(int x, int y, int width, int height) {
   mPos.x = x;
@@ -9,26 +11,36 @@ Player::Player(int x, int y, int width, int height) {
   mHalfWidth = width / 2;
   mHalfHeight = height / 2;
 
+  facingLeft = false;
+
   registerAnimation(Animation("resources/animations/playerWalk.xml"));
   registerAnimation(Animation("resources/animations/playerIdle.xml"));
   registerAnimation(Animation("resources/animations/playerJump.xml"));
+
+  _PlayerIdleState = new PlayerIdle(this);
+  _PlayerWalkState = new PlayerWalk(this);
+  _PlayerJumpState = new PlayerJump(this);
 }
 
 Player::~Player() {
-  if (state) delete state;
+  if(_PlayerIdleState) delete _PlayerIdleState;
+  if(_PlayerWalkState) delete _PlayerWalkState;
+  if(_PlayerJumpState) delete _PlayerJumpState;
 }
 
 void Player::update() {
   PlayerState* nextState = state->update(this);
   if (nextState) {
     state->exit(this);
-    delete state;
     state = nextState;
+    state->enter(this);
   }
 }
 
 void Player::start() {
-  state = new PlayerIdle(this);
+  state = _PlayerIdleState;
+  state->enter(this);
+
   velocity.x = velocity.y = 0;
 
   Callback input = [this](Event* e) { this->handleInput(e); };
@@ -54,8 +66,8 @@ void Player::handleInput(Event* event) {
   PlayerState* nextState = state->handleInput(this, event);
   if (nextState) {
     state->exit(this);
-    delete state;
     state = nextState;
+    state->enter(this);
   }
 }
 

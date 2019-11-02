@@ -21,7 +21,7 @@ class SceneHandler {
 
   Scene* getCurrentScene();
   static SceneHandler& getInstance();
-  static void destroyInstance();
+  static void destroy();
 
  private:
   ~SceneHandler() {

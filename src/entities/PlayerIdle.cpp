@@ -4,17 +4,17 @@
 #include "PlayerJump.h"
 #include "PlayerWalk.h"
 
-PlayerIdle::PlayerIdle(Player *player) { player->setAnimation("player_idle"); }
-void PlayerIdle::enter(Player *player) {}
+PlayerIdle::PlayerIdle(Player *player) { }
+void PlayerIdle::enter(Player *player) {player->setAnimation("player_idle"); }
 
 void PlayerIdle::exit(Player *player) {}
 
 PlayerState *PlayerIdle::update(Player *player) {
   PlayerState::update(player);
-  if (fabs(player->velocity.x) >= .001f) return new PlayerWalk(player);
+  if (fabs(player->velocity.x) >= .001f) return player->_PlayerWalkState;
 
   if (!player->grounded) {
-    return new PlayerJump(player);
+    return player->_PlayerJumpState;
   }
   return nullptr;
 }
@@ -25,7 +25,7 @@ PlayerState *PlayerIdle::handleInput(Player *player, Event *event) {
   if (event->getType() == KeyboardEvent::KeyPress) {
     if (e->keyID == SDLK_SPACE) {
       player->velocity.y = -30;
-      return new PlayerJump(player);
+      return player->_PlayerJumpState;
     }
   }
 

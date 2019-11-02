@@ -115,7 +115,7 @@ void Game::registerInputs() {
 
 void Game::destroy() {
   AssetManager::destroy();
-  SceneHandler::destroyInstance();
+  SceneHandler::destroy();
 
   SDL_FreeSurface(screenSurface);
   screenSurface = nullptr;

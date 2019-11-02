@@ -3,19 +3,19 @@
 #include "Player.h"
 #include "PlayerIdle.h"
 
-PlayerJump::PlayerJump(Player *player) {
+PlayerJump::PlayerJump(Player *player) {}
+void PlayerJump::enter(Player *player) {
   jumpCount = 1;
   player->grounded = false;
   player->setAnimation("player_jump");
 }
-void PlayerJump::enter(Player *player) {}
 
 void PlayerJump::exit(Player *player) { jumpCount = 1; }
 
 PlayerState *PlayerJump::update(Player *player) {
   PlayerState::update(player);
   if (player->grounded) {
-    return new PlayerIdle(player);
+    return player->_PlayerIdleState;
   }
   return nullptr;
 }

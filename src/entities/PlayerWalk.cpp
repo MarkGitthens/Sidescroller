@@ -5,9 +5,9 @@
 #include "PlayerJump.h"
 
 PlayerWalk::PlayerWalk(Player *player) {
-  player->setAnimation("player_walking");
+  
 }
-void PlayerWalk::enter(Player *player) {}
+void PlayerWalk::enter(Player *player) {player->setAnimation("player_walking");}
 
 void PlayerWalk::exit(Player *player) {}
 
@@ -15,11 +15,11 @@ PlayerState *PlayerWalk::update(Player *player) {
   PlayerState::update(player);
 
   if (fabs(player->velocity.x) <= .001f) {
-    return new PlayerIdle(player);
+    return player->_PlayerIdleState;
   }
 
   if (!player->grounded) {
-    return new PlayerJump(player);
+    return player->_PlayerJumpState;
   }
 
   return nullptr;
@@ -31,7 +31,7 @@ PlayerState *PlayerWalk::handleInput(Player *player, Event *event) {
   if (event->getType() == KeyboardEvent::KeyPress) {
     if (e->keyID == SDLK_SPACE) {
       player->velocity.y = -30;
-      return new PlayerJump(player);
+      return player->_PlayerJumpState;
     }
   }
   return nullptr;

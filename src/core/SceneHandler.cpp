@@ -36,6 +36,6 @@ SceneHandler& SceneHandler::getInstance() {
   return *instance;
 }
 
-void SceneHandler::destroyInstance() {
+void SceneHandler::destroy() {
   if (instance) delete instance;
 }
