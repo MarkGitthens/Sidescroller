@@ -1,54 +1,49 @@
 #include "PlayerSpawner.h"
 
 PlayerSpawner::PlayerSpawner(int x, int y) {
-
-    this->x = x;
-    this->y = y;
-
+  this->x = x;
+  this->y = y;
 }
 
-void PlayerSpawner::start() {
-    std::cout << "starting playerspawner" << std::endl;
-    spawnPlayer(nullptr);
-    Callback spawn = [this](Event* e) {
-        this->spawnPlayer(e);
-    };
+void PlayerSpawner::lateStart() {
+  spawnPlayer(nullptr);
+  Callback spawn = [this](Event* e) { this->spawnPlayer(e); };
 
-    Game::getSceneHandler().getCurrentScene()->addListener(KeyboardEvent::KeyPress, spawn);
+  Game::getSceneHandler().getCurrentScene()->addListener(
+      KeyboardEvent::KeyPress, spawn);
 }
 
 void PlayerSpawner::spawnPlayer(Event* e) {
-    KeyboardEvent* k = (KeyboardEvent*) e;
-    
-    if(!player) {
-        Scene* scene = Game::getSceneHandler().getCurrentScene();
-        player = new Player(x, y + 64, 64, 64);
-        player->setName("player");
-        player->setSprite(Game::getAssetManager().getTexture("player"));
+  KeyboardEvent* k = (KeyboardEvent*)e;
 
-        SDL_Rect* cameraRect = new SDL_Rect();
-        cameraRect->x = 0;
-        cameraRect->y = 0;
-        cameraRect->w = 1280;
-        cameraRect->h = 720;
+  if (!player) {
+    Scene* scene = Game::getSceneHandler().getCurrentScene();
+    player = new Player(x, y + 64, 64, 64);
+    player->setName("player");
+    player->setSprite(Game::getAssetManager().getTexture("player"));
 
-        camera = new Camera();
-        camera->setSceneWidth(scene->getSceneWidth());
-        camera->setSceneHeight(scene->getSceneHeight());
-        camera->setCameraRect(cameraRect);
+    SDL_Rect* cameraRect = new SDL_Rect();
+    cameraRect->x = 0;
+    cameraRect->y = 0;
+    cameraRect->w = 1280;
+    cameraRect->h = 720;
 
-        scene->registerEntity(player);
-        player->start();
-        camera->setParentPos(player->getPos());
-        scene->setCamera(camera);
-    }
+    camera = new Camera();
+    camera->setSceneWidth(scene->getSceneWidth());
+    camera->setSceneHeight(scene->getSceneHeight());
+    camera->setCameraRect(cameraRect);
 
-    if(!e) {
-        return;
-    }
-    if(k->keyID == SDLK_r) {
+    player->start();
+    scene->registerEntity(player);
+    camera->setParentPos(player->getPos());
+    scene->setCamera(camera);
+  }
 
-        player->setVelocity(player->getVelocity().x, 0);
-        player->setPosition(x, y + 64);
-    }
+  if (!e) {
+    return;
+  }
+  if (k->keyID == SDLK_r) {
+    player->setVelocity(player->getVelocity().x, 0);
+    player->setPosition(x, y + 64);
+  }
 }

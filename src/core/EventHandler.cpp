@@ -21,10 +21,10 @@ namespace Vulture2D {
     }
 
     void EventHandler::dispatchEvent(Event* event) {
-        for (Listener l : listeners) {
-            if (l.type == event->getType())
-                if(l.cb)
-                    l.cb(event); 
+        for (int i = 0; i < listeners.size(); i++) {
+            if (listeners.at(i).type == event->getType())
+                if(listeners.at(i).cb)
+                    listeners.at(i).cb(event);
         }
     }
 }

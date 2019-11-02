@@ -15,6 +15,7 @@ namespace Vulture2D {
         virtual ~Entity() = default;
 
         virtual void start() {};
+        virtual void lateStart() {};
         virtual void update() = 0;
         virtual void stop() {};
         

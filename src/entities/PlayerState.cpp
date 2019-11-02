@@ -36,6 +36,11 @@ PlayerState *PlayerState::handleInput(Player *player, Event *event) {
     if (e->keyID == SDLK_e) {
       player->fireBullet();
     }
+
+    if(e->keyID == SDLK_l) {
+        SceneHandler::getInstance().changeScene("testScene");
+    }
+
     if (e->keyID == SDLK_RIGHT) {
       player->velocity.x += speed;
     } else if (e->keyID == SDLK_LEFT) {
@@ -44,6 +49,8 @@ PlayerState *PlayerState::handleInput(Player *player, Event *event) {
   }
 
   if (event->getType() == KeyboardEvent::KeyReleased) {
+    
+    
     if (e->keyID == SDLK_RIGHT) {
       player->velocity.x -= speed;
     }

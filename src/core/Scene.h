@@ -189,6 +189,14 @@ namespace Vulture2D {
             for (auto i: mOffScreenEntityMap) {
                 i.second->start();
             }
+
+            for(auto i: mEntityMap) {
+                i.second->lateStart();
+            }
+
+            for (auto i: mOffScreenEntityMap) {
+                i.second->lateStart();
+            }
         }
 
         void stopScene() {

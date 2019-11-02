@@ -12,8 +12,6 @@ Player::Player(int x, int y, int width, int height) {
   registerAnimation(Animation("resources/animations/playerWalk.xml"));
   registerAnimation(Animation("resources/animations/playerIdle.xml"));
   registerAnimation(Animation("resources/animations/playerJump.xml"));
-
-  state = new PlayerIdle(this);
 }
 
 Player::~Player() {
@@ -30,12 +28,13 @@ void Player::update() {
 }
 
 void Player::start() {
+  state = new PlayerIdle(this);
   velocity.x = velocity.y = 0;
 
   Callback input = [this](Event* e) { this->handleInput(e); };
 
   Scene* currentScene = SceneHandler::getInstance().getCurrentScene();
-  setAnimation("player_idle");
+
   registeredCallbacks.push_back(
       currentScene->addListener(KeyboardEvent::KeyPress, input));
   registeredCallbacks.push_back(
