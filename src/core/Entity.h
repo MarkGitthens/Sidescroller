@@ -13,7 +13,10 @@ namespace Vulture2D {
         Entity() : id(nextValidID), name("new_entity"), x(0), y(0), velocity(0, 0) { nextValidID++;  };
         Entity(string name) : id(0), name(name), x(0), y(0), velocity(0, 0) {};
         virtual ~Entity() = default;
+
+        virtual void start() {};
         virtual void update() = 0;
+        virtual void stop() {};
         
         void setID(int id);
         void setName(string name);

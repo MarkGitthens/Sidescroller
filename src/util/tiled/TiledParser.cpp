@@ -102,8 +102,6 @@ void TiledParser::parseObjects(xml_node<>* objectGroup, Vulture2D::Scene* scene)
                 int visible = 1;
                 if(visibility)
                     visible = atoi(visibility->value());
-                
-                
 
                 if (type == "Box") {
                     Box* box = new Box(x + (width / 2), y + (height / 2), width, height);
@@ -159,6 +157,29 @@ void TiledParser::parseObjects(xml_node<>* objectGroup, Vulture2D::Scene* scene)
                 if(type == "PlayerSpawner") {
                     PlayerSpawner* spawner = new PlayerSpawner(x, y);
                     scene->registerEntity(spawner);
+                }
+
+                if(type == "Goal") {
+                    //TODO: Don't use name for scene name
+                    Goal* goal = new Goal(x + (width / 2), y + (height / 2), width, height, name);
+                    goal->setSprite(Game::getAssetManager().getTexture("block"));
+                    goal->setVisible(visible);
+
+                    xml_node<>* properties = object->first_node("properties");
+                    if (properties) {
+                        xml_node<>* prop = properties->first_node("property");
+                        string propertyName = prop->first_attribute("name")->value();
+                        if (propertyName == "Trigger") {
+                            string triggerValue(prop->first_attribute("value")->value());
+                            goal->setTrigger(triggerValue == "true");
+                        }
+                    }
+                    else {
+                        std::cerr << "Missing required Object properties." << std::endl;
+                    }
+
+
+                    scene->registerEntity(goal);
                 }
 
                 object = object->next_sibling();

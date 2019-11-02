@@ -17,6 +17,7 @@
 #include "../../entities/PlayerSpawner.h"
 #include "../../entities/Coin.h"
 #include "../../entities/Patroller.h"
+#include "../../entities/Goal.h"
 
 using std::string;
 using namespace rapidxml;

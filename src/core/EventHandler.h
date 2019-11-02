@@ -13,7 +13,7 @@ namespace Vulture2D {
         int addListener(EventType type, Callback);
         void removeListener(int id);
         void dispatchEvent(Event*);
-
+        
     private:
         int lastID = 0;
 

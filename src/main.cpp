@@ -11,6 +11,8 @@ void initializeEntities();
 void registerAssets();
 
 Scene scene;
+Scene testScene;
+
 Game* game = nullptr;
 
 int main(int argc, char* argv[]) {
@@ -28,11 +30,15 @@ int main(int argc, char* argv[]) {
     game->registerInputs();
 
     registerAssets();
-    scene.setName("start");
-   
-    SceneHandler::getInstance().registerScene(&scene);
-    
     initializeEntities();
+
+    scene.setName("start");
+    testScene.setName("testScene");
+
+    SceneHandler::getInstance().registerScene(&scene);
+    SceneHandler::getInstance().registerScene(&testScene);
+
+    SceneHandler::getInstance().changeScene("start");
 
     game->run();
     game->destroy();
@@ -55,4 +61,5 @@ void registerAssets() {
 
 void initializeEntities() {
     TiledParser::parse("Level1.tmx", "resources/tilesets/", &scene);
+    TiledParser::parse("Level2.tmx", "resources/tilesets/", &testScene);
 }

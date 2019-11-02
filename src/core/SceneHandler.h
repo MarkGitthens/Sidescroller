@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include <unordered_map>
 #include <string>
+#include <iostream>
+
 using std::unordered_map;
 using std::string;
 

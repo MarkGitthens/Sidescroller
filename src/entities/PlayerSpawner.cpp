@@ -5,6 +5,10 @@ PlayerSpawner::PlayerSpawner(int x, int y) {
     this->x = x;
     this->y = y;
 
+}
+
+void PlayerSpawner::start() {
+    std::cout << "starting playerspawner" << std::endl;
     spawnPlayer(nullptr);
     Callback spawn = [this](Event* e) {
         this->spawnPlayer(e);
@@ -12,6 +16,7 @@ PlayerSpawner::PlayerSpawner(int x, int y) {
 
     Game::getSceneHandler().getCurrentScene()->addListener(KeyboardEvent::KeyPress, spawn);
 }
+
 void PlayerSpawner::spawnPlayer(Event* e) {
     KeyboardEvent* k = (KeyboardEvent*) e;
     
@@ -33,9 +38,9 @@ void PlayerSpawner::spawnPlayer(Event* e) {
         camera->setCameraRect(cameraRect);
 
         scene->registerEntity(player);
+        player->start();
         camera->setParentPos(player->getPos());
         scene->setCamera(camera);
-
     }
 
     if(!e) {

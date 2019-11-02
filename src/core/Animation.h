@@ -6,6 +6,7 @@
 #include "../util/rapidxml/rapidxml_print.hpp"
 #include "Texture.h"
 #include <fstream>
+#include "../core/Game.h"
 using namespace rapidxml;
 namespace Vulture2D{
     class Animation {

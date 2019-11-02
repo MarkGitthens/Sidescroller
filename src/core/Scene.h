@@ -181,6 +181,26 @@ namespace Vulture2D {
             return sceneHeight;
         }
 
+        void startScene() {
+            for(auto i: mEntityMap) {
+                i.second->start();
+            }
+
+            for (auto i: mOffScreenEntityMap) {
+                i.second->start();
+            }
+        }
+
+        void stopScene() {
+            for(auto i: mEntityMap) {
+                i.second->stop();
+            }
+
+            for (auto i: mOffScreenEntityMap) {
+                i.second->stop();
+            }
+        }
+        
     private:
         string mSceneName;
         SDL_Rect mWorldSpace;

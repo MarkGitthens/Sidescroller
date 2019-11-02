@@ -23,7 +23,8 @@ namespace Vulture2D {
     void EventHandler::dispatchEvent(Event* event) {
         for (Listener l : listeners) {
             if (l.type == event->getType())
-                l.cb(event); 
+                if(l.cb)
+                    l.cb(event); 
         }
     }
 }
