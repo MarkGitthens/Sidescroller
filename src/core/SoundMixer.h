@@ -21,6 +21,7 @@ namespace Vulture2D {
         void updateSound();
         int playSound(Sound* sound, int channel = -1);
         void pauseChannel(int channel);
+        void stopChannel(int channel);
         void pauseAllChannels();
         void resumeChannel(int channel);
         void resumeAllChannels();

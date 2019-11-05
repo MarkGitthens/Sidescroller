@@ -48,6 +48,10 @@ namespace Vulture2D {
         Mix_Pause(channel);
     }
 
+    void SoundMixer::stopChannel(int channel) {
+        Mix_HaltChannel(channel);
+    }
+
     void SoundMixer::pauseAllChannels() {
         for(int i = 0; i < maxChannels; i++) {
             Mix_Pause(i);
