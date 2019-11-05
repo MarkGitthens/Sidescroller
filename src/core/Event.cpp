@@ -1,5 +1,4 @@
 #include "Event.h"
-#include "Event.h"
 
 namespace Vulture2D {
     string Event::getStringData() {

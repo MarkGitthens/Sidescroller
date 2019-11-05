@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL_mixer.h>
-#include "../util/Vector2D.h"
+#include "util/Vector2D.h"
 
 namespace Vulture2D {
     class Sound {

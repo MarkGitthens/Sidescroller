@@ -1,6 +1,6 @@
 #pragma once
 #include "Unit.h"
-#include "../physics/AABBCollider.h"
+#include "physics/AABBCollider.h"
 
 class Collision_test : public VultureUnit::Unit {
 public:

@@ -1,8 +1,8 @@
 #pragma once
 #include <cmath>
 #include <SDL.h>
-#include "../util/Vector2D.h"
-#include "../core/Entity.h"
+#include "util/Vector2D.h"
+#include "core/Entity.h"
 
 class Camera : public Vulture2D::Entity {
 public:

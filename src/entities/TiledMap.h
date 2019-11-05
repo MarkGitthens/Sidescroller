@@ -5,11 +5,11 @@
 #include <map>
 #include <iostream>
 #include <SDL.h>
-#include "../util/tiled/Tileset.h"
-#include "../core/Texture.h"
-#include "../core/Entity.h"
-#include "../core/Renderable.h"
-#include "../core/Renderer.h"
+#include "util/tiled/Tileset.h"
+#include "core/Texture.h"
+#include "core/Entity.h"
+#include "core/Renderable.h"
+#include "core/Renderer.h"
 
 using std::string;
 using std::vector;

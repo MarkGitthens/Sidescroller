@@ -1,8 +1,8 @@
 #pragma once
-#include "../core/Entity.h"
-#include "../core/Renderable.h"
-#include "../physics/AABBCollider.h"
-#include "../core/Game.h"
+#include "core/Entity.h"
+#include "core/Renderable.h"
+#include "physics/AABBCollider.h"
+#include "core/Game.h"
 
 #include "Projectile.h"
 

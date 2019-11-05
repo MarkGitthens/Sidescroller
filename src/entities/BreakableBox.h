@@ -1,8 +1,8 @@
 #pragma once
-#include "../core/Game.h"
-#include "../core/Renderable.h"
-#include "../core/Entity.h"
-#include "../physics/AABBCollider.h"
+#include "core/Game.h"
+#include "core/Renderable.h"
+#include "core/Entity.h"
+#include "physics/AABBCollider.h"
 
 class BreakableBox: public Entity, public Renderable, public AABBCollider {
 public:

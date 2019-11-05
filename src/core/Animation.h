@@ -1,12 +1,12 @@
 #pragma once
 #include <SDL.h>
 #include <string>
-#include "../util/rapidxml/rapidxml.hpp"
-#include "../util/rapidxml/rapidxml_utils.hpp"
-#include "../util/rapidxml/rapidxml_print.hpp"
+#include "util/rapidxml/rapidxml.hpp"
+#include "util/rapidxml/rapidxml_utils.hpp"
+#include "util/rapidxml/rapidxml_print.hpp"
 #include "Texture.h"
 #include <fstream>
-#include "../core/Game.h"
+#include "core/Game.h"
 using namespace rapidxml;
 namespace Vulture2D{
     class Animation {

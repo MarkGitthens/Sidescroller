@@ -9,6 +9,8 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(sidescroller ${VULTURE2D_SRC})
 
+target_include_directories(sidescroller PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT sidescroller)
 
 foreach(source IN LISTS VULTURE2D_SRC)

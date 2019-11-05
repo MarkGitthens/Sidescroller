@@ -1,5 +1,5 @@
 #pragma once
-#include "../core/events/Event.h"
+#include "core/events/Event.h"
 
 class Player;
 

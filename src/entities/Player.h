@@ -1,11 +1,11 @@
 #pragma once
 #include <string>
 
-#include "../core/AnimatedSprite.h"
-#include "../core/Entity.h"
-#include "../core/Game.h"
-#include "../core/events/KeyboardEvent.h"
-#include "../physics/AABBCollider.h"
+#include "core/AnimatedSprite.h"
+#include "core/Entity.h"
+#include "core/Game.h"
+#include "core/events/KeyboardEvent.h"
+#include "physics/AABBCollider.h"
 #include "Projectile.h"
 
 class PlayerState;

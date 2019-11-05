@@ -2,8 +2,8 @@
 #include <string>
 #include <map>
 #include "Tile.h"
-#include "../../core/Texture.h"
-#include "../../core/AssetManager.h"
+#include "core/Texture.h"
+#include "core/AssetManager.h"
 
 using std::string;
 

@@ -7,9 +7,9 @@
 #include "EventHandler.h"
 #include "Entity.h"
 #include "Renderable.h"
-#include "../entities/TiledMap.h"
-#include "../entities/Camera.h"
-#include "../physics/AABBCollider.h"
+#include "entities/TiledMap.h"
+#include "entities/Camera.h"
+#include "physics/AABBCollider.h"
 
 using std::string;
 using std::unordered_map;

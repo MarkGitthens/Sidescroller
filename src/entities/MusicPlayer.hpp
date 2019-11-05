@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 
-#include "../core/Entity.h"
-#include "../core/Game.h"
-#include "../core/Sound.h"
+#include "core/Entity.h"
+#include "core/Game.h"
+#include "core/Sound.h"
 
 using std::string;
 using namespace Vulture2D;
