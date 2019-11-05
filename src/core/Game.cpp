@@ -109,7 +109,6 @@ void Game::registerInputs() {
   InputHandler::getInstance().addKeyAction(SDLK_ESCAPE, "quit_game");
   InputHandler::getInstance().addKeyAction(SDLK_RIGHT, "move_right");
   InputHandler::getInstance().addKeyAction(SDLK_LEFT, "move_left");
-  InputHandler::getInstance().addKeyAction(SDLK_t, "test_scene");
   InputHandler::getInstance().addKeyAction(SDLK_SPACE, "jump");
 }
 

@@ -13,7 +13,8 @@ set(VULTURE2D_ENTITIES_HEADERS
     src/entities/PlayerState.h
     src/entities/PlayerWalk.h
     src/entities/PlayerIdle.h
-    src/entities/PlayerJump.h)
+    src/entities/PlayerJump.h
+    src/entities/MusicPlayer.hpp)
 
 set(VULTURE2D_ENTITIES_SRC 
 
@@ -29,4 +30,5 @@ set(VULTURE2D_ENTITIES_SRC
     src/entities/PlayerState.cpp
     src/entities/PlayerWalk.cpp
     src/entities/PlayerIdle.cpp
-    src/entities/PlayerJump.cpp )
+    src/entities/PlayerJump.cpp
+    src/entities/MusicPlayer.cpp )

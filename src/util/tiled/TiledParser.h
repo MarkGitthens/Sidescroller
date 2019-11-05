@@ -18,6 +18,7 @@
 #include "../../entities/Coin.h"
 #include "../../entities/Patroller.h"
 #include "../../entities/Goal.h"
+#include "../../entities/MusicPlayer.hpp"
 
 using std::string;
 using namespace rapidxml;
